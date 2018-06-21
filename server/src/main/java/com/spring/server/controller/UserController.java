@@ -1,15 +1,13 @@
 package com.spring.server.controller;
 
+import com.spring.server.model.User;
 import com.spring.server.service.UserService;
 import com.spring.server.service.dto.UserListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,9 +21,16 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public List<UserListDto> finalAll(
+    public List<UserListDto> findAll(
     ) {
         return this.userService.findAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void delete(@PathVariable(name = "id") Long id
+    ) {
+        this.userService.delete(id);
+    }
 }

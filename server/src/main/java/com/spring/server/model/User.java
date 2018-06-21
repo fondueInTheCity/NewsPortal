@@ -26,23 +26,43 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "username")
     private String username;
 
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
+
+    @Column(name = "email")
+    private String email;
 
     @Column
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public User(String username, String password, final UserRole role) {
+    @Column(name = "activateCode")
+    private String activationCode;
+
+    public User(String username, String password, String firstName, String lastName, String email) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = UserRole.ROLE_READER;
     }
 
     public void applyChanges(final User inUser) {
         this.setUsername(inUser.getUsername());
-        this.setRole(inUser.getRole());
         this.setPassword(inUser.getPassword());
+        this.setFirstName(inUser.getFirstName());
+        this.setLastName(inUser.getLastName());
+        this.setEmail(inUser.getEmail());
+        this.setRole(inUser.getRole());
     }
 }

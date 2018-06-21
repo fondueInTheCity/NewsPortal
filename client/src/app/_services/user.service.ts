@@ -11,4 +11,20 @@ export class UserService {
     getAll() {
         return this.http.get<User[]>(`${environment.serverUrl}users`);
     }
+
+    getById(id: number) {
+        return this.http.get(`${environment.serverUrl}users` + '/' + id);
+    }
+
+    addUser(user: User) {
+        return this.http.post(`${environment.serverUrl}registration`, user);
+    }
+
+    update(user: User) {
+        return this.http.put(`${environment.serverUrl}users`, user);
+    }
+
+    delete(id: number) {
+        return this.http.delete(`${environment.serverUrl}users` + '/' + id);
+    }
 }

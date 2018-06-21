@@ -21,12 +21,12 @@ public class AuthenticationController {
     public LoginResponseDto login(
             @RequestBody final LoginRequestDto loginRequestDto
     ) {
-        return authenticationService.login(loginRequestDto);
+        return this.authenticationService.login(loginRequestDto);
     }
 
     @GetMapping(value = "/me")
     @ResponseStatus(value = HttpStatus.OK)
     public AuthUserDto me() {
-        return authenticationService.getMe();
+        return this.authenticationService.getMe();
     }
 }

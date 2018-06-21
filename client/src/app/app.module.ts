@@ -11,10 +11,12 @@ import { routing }        from './app.routing';
 
 import { AuthGuard } from './_guards';
 import { JwtInterceptor } from './_helpers';
-import { AuthenticationService, UserService } from './_services';
+import {AlertService, AuthenticationService, UserService} from './_services';
 import { HomeComponent } from './home';
-import { LoginComponent } from './login';
-
+import { LoginComponent } from './login';;
+import { AlertComponent } from './_directives/alert.component'
+;
+import { RegisterComponent } from './register/register.component'
 @NgModule({
     imports: [
         BrowserModule,
@@ -25,10 +27,13 @@ import { LoginComponent } from './login';
     declarations: [
         AppComponent,
         HomeComponent,
-        LoginComponent
+        LoginComponent,
+        AlertComponent ,
+        RegisterComponent
     ],
     providers: [
         AuthGuard,
+        AlertService,
         AuthenticationService,
         UserService,
         {

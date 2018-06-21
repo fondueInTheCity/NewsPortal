@@ -3,7 +3,11 @@
 <div>
     Users from secure api end point:
     <ul>
-        <li *ngFor="let user of users">{{user.username}} {{user.role}}</li>
+        <li *ngFor="let user of users">
+          {{user.username}} {{user.role}} - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+        </li>
     </ul>
 </div>
-<p><a [routerLink]="['/login']">Logout</a></p>
+<p>
+  <a [routerLink]="['/login']">Logout</a>
+</p>

@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { AuthGuard } from './_guards';
@@ -27,8 +27,7 @@ import { HeaderComponent } from './shared/header/header.component';
         HomeComponent,
         LoginComponent,
         AlertComponent ,
-        RegisterComponent
-,
+        RegisterComponent,
         HeaderComponent
     ],
   schemas: [],
@@ -45,5 +44,4 @@ import { HeaderComponent } from './shared/header/header.component';
     ],
     bootstrap: [AppComponent]
 })
-
 export class AppModule { }

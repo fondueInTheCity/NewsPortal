@@ -1,4 +1,5 @@
-﻿import { NgModule }      from '@angular/core';
+﻿import { NgModule } from '@angular/core';
+import { MDBBootstrapModule } from 'angular-bootstrap-md'
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -17,10 +18,13 @@ import { LoginComponent } from './login';;
 import { AlertComponent } from './_directives/alert.component'
 ;
 import { RegisterComponent } from './register/register.component'
+;
+import { HeaderComponent } from './shared/header/header.component'
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
+        MDBBootstrapModule.forRoot(),
         HttpClientModule,
         routing
     ],
@@ -30,7 +34,10 @@ import { RegisterComponent } from './register/register.component'
         LoginComponent,
         AlertComponent ,
         RegisterComponent
+,
+        HeaderComponent
     ],
+    schemas: [  ],
     providers: [
         AuthGuard,
         AlertService,

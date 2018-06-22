@@ -31,8 +31,8 @@ public class AuthenticationController {
 
     @PostMapping(value = "/registration")
     @ResponseStatus(value = HttpStatus.OK)
-    public void addUser(@RequestBody User user) {
-        this.userService.addUser(user);
+    public void addUser(@RequestBody final User user) {
+         this.userService.addUser(user);
     }
 
     @GetMapping("/registration/activate/{code)")

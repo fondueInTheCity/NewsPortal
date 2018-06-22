@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class AuthenticationController {
@@ -29,9 +30,10 @@ public class AuthenticationController {
         return this.authenticationService.login(loginRequestDto);
     }
 
+//    @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
     @PostMapping(value = "/registration")
     @ResponseStatus(value = HttpStatus.OK)
-    public void addUser(@RequestBody final User user) {
+    public void addUser(@RequestBody User user) {
          this.userService.addUser(user);
     }
 

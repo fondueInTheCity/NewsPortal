@@ -45,7 +45,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @Column(name = "activateCode")
+    @Column(name = "activationCode")
     private String activationCode;
 
     public User(String username, String password, String firstName, String lastName, String email) {

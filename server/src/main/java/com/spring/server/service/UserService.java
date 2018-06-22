@@ -1,6 +1,7 @@
 package com.spring.server.service;
 
 import com.spring.server.model.User;
+import com.spring.server.model.UserRole;
 import com.spring.server.repository.UserRepository;
 import com.spring.server.service.dto.UserListDto;
 import com.spring.server.service.transformer.UserListTransformer;
@@ -57,11 +58,12 @@ public class UserService {
     }
 
     public void addUser(User user) {
-        if (isUniqueUser(user)) {
+        if (isUserExsists(user)) {
             return;
         }
 
         encoder(user);
+        user.setRole(UserRole.ROLE_READER);
         if(!this.mailService.isNull(user)) {
             String message = String.format(
                     "Hallo, %s \n" +
@@ -75,8 +77,8 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-    private Boolean isUniqueUser(User user) {
-        return this.userRepository.findByUsername(user.getUsername()) == null;
+    private Boolean isUserExsists(User user) {
+        return this.userRepository.findByUsername(user.getUsername()) != null;
     }
 
     private Boolean isNull(User user) {

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({ SecurityConfiguration.class, WebConfiguration.class })
+@Import({ SecurityConfiguration.class, WebConfig.class })
 public class JwtApplication {
 
     public static void main(String[] args) {

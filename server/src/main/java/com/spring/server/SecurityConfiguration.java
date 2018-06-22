@@ -73,6 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(final WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(HttpMethod.POST, allowedUrlsForPost)
+                .antMatchers(HttpMethod.POST, "/auth/registration")
                 .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 

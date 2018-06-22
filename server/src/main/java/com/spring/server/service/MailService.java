@@ -1,7 +1,6 @@
 package com.spring.server.service;
 
 import com.spring.server.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,8 +9,12 @@ import org.springframework.util.StringUtils;
 
 @Service
 public class MailService {
-    @Autowired
-    private JavaMailSender mailSender;
+
+    private final JavaMailSender mailSender;
+
+    MailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     @Value("${spring.mail.username}")
     private String username;
@@ -23,7 +26,7 @@ public class MailService {
     public void send(
             String emailTo,
             String subject,
-            String message ) {
+            String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         mailMessage.setFrom(username);

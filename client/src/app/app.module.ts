@@ -13,10 +13,11 @@ import { AuthGuard } from './_guards';
 import { JwtInterceptor } from './_helpers';
 import {AlertService, AuthenticationService, UserService} from './_services';
 import { HomeComponent } from './home';
-import { LoginComponent } from './login';;
-import { AlertComponent } from './_directives/alert.component'
-;
-import { RegisterComponent } from './register/register.component'
+import { LoginComponent } from './login';
+import { AlertComponent } from './_directives/alert.component';
+import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -29,8 +30,8 @@ import { RegisterComponent } from './register/register.component'
         HomeComponent,
         LoginComponent,
         AlertComponent ,
-        RegisterComponent
-    ],
+        RegisterComponent,
+        ProfileComponent   ],
     providers: [
         AuthGuard,
         AlertService,

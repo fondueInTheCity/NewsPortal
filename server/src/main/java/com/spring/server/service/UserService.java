@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,8 +39,25 @@ public class UserService {
         this.userRepository.deleteById(id);
     }
 
+    public void changes(Long id, User user) {
+        Optional<User> userFromDB = this.userRepository.findById(id);
+        if (userFromDB.isPresent()) {
+            userFromDB.get().applyChanges(user);
+            this.userRepository.save(userFromDB.get());
+        }
+    }
+
+    public void activateUser(String code) {
+        User user = userRepository.findByActivationCode(code);
+        if (isNull(user)) {
+            return;
+        }
+        user.setActivationCode(null);
+        userRepository.save(user);
+    }
+
     public void addUser(User user) {
-        if (!isNull(user)) {
+        if (isUniqueUser(user)) {
             return;
         }
 
@@ -58,23 +75,18 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-    public Boolean isNull(User user) {
+    private Boolean isUniqueUser(User user) {
         return this.userRepository.findByUsername(user.getUsername()) == null;
     }
 
-    public void encoder(User user) {
+    private Boolean isNull(User user) {
+        return this.userRepository.findByUsername(user.getUsername()) == null;
+    }
+
+
+    private void encoder(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         user.setActivationCode(UUID.randomUUID().toString());
-    }
-
-    public boolean activateUser(String code) {
-        User user = userRepository.findByActivationCode(code);
-        if (isNull(user)){
-            return false;
-        }
-        user.setActivationCode(null);
-        userRepository.save(user);
-        return  true;
     }
 }

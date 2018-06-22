@@ -17,7 +17,7 @@ export class UserService {
     }
 
     addUser(user: User) {
-        return this.http.post(`${environment.serverUrl}auth/registration`, user);
+        return this.http.post(`${environment.serverUrl}registration`, user);
     }
 
     update(user: User) {

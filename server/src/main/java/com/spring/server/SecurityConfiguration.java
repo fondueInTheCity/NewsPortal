@@ -74,6 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers(HttpMethod.POST, allowedUrlsForPost)
                 .antMatchers(HttpMethod.POST, "/auth/registration")
+                .antMatchers(HttpMethod.POST, "/auth/activate/{code}")
                 .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 

@@ -13,7 +13,8 @@ import { LoginComponent } from './login';
 import { AlertComponent } from './_directives/alert.component';
 import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { FooterComponent } from './shared/footer/footer.component';
+import { FooterComponent } from './shared/footer/footer.component';;
+import { ProfileComponent } from './user/profile/profile.component';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { FooterComponent } from './shared/footer/footer.component';
         AlertComponent ,
         RegisterComponent,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        ProfileComponent
     ],
   schemas: [],
     providers: [

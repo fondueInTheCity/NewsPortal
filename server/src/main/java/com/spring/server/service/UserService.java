@@ -49,7 +49,7 @@ public class UserService {
     }
 
     public void activateUser(String code) {
-        User user = userRepository.findByActivationCode(code);
+        User user = this.userRepository.findByActivationCode(code);
         if (isNull(user)) {
             return;
         }
@@ -67,7 +67,7 @@ public class UserService {
         if(!this.mailService.isNull(user)) {
             String message = String.format(
                     "Hallo, %s \n" +
-                            "Welcome to RealTime Paint! Please, visit next link: http://localhost:8080/activate/%s",
+                            "Welcome to RealTime Paint! Please, visit next link: http://localhost:8080/auth/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );

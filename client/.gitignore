@@ -33,6 +33,10 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+package.json
+angular.json
+package-lock.json
+
 
 # System Files
 .DS_Store

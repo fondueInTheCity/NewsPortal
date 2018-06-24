@@ -1,5 +1,6 @@
 package com.spring.server.service;
 
+import com.spring.server.model.MagicWord;
 import com.spring.server.model.User;
 import com.spring.server.model.UserRole;
 import com.spring.server.repository.UserRepository;
@@ -23,34 +24,34 @@ public class UserService {
     private final UserRepository userRepository;
     private final MailService mailService;
     private final UserListTransformer userListTransformer;
+    private final MessageService messageService;
 
     @Transactional(readOnly = true)
     public List<UserListDto> findAll() {
         List<User> users = userRepository.findAll();
-
         List<UserListDto> userDtoList = new ArrayList<>();
         for (User user : users) {
-            UserListDto dto = this.userListTransformer.makeDto(user);
+            UserListDto dto = userListTransformer.makeDto(user);
             userDtoList.add(dto);
         }
         return userDtoList;
     }
 
     public void delete(Long id) {
-        this.userRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
     public void changes(Long id, User user) {
-        Optional<User> userFromDB = this.userRepository.findById(id);
+        Optional<User> userFromDB = userRepository.findById(id);
         if (userFromDB.isPresent()) {
             userFromDB.get().applyChanges(user);
-            this.userRepository.save(userFromDB.get());
+            userRepository.save(userFromDB.get());
         }
     }
 
     public void activateUser(String code) {
-        User user = this.userRepository.findByActivationCode(code);
-        if (isNull(user)) {
+        User user = userRepository.findByActivationCode(code);
+        if (this.isNull(user)) {
             return;
         }
         user.setActivationCode(null);
@@ -58,37 +59,87 @@ public class UserService {
     }
 
     public void addUser(User user) {
-        if (isUserExsists(user)) {
+        if (this.isUserExsists(user)) {
             return;
         }
-
         encoder(user);
+        newActivationCode(user);
         user.setRole(UserRole.ROLE_READER);
-        if(!this.mailService.isNull(user)) {
-            String message = String.format(
-                    "Hallo, %s \n" +
-                            "Welcome to RealTime Paint! Please, visit next link: http://localhost:8080/auth/activate/%s",
-                    user.getUsername(),
-                    user.getActivationCode()
-            );
-
-            this.mailService.send(user.getEmail(), "Activation code", message);
+        if(!mailService.isNull(user)) {
+            mailService.send(user.getEmail(), MagicWord.SUBJECT_ACTIVATION_CODE,
+                    messageService.activationCode(user.getUsername(), user.getActivationCode()));
         }
-        this.userRepository.save(user);
+        userRepository.save(user);
+    }
+
+    public boolean isCodeActivated(String username) {
+        return userRepository.findByUsername(username).getActivationCode() == null;
+    }
+
+    public void sendPasswordUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (this.isNull(user)) {
+            return;
+        }
+        if (!mailService.isNull(user)) {
+            mailService.send(user.getEmail(), MagicWord.SUBJECT_REMEMBER_PASSWORD,
+                    messageService.rememberPassword(user.getUsername(), user.getPassword()));
+        }
+    }
+
+    public void sendPasswordEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (this.isNull(user)) {
+            return;
+        }
+        mailService.send(user.getEmail(), MagicWord.SUBJECT_REMEMBER_PASSWORD,
+                messageService.rememberPassword(user.getUsername(), user.getPassword()));
+    }
+
+    public void myUsernamePassword(String email) {
+        User user = userRepository.findByEmail(email);
+        if (this.isNull(user)) {
+            return;
+        }
+        mailService.send(user.getEmail(), MagicWord.SUBJECT_REMEMBER_USERNAME_PASSWORD,
+                messageService.rememberUsernamePassword(user.getUsername(), user.getPassword()));
+    }
+
+    public void sendActivateNewPassword(String email) {
+        User user = userRepository.findByEmail(email);
+        if(this.isNull(user)) {
+            return;
+        }
+        newActivationCode(user);
+        mailService.send(user.getEmail(), MagicWord.SUBJECT_REMEMBER_USERNAME_PASSWORD,
+                messageService.activationCodeChangePassword(user.getUsername(), user.getActivationCode()));
+    }
+
+    public void newPassword(String code, String password) {
+        User user = userRepository.findByActivationCode(code);
+        if (this.isNull(user)) {
+            return;
+        }
+        user.setActivationCode(null);
+        user.setPassword(password);
+        userRepository.save(user);
+        sendPasswordUsername(user.getUsername());
     }
 
     private Boolean isUserExsists(User user) {
-        return this.userRepository.findByUsername(user.getUsername()) != null;
+        return userRepository.findByUsername(user.getUsername()) != null;
     }
 
     private Boolean isNull(User user) {
-        return this.userRepository.findByUsername(user.getUsername()) == null;
+        return userRepository.findByUsername(user.getUsername()) == null;
     }
 
+    private void newActivationCode(User user) {
+        user.setActivationCode(UUID.randomUUID().toString());
+    }
 
     private void encoder(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setActivationCode(UUID.randomUUID().toString());
     }
 }

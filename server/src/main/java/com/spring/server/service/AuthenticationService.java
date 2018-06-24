@@ -27,12 +27,17 @@ import java.util.Optional;
 public class AuthenticationService {
 
     private final UserRepository userRepository;
+    private final UserService userService;
     private final AuthUserTransformer authUserTransformer;
     private final AuthenticationHelper authenticationHelper;
     private final AuthenticationManager authenticationManager;
 
     public LoginResponseDto login(final LoginRequestDto loginRequestDto) {
         try {
+            if (!this.userService.isCodeActivated(loginRequestDto.getUsername())) {
+                throw new JsonException("Code is not active.");
+            }
+
             String username = Optional.ofNullable(loginRequestDto.getUsername())
                     .orElseThrow(() -> new BadCredentialsException("Username should be passed."));
 
@@ -64,13 +69,5 @@ public class AuthenticationService {
         } catch (BadCredentialsException exception) {
             throw new JsonException("Username or password was incorrect. Please try again.", exception);
         }
-    }
-
-    @Transactional(readOnly = true)
-    public AuthUserDto getMe() {
-        Authentication authentication = SecurityHelper.getAuthenticationWithCheck();
-        User byUsername = userRepository.findByUsername(authentication.getName());
-
-        return authUserTransformer.makeDto(byUsername);
     }
 }

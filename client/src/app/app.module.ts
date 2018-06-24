@@ -1,4 +1,5 @@
-﻿import { NgModule } from '@angular/core';
+﻿
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,8 +14,9 @@ import { LoginComponent } from './login';
 import { AlertComponent } from './_directives/alert.component';
 import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { FooterComponent } from './shared/footer/footer.component';;
-import { RemovedInformationComponent } from './removed-information/removed-information.component'
+import { FooterComponent } from './shared/footer/footer.component';
+import { RemovedInformationComponent } from './removed-information/removed-information.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 @NgModule({
     imports: [
@@ -31,9 +33,10 @@ import { RemovedInformationComponent } from './removed-information/removed-infor
         AlertComponent ,
         RegisterComponent,
         HeaderComponent,
-        FooterComponent,
-        RemovedInformationComponent
-,
+        FooterComponent,
+        RemovedInformationComponent,
+        ProfileComponent
+
     ],
   schemas: [],
     providers: [

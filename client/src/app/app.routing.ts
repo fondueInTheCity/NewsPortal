@@ -5,7 +5,7 @@ import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
 import {RegisterComponent} from './register';
 import {RemovedInformationComponent} from './removed-information/removed-information.component';
-
+import {ProfileComponent} from './user/profile/profile.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -13,7 +13,7 @@ const appRoutes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'removed', component: RemovedInformationComponent},
     { path: 'auth/activate/:code', component: LoginComponent},
-
+    { path: 'profile', component: ProfileComponent },
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

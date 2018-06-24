@@ -1,6 +1,6 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark default-color ie-nav" [containerInside]="false">
   <logo>
-    <a class="logo navbar-brand" href="/home"><strong>ITnews</strong></a>
+    <a class="logo navbar-brand" href="/"><strong>ITnews</strong></a>
   </logo>
   <links>
     <ul class="navbar-nav mr-auto">
@@ -11,6 +11,13 @@
         <a class="nav-link">Users</a>
       </li>
     </ul>
+    <div class="no-space row">
+      <!--<form class="form-inline md-form form-sm">-->
+        <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" mdbInputDirective>
+        <!--<button class="btn btn-primary">Search</button>-->
+        <i class="fa fa-search" aria-hidden="true"></i>
+      <!--</form>-->
+    </div>
     <ul class="navbar-nav nav-flex-icons" *ngIf="currentUser == null">
       <li class="nav-item waves-light" mdbWavesEffect>
         <a class="nav-link"><i class="fa fa-facebook"></i></a>
@@ -26,9 +33,9 @@
         <!--<ng-template #elseBlock><a class="nav-link" href="/login">Login </a></ng-template>-->
       </li>
     </ul>
-    <ul class="navbar-nav nav-flex-icons" *ngIf="currentUser != null">
+    <ul class="navbar-nav" *ngIf="currentUser != null">
       <li class="nav-item waves-light" mdbWavesEffect>
-        <a class="nav-link">{{currentUser.username}}</a>
+        <a class="nav-link" href="/profile">{{currentUser.username}}</a>
       </li>
       <li class="nav-item waves-light" mdbWavesEffect>
         <a class="nav-link" [routerLink]="['/login']">Logout</a>

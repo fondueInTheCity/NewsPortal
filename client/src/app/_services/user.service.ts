@@ -17,6 +17,10 @@ export class UserService   {
     return this.http.get(`${environment.serverUrl}users` + '/' + id);
   }
 
+  getByUsername(username: string) {
+    return this.http.get(`${environment.serverUrl}users` + '/' + username);
+  }
+
   addUser(user: User) {
     return this.http.post(`${environment.serverUrl}auth/registration`, user);
   }

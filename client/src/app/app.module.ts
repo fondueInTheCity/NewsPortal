@@ -17,6 +17,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { RemovedInformationComponent } from './removed-information/removed-information.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { UsersListComponent } from './user/users-list/users-list.component';
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -24,7 +26,11 @@ import { ProfileComponent } from './user/profile/profile.component';
         ReactiveFormsModule,
         HttpClientModule,
         MDBBootstrapModule.forRoot(),
-        routing
+        routing,
+        MatMenuModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule
     ],
     declarations: [
         AppComponent,
@@ -35,7 +41,8 @@ import { ProfileComponent } from './user/profile/profile.component';
         HeaderComponent,
         FooterComponent,
         RemovedInformationComponent,
-        ProfileComponent
+        ProfileComponent,
+        UsersListComponent
 
     ],
   schemas: [],

@@ -19,12 +19,17 @@ public class UserController {
 
     private final UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public List<UserListDto> findAll(
     ) {
         return this.userService.findAll();
+    }
+
+    @GetMapping("/{username}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public User findUserByUsername(@PathVariable(value = "username") String username) {
+        return this.userService.findUserByUsername(username);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -1,9 +1,9 @@
 package com.spring.server;
 
-import com.spring.server.security.service.JwtAuthenticationFilter;
-import com.spring.server.security.service.JwtAuthenticationProvider;
 import com.spring.server.security.handler.RestAccessDeniedHandler;
 import com.spring.server.security.handler.RestAuthenticationEntryPoint;
+import com.spring.server.security.service.JwtAuthenticationFilter;
+import com.spring.server.security.service.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
@@ -76,6 +74,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, allowedUrlsForPost)
                 .antMatchers(HttpMethod.POST, "/auth/registration")
                 .antMatchers(HttpMethod.GET, "/auth/activate/{code}")
+                .antMatchers(HttpMethod.GET, "/users/{username}")
+                .antMatchers(HttpMethod.POST, "/auth/login")
                 .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 

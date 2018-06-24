@@ -1,0 +1,58 @@
+<div class="mx-auto w-auto p-3 h-100 w-100 user-list">
+  <h2 class="h1 font-weight-bold">Users list</h2>
+  <div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Username</th>
+      <th>E-mail</th>
+      <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.role}}</td>
+      <td>
+        <div class="btn-group" dropdown>
+          <button type="button" class="btn btn-danger waves-light" mdbWavesEffect>Action</button>
+          <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/profile/{{user.username}}">Edit</a>
+            <a class="dropdown-item" href="#">Block</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="deleteUser(user.id)">Delete</a>
+          </div>
+        </div>
+        <!--<button mat-button [matMenuTriggerFor]="menu">Menu</button>-->
+        <!--<mat-menu #menu="matMenu">-->
+        <!--<button mat-menu-item>Item 1</button>-->
+        <!--<button mat-menu-item>Item 2</button>-->
+        <!--</mat-menu>-->
+
+
+        <!--<mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">more_vert</mat-icon>-->
+        <!--<button mat-icon-button [matMenuTriggerFor]="menu">-->
+        <!--<mat-icon>more_vert</mat-icon>-->
+        <!--</button>-->
+        <!--<mat-menu #menu="matMenu">-->
+        <!--<button mat-menu-item>-->
+        <!--<mat-icon>dialpad</mat-icon>-->
+        <!--<span>Redial</span>-->
+        <!--</button>-->
+        <!--<button mat-menu-item disabled>-->
+        <!--<mat-icon>voicemail</mat-icon>-->
+        <!--<span>Check voicemail</span>-->
+        <!--</button>-->
+        <!--<button mat-menu-item>-->
+        <!--<mat-icon>notifications_off</mat-icon>-->
+        <!--<span>Disable alerts</span>-->
+        <!--</button>-->
+        <!--</mat-menu>-->
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</div>

@@ -1,5 +1,4 @@
-﻿
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +18,8 @@ import { RemovedInformationComponent } from './removed-information/removed-infor
 import { ProfileComponent } from './user/profile/profile.component';
 import { UsersListComponent } from './user/users-list/users-list.component';
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule } from '@angular/material';
+import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.component';
+import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,9 @@ import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule } from '@a
         FooterComponent,
         RemovedInformationComponent,
         ProfileComponent,
-        UsersListComponent
+        UsersListComponent,
+        ProfileEditComponent,
+        ProfileNewsComponent,
 
     ],
   schemas: [],

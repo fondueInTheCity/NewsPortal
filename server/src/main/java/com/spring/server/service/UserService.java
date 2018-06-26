@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -45,12 +44,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void changes(Long id, User user) {
-        Optional<User> userFromDB = userRepository.findById(id);
-        if (userFromDB.isPresent()) {
-            userFromDB.get().applyChanges(user);
-            userRepository.save(userFromDB.get());
-        }
+    public void editUser(User user) {
+        userRepository.save(user);
     }
 
     public void activateUser(String code) {
@@ -68,7 +63,7 @@ public class UserService {
         }
         encoder(user);
         newActivationCode(user);
-        user.setRole(UserRole.ROLE_READER);
+        user.setRole(UserRole.Reader);//.ROLE_READER);
         if(!mailService.isNull(user)) {
             mailService.send(user.getEmail(), MagicWord.SUBJECT_ACTIVATION_CODE,
                     messageService.activationCode(user.getUsername(), user.getActivationCode()));

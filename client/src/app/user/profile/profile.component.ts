@@ -14,10 +14,11 @@ import {first} from "rxjs/internal/operators";
 })
 export class ProfileComponent implements OnInit {
   user: any;
+  viewMode = 'newsTab';
   // user: User[];
+  isCanEdit: boolean;
+
   constructor(
-      private formBuilder: FormBuilder,
-      private router: Router,
       private userService: UserService,
       private alertService: AlertService,
       private activatedRoute: ActivatedRoute
@@ -29,7 +30,11 @@ export class ProfileComponent implements OnInit {
         .subscribe(
           data => {
             this.user = data;
-            this.user["role"] = this.user["role"].substring(5);
+            let currentUserJson = JSON.parse(localStorage.getItem("currentUser"));
+            if ((currentUserJson.user.role == "Admin") || (this.user["username"] == currentUserJson.username))
+              this.isCanEdit = true;
+            else
+              this.isCanEdit = false;
           },
           error => {
             this.alertService.error(error);

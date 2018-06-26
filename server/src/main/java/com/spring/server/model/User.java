@@ -48,13 +48,31 @@ public class User {
     @Column(name = "activationCode")
     private String activationCode;
 
-    public User(String username, String password, String firstName, String lastName, String email) {
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "bio")
+    private String bio;
+
+    @Column(name = "avatar")
+    private String avatar;
+
+    @Column(name = "isBlocked")
+    private boolean isBlocked;
+
+    @Column(name = "isDeleted")
+    private boolean isDeleted;
+
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.email = email;
-        this.role = UserRole.ROLE_READER;
+        this.role = UserRole.Reader;//.ROLE_READER;
+        this.isBlocked = false;
+        this.isDeleted = false;
     }
 
     public void applyChanges(final User inUser) {

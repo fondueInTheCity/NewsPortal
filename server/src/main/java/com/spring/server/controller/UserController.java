@@ -32,7 +32,13 @@ public class UserController {
         return this.userService.findUserByUsername(username);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/edit")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void editUser(@RequestBody User user) {
+        this.userService.editUser(user);
+    }
+
+    @PreAuthorize("hasRole('Admin')")
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable(name = "id") Long id

@@ -8,8 +8,6 @@ import com.spring.server.service.dto.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.facebook.api.Facebook;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

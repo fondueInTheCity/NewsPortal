@@ -1,18 +1,9 @@
 package com.spring.server.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -25,9 +16,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name ="isActive")
-    private Boolean isActive;
 
     @Column(name = "username")
     private String username;
@@ -63,17 +51,32 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
+    @Column(name ="isActive")
+    private Boolean isActive;
+
     @Column(name = "isBlocked")
     private boolean isBlocked;
 
     @Column(name = "isDeleted")
     private boolean isDeleted;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<News> news;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Like> likes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Rating> ratings;
+
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = UserRole.Reader;//.ROLE_READER;
+        this.role = UserRole.Reader;
         this.isBlocked = false;
         this.isDeleted = false;
         this.isActive = true;

@@ -27,19 +27,29 @@ public class News {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "user_id")
-    private long user_id;
-    public void setUser_id(long user_id)
-    {
-        this.user_id = user_id;
-    }
-    public long getUser_id()
-    {
-        return user_id;
-    }
-
     @Column(name = "publishDate")
     private Date publishDate;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "news_tag", joinColumns = @JoinColumn(name = "id_news", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_tag", referencedColumnName = "id"))
+    public Set<Tag> tags;
+    public Set<Tag> getTag() {
+        return tags;
+    }
+    public void setTag(Set<Tag> tags){
+        this.tags = tags;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+    public User getUser() {
+        return this.user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
     private Set<Comment> comments;
@@ -59,10 +69,9 @@ public class News {
         this.rating = rating;
     }
 
-    public News(String name, String description, long user_id, String text) {
+    public News(String name, String description, String text) {
         this.name = name;
         this.description = description;
-        this.user_id = user_id;
         this.text = text;
         this.publishDate = new Date();
     }

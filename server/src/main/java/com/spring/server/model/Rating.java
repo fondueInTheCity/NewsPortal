@@ -21,19 +21,18 @@ public class Rating {
     @Column(name = "value")
     private int value;
 
-    @Column(name = "user_id")
-    private long user_id;
-    public void setUser_id(long user_id)
-    {
-        this.user_id = user_id;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+    public User getUser() {
+        return this.user;
     }
-    public long getUser_id()
-    {
-        return user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @ManyToOne
-    @JoinColumn(name = "news_id")
+    @JoinColumn(name = "id_news")
     private News news;
     public News getNews() {
         return this.news;
@@ -42,8 +41,7 @@ public class Rating {
         this.news = news;
     }
 
-    public Rating(long user_id, int value) {
-        this.user_id = user_id;
+    public Rating(int value) {
         this.value = value;
     }
 }

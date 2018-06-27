@@ -17,22 +17,21 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "user_id")
-    private long user_id;
-    public void setUser_id(long user_id)
-    {
-        this.user_id = user_id;
-    }
-    public long getUser_id()
-    {
-        return user_id;
-    }
-
     @Column(name = "text")
     private String text;
 
     @ManyToOne
-    @JoinColumn(name = "news_id")
+    @JoinColumn(name = "id_user")
+    private User user;
+    public User getUser() {
+        return this.user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_news")
     private News news;
     public News getNews() {
         return this.news;
@@ -50,8 +49,7 @@ public class Comment {
         this.likes = likes;
     }
 
-    public Comment(long user_id, String text, News news) {
-        this.user_id = user_id;
+    public Comment(String text, News news) {
         this.text = text;
         this.news = news;
     }

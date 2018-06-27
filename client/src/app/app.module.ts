@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { MarkdownModule } from 'ngx-markdown';
 import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -31,7 +30,6 @@ import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.c
         ReactiveFormsModule,
         HttpClientModule,
         MDBBootstrapModule.forRoot(),
-        MarkdownModule.forRoot(),
         routing
     ],
     declarations: [

@@ -10,25 +10,25 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
+@Table(name="lois")
 public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "user_id")
-    private long user_id;
-    public void setUser_id(long user_id)
-    {
-        this.user_id = user_id;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+    public User getUser() {
+        return this.user;
     }
-    public long getUser_id()
-    {
-        return user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @ManyToOne
-    @JoinColumn(name = "comment_id")
+    @JoinColumn(name = "id_comment")
     private Comment comment;
     public Comment getComment() {
         return this.comment;
@@ -37,7 +37,8 @@ public class Like {
         this.comment = comment;
     }
 
-    public Like(long user_id) {
-        this.user_id = user_id;
+    public Like(User user, Comment comment){
+        this.user = user;
+        this.comment = comment;
     }
 }

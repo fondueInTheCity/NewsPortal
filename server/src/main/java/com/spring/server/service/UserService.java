@@ -4,7 +4,9 @@ import com.spring.server.model.MagicWord;
 import com.spring.server.model.User;
 import com.spring.server.model.UserRole;
 import com.spring.server.repository.UserRepository;
+import com.spring.server.service.dto.UserEditDto;
 import com.spring.server.service.dto.UserListDto;
+import com.spring.server.service.transformer.UserEditTransformer;
 import com.spring.server.service.transformer.UserListTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final MailService mailService;
     private final UserListTransformer userListTransformer;
+    private final UserEditTransformer userEditTransformer;
     private final MessageService messageService;
 
     @Transactional(readOnly = true)
@@ -36,16 +39,28 @@ public class UserService {
         return userDtoList;
     }
 
-    public User findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public UserEditDto findUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        UserEditDto dto = userEditTransformer.makeDto(user);
+        return dto;
     }
 
-    public void delete(Long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(Long id) {
+        User deletedUser = userRepository.findById((long)id);
+        deletedUser.setDeleted(true);
+        userRepository.save(deletedUser);
     }
 
-    public void editUser(User user) {
-        userRepository.save(user);
+    public void blockUser(Long id, boolean blockStatus) {
+        User blockedUser = userRepository.findById((long)id);
+        blockedUser.setBlocked(blockStatus);
+        userRepository.save(blockedUser);
+    }
+
+    public void editUser(UserEditDto user) {
+        User oldUser = userRepository.findById((long)user.getId());
+        User editedUser = userEditTransformer.mergeUserData(oldUser, user);
+        userRepository.save(editedUser);
     }
 
     public void activateUser(String code) {

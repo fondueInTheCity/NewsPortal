@@ -10,7 +10,7 @@ import {first} from "rxjs/internal/operators";
 })
 export class UsersListComponent implements OnInit {
   users: User[] = [];
-
+  loading = false;
   constructor(private userService: UserService) {
   }
 
@@ -26,9 +26,17 @@ export class UsersListComponent implements OnInit {
     });
   }
 
+  changeBlockUserStatus(id: number, blocked: boolean){
+    this.loading = true;
+    this.userService.block(id, blocked).pipe(first()).subscribe(() => {
+      this.loadAllUsers();
+    });
+  }
+
   private loadAllUsers() {
     this.userService.getAll().pipe(first()).subscribe(users => {
       this.users = users;
+      this.loading = false;
     });
   }
 }

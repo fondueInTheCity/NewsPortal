@@ -1,11 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router, Params} from "@angular/router";
 import {UserService} from "../../../_services/user.service";
 import {AlertService} from "../../../_services/alert.service";
 import {first} from "rxjs/internal/operators";
-import {ProfileComponent} from "../profile.component";
-import {User} from "../../../_models/user";
 
 @Component({
   selector: 'app-profile-edit',
@@ -20,7 +17,6 @@ export class ProfileEditComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private userService: UserService,
     private alertService: AlertService
   ) {
@@ -46,7 +42,8 @@ export class ProfileEditComponent implements OnInit {
     if (this.editUserForm.invalid) {
       return;
     }
-    let user = this.updateUserWithForm();
+    let user = this.editUserForm.value;
+    user.role = this.user.role;
     this.loading = true;
     this.userService.update(user)
       .pipe(first())
@@ -62,18 +59,4 @@ export class ProfileEditComponent implements OnInit {
           this.submitted = false;
         });
   }
-
-  updateUserWithForm(){
-    let currentUser = this.user;
-    let formUser = this.editUserForm.value;
-    currentUser.username = formUser.username;
-    currentUser.firstName = formUser.firstName;
-    currentUser.lastName = formUser.lastName;
-    currentUser.country = formUser.country;
-    currentUser.city = formUser.city;
-    currentUser.bio = formUser.bio;
-    currentUser.avatar = formUser.avatar;
-    return currentUser;
-  }
-
 }

@@ -7,6 +7,7 @@
       <th>Username</th>
       <th>E-mail</th>
       <th>Role</th>
+      <th>Blocked</th>
     </tr>
     </thead>
     <tbody>
@@ -15,12 +16,14 @@
       <td>{{user.email}}</td>
       <td>{{user.role}}</td>
       <td>
+        <input type="checkbox" [checked]="user.blocked" (change)="changeBlockUserStatus(user.id, user.blocked)" class="big-checkbox">
+      </td>
+      <td>
         <div class="btn-group" dropdown>
           <button type="button" class="btn btn-danger waves-light" mdbWavesEffect>Action</button>
           <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>
           <div class="dropdown-menu">
             <a class="dropdown-item" routerLink="/profile/{{user.username}}">Edit</a>
-            <a class="dropdown-item" routerLink="#">Block</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" (click)="deleteUser(user.id)">Delete</a>
           </div>

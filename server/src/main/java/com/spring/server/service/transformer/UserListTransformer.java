@@ -13,7 +13,8 @@ public class UserListTransformer {
         dto.setUsername(user.getUsername());
         dto.setEmail(user.getEmail());
         dto.setRole(user.getRole().name());
-
+        dto.setBlocked(user.isBlocked());
+        dto.setDeleted(user.isDeleted());
         return dto;
     }
 }

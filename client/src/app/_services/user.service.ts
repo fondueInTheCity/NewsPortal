@@ -33,5 +33,8 @@ export class UserService   {
     return this.http.delete(`${environment.serverUrl}users` + '/' + id);
   }
 
+  block(id: number, blocked: boolean) {
+    this.http.post(`${environment.serverUrl}users/block`, { id, blocked });
+  }
 
 }

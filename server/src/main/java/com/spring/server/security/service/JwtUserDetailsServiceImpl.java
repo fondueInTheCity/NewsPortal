@@ -24,6 +24,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
         return Optional.ofNullable(byUsername)
                 .map(JwtUserDetails::new)
-                .orElseThrow(() -> new JsonException("User nor found."));
+                .orElseThrow(() -> new JsonException("User not found."));
     }
 }

@@ -1,4 +1,4 @@
-package com.spring.server;
+package com.spring.server.configuration;
 
 import com.spring.server.security.service.JwtAuthenticationFilter;
 import com.spring.server.security.service.JwtAuthenticationProvider;
@@ -19,8 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
@@ -29,7 +27,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private static final String[] allowedUrlsForPost = new String[]{ "/auth/login" };
+    private static final String[] allowedUrlsForPost = new String[]{ "/auth/login", "/auth/registration",
+            "/auth/sendCodeNewPassword", "/auth/changeNewPassword/{code}"};
+    private static final String[] allowedUrlsForGet = new String[]{ "/auth/activate/{code}" };
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final UserDetailsService userDetailsService;
@@ -74,8 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(final WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(HttpMethod.POST, allowedUrlsForPost)
-                .antMatchers(HttpMethod.POST, "/auth/registration")
-                .antMatchers(HttpMethod.GET, "/auth/activate/{code}")
+                .antMatchers(HttpMethod.GET, allowedUrlsForGet)
                 .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 

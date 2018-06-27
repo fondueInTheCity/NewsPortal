@@ -8,8 +8,9 @@ import com.spring.server.service.dto.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -39,33 +40,15 @@ public class AuthenticationController {
         userService.activateUser(code);
     }
 
-    @GetMapping("/myPasswordUsername/{username}")
+    @PostMapping("/sendCodeNewPassword")
     @ResponseStatus(HttpStatus.OK)
-    public void rememberPasswordUsername(@PathVariable String username) {
-        userService.sendPasswordUsername(username);
-    }
-
-    @GetMapping("/myPasswordEmail/{email}")
-    @ResponseStatus(HttpStatus.OK)
-    public void rememberPasswordEmail(@PathVariable String email) {
-        userService.sendPasswordEmail(email);
-    }
-
-    @GetMapping("/myUsernamePassword/{email}")
-    @ResponseStatus(HttpStatus.OK)
-    public void rememberUsernamePassword(@PathVariable String email) {
-        userService.myUsernamePassword(email);
-    }
-
-    @GetMapping("/newPassword/{email}")
-    @ResponseStatus(HttpStatus.OK)
-    public void newPasswordActivate(@PathVariable String email) {
+    public void codeNewPassword(@RequestBody String email) {
         userService.sendActivateNewPassword(email);
     }
 
-    @PostMapping("/newPassword")
+    @PostMapping("/changeNewPassword/{code}")
     @ResponseStatus(HttpStatus.OK)
-    public void newPassword(@RequestBody String code, @RequestBody String password) {
+    public void changePassword(@PathVariable String code, @RequestBody String password ) {
         userService.newPassword(code, password);
     }
 }

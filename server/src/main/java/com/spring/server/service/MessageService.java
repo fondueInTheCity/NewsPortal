@@ -17,12 +17,8 @@ public class MessageService {
         return String.format( "Hallo, %s \n" + "It is your password %s", username, password);
     }
 
-    public String rememberUsernamePassword(String username, String password) {
-        return String.format( "Hallo.\n" + "It is your username : %s , and password : %s", username, password);
-    }
-
     public String activationCodeChangePassword(String username, String code) {
-        return String.format("Hallo, %s \n" + "It is confirm on change password http://localhost:4200/password/change/%s"
+        return String.format("Hallo, %s \n" + "It is confirm on change password http://localhost:4200/restore/%s"
                 , username, code);
     }
 }

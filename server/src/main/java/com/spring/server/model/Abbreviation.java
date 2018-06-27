@@ -1,6 +1,6 @@
 package com.spring.server.model;
 
-public class MagicWord {
+public class Abbreviation {
 
     static public final String SUBJECT_ACTIVATION_CODE = "Activation code";
     static public final String SUBJECT_REMEMBER_PASSWORD = "Remember password";

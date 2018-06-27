@@ -34,8 +34,8 @@ public class AuthenticationService {
 
     public LoginResponseDto login(final LoginRequestDto loginRequestDto) {
         try {
-            if (!this.userService.isCodeActivated(loginRequestDto.getUsername())) {
-                throw new JsonException("Code is not active.");
+            if (!this.userService.userIsActive(loginRequestDto.getUsername())) {
+                throw new JsonException("User is not active.");
             }
 
             String username = Optional.ofNullable(loginRequestDto.getUsername())

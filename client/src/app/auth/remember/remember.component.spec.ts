@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RemovedInformationComponent } from './removed-information.component';
+import { RememberComponent } from './remember.component';
 
-describe('RemovedInformationComponent', () => {
-  let component: RemovedInformationComponent;
-  let fixture: ComponentFixture<RemovedInformationComponent>;
+describe('RememberComponent', () => {
+  let component: RememberComponent;
+  let fixture: ComponentFixture<RememberComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RemovedInformationComponent ]
+      declarations: [ RememberComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RemovedInformationComponent);
+    fixture = TestBed.createComponent(RememberComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

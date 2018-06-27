@@ -21,7 +21,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public List<UserListDto> findAll(
     ) {
         return this.userService.findAll();
@@ -29,7 +29,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable(name = "id") Long id
     ) {
         this.userService.delete(id);

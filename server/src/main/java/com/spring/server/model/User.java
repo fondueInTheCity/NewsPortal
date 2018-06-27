@@ -26,6 +26,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name ="isActive")
+    private Boolean isActive;
+
     @Column(name = "username")
     private String username;
 
@@ -48,7 +51,8 @@ public class User {
     @Column(name = "activationCode")
     private String activationCode;
 
-    public User(String username, String password, String firstName, String lastName, String email) {
+    public User(Boolean isActive, String username, String password, String firstName, String lastName, String email) {
+        this.isActive = true;
         this.username = username;
         this.password = password;
         this.firstName = firstName;

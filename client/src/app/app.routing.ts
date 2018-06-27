@@ -1,19 +1,25 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home';
-import { LoginComponent } from './login';
-import { AuthGuard } from './_guards';
-import {RegisterComponent} from './register';
-import {RemovedInformationComponent} from './removed-information/removed-information.component';
+import { LoginComponent } from './auth/login';
+import { AuthGuard } from './auth/guards';
+import {RegisterComponent} from './auth/register';
 import {ProfileComponent} from './user/profile/profile.component';
+import {RestorePasswordComponent} from './auth/restore-password/restore-password.component';
+import {RememberComponent} from './auth/remember/remember.component';
+import {CommentComponent} from './comment/comment.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'removed', component: RemovedInformationComponent},
     { path: 'auth/activate/:code', component: LoginComponent},
     { path: 'profile', component: ProfileComponent },
+    { path: 'restorePassword', component: RestorePasswordComponent},
+    { path: 'restorePassword/:code', component: RestorePasswordComponent},
+    { path: 'remember', component: RememberComponent},
+    { path: 'restore/:code', component: RestorePasswordComponent},
+    { path: 'comment', component: CommentComponent},
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

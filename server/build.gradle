@@ -3,10 +3,11 @@ buildscript {
         springBootVersion = '2.0.3.RELEASE'
     }
     repositories {
-        mavenCentral()
+        maven { url "https://repo.spring.io/libs-milestone" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
     }
 }
 
@@ -26,6 +27,7 @@ ext {
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/libs-milestone" }
 }
 
 
@@ -34,11 +36,13 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile('org.springframework.boot:spring-boot-starter-mail')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-web-services')
     compile('org.springframework.boot:spring-boot-starter-security')
-    compile ('org.springframework.security:spring-security-jwt:1.0.3.RELEASE')
+    compile('org.springframework.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
+    compile('org.springframework.security:spring-security-jwt:1.0.3.RELEASE')
+    compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('mysql:mysql-connector-java')
+
     compileOnly('org.projectlombok:lombok')
     compile("com.google.guava:guava:$guava")
     compile("org.apache.commons:commons-lang3:$commons")

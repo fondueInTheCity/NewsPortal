@@ -1,9 +1,9 @@
 package com.spring.server.configuration;
 
-import com.spring.server.security.service.JwtAuthenticationFilter;
-import com.spring.server.security.service.JwtAuthenticationProvider;
 import com.spring.server.security.handler.RestAccessDeniedHandler;
 import com.spring.server.security.handler.RestAuthenticationEntryPoint;
+import com.spring.server.security.service.JwtAuthenticationFilter;
+import com.spring.server.security.service.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] allowedUrlsForPost = new String[]{ "/auth/login", "/auth/registration",
             "/auth/sendCodeNewPassword", "/auth/changeNewPassword/{code}"};
-    private static final String[] allowedUrlsForGet = new String[]{ "/auth/activate/{code}" };
+    private static final String[] allowedUrlsForGet = new String[]{ "/auth/activate/{code}", "/users/{username}" };
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final UserDetailsService userDetailsService;

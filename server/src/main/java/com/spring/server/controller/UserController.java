@@ -1,7 +1,7 @@
 package com.spring.server.controller;
 
-import com.spring.server.model.User;
 import com.spring.server.service.UserService;
+import com.spring.server.service.dto.UserEditDto;
 import com.spring.server.service.dto.UserListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<UserListDto> findAll(
@@ -27,11 +26,31 @@ public class UserController {
         return this.userService.findAll();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/{username}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public UserEditDto findUserByUsername(@PathVariable(value = "username") String username) {
+        return this.userService.findUserByUsername(username);
+    }
+
+    @PostMapping("/edit")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void editUser(@RequestBody UserEditDto user) {
+        this.userService.editUser(user);
+    }
+
+    @PreAuthorize("hasRole('Admin')")
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable(name = "id") Long id
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteUser(@PathVariable(name = "id") Long id
     ) {
-        this.userService.delete(id);
+        this.userService.deleteUser(id);
+    }
+
+    @PreAuthorize("hasRole('Admin')")
+    @PostMapping("/block")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void blockUser(@RequestParam(name = "id") Long id, @RequestParam(name = "blocked") boolean blockStatus
+    ) {
+        this.userService.blockUser(id, blockStatus);
     }
 }

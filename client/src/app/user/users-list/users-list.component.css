@@ -1,0 +1,9 @@
+.user-list{
+  position:absolute;
+  width:100%;
+}
+.big-checkbox{
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}

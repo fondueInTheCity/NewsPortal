@@ -4,4 +4,6 @@
     firstName: string;
     lastName: string;
     email: string;
+    deleted: boolean;
+    blocked: boolean;
 }

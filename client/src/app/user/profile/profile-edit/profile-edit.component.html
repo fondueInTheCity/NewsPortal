@@ -1,0 +1,88 @@
+<div class="card-body text-center">
+  <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()" novalidate="" class="ng-untouched ng-pristine ng-valid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="md-form">
+          <input value="{{user.username}}" class="form-control" required id="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && formEditControls.username.errors }" placeholder="Username" type="text">
+          <label class="active" for="username">Username</label>
+          <div *ngIf="submitted && formEditControls.username.errors" class="invalid-feedback">
+            <div *ngIf="formEditControls.username.errors.required">Username is required</div>
+            <div *ngIf="formEditControls.username.errors.pattern">Username is incorrect</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="md-form">
+          <input value="{{user.firstName}}" class="form-control" id="firstName" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && formEditControls.firstName.errors }" placeholder="FirstName" type="text">
+          <label class="active" for="firstName">First Name</label>
+          <div *ngIf="submitted && formEditControls.firstName.errors" class="invalid-feedback">
+            <div *ngIf="formEditControls.firstName.errors.pattern">First name is incorrect</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="md-form">
+          <input value="{{user.lastName}}" class="form-control" id="lastName" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && formEditControls.lastName.errors }" placeholder="Last Name"  type="text">
+          <label class="active" for="lastName">Last Name</label></div>
+        <div *ngIf="submitted && formEditControls.lastName.errors" class="invalid-feedback">
+          <div *ngIf="formEditControls.lastName.errors.pattern">Last name is incorrect</div>
+        </div>
+      </div>
+    </div>
+    <div  class="row">
+      <div  class="col-md-4">
+        <div  class="md-form">
+          <input class="form-control" id="country" value="{{user.country}}" formControlName="country" [ngClass]="{ 'is-invalid': submitted && formEditControls.country.errors }" mdbinputdirective="" placeholder="Country" type="text">
+          <label class="active" for="country">Country</label>
+          <div *ngIf="submitted && formEditControls.country.errors" class="invalid-feedback">
+            <div *ngIf="formEditControls.country.errors.pattern">Country is incorrect</div>
+          </div>
+        </div>
+      </div>
+      <div  class="col-md-4">
+        <div  class="md-form">
+          <input class="form-control" value="{{user.city}}" id="city" formControlName="city" [ngClass]="{ 'is-invalid': submitted && formEditControls.city.errors }" placeholder="City" type="text">
+          <label class="active" for="city">City</label>
+          <div *ngIf="submitted && formEditControls.city.errors" class="invalid-feedback">
+            <div *ngIf="formEditControls.city.errors.pattern">City is incorrect</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div  class="md-form">
+          <textarea  class="md-textarea form-control" value="{{user.bio}}" formControlName="bio" [ngClass]="{ 'is-invalid': submitted && formEditControls.bio.errors }" id="bio" mdbinputdirective="" placeholder="Bio" type="text"></textarea>
+          <label for="bio" class="active">About yourself</label>
+          <div *ngIf="submitted && formEditControls.bio.errors" class="invalid-feedback">
+            <div *ngIf="formEditControls.bio.errors.pattern">Bio is too long</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="input-group image-preview">
+          <input type="text" placeholder="Upload avatar" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+              <span class="glyphicon glyphicon-remove"></span> Clear
+          </button>
+          <div class="btn btn-default image-preview-input">
+              <span class="glyphicon glyphicon-folder-open"></span>
+              <span class="image-preview-input-title">Browse</span>
+              <input value="{{user.avatar}}" type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+          </div>
+        </span>
+        </div>
+      </div>
+    </div>
+    <div class="text-center btn-div">
+      <input value="{{user.id}}" formControlName="id" type="hidden">
+      <button [disabled]="loading" class="btn btn-primary" mdbwaveseffect="" type="submit">Update</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+  </form>
+</div>
+

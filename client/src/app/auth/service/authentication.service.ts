@@ -4,6 +4,7 @@ import {Observable, BehaviorSubject} from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Router} from '@angular/router';
+import {first} from "rxjs/internal/operators";
 
 
 @Injectable()
@@ -13,13 +14,23 @@ export class AuthenticationService  {
     public loggedIn = new BehaviorSubject<boolean>(false);
 
     login(username: string, password: string) {
+        let user;
+        this.http.get(`${environment.serverUrl}users` + '/' + username)
+        .pipe(first())
+            .subscribe(
+                data => {
+                    user = data;
+                },
+                error => {
+                    console.log("error");
+                });
         return this.http.post<any>(`${environment.serverUrl}auth/login`,
             { username: username, password: password })
             .pipe(map((res: any) => {
                 // login successful if there's a jwt token in the response
                 if (res && res.token) {
                     // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token }));
+                    localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token, user }));
                     this.loggedIn.next(true);
                 }
             }));

@@ -17,17 +17,24 @@ export class UserService   {
     return this.http.get(`${environment.serverUrl}users` + '/' + id);
   }
 
+  getByUsername(username: string) {
+    return this.http.get(`${environment.serverUrl}users` + '/' + username);
+  }
+
   addUser(user: User) {
     return this.http.post(`${environment.serverUrl}auth/registration`, user);
   }
 
   update(user: User) {
-    return this.http.put(`${environment.serverUrl}users`, user);
+    return this.http.post(`${environment.serverUrl}users/edit`, user);
   }
 
   delete(id: number) {
     return this.http.delete(`${environment.serverUrl}users` + '/' + id);
   }
 
+  block(id: number, blocked: boolean) {
+    this.http.post(`${environment.serverUrl}users/block`, { id, blocked });
+  }
 
 }

@@ -9,6 +9,9 @@ public class UserListDto implements Dto {
 
     private long id;
     private String username;
+    private String email;
     private String role;
+    private boolean isBlocked;
+    private boolean isDeleted;
 
 }

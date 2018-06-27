@@ -1,4 +1,3 @@
-﻿
 import { NgModule } from '@angular/core';
 import { MarkdownModule } from 'ngx-markdown';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,6 +21,9 @@ import { RestorePasswordComponent } from './auth/restore-password/restore-passwo
 import { RememberComponent } from './auth/remember/remember.component';
 import { CommentComponent } from './comment/comment.component';
 import { NewCommentComponent } from './new-comment/new-comment.component';
+import { UsersListComponent } from './user/users-list/users-list.component';
+import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.component';
+import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
 @NgModule({
     imports: [
         BrowserModule,
@@ -40,12 +42,14 @@ import { NewCommentComponent } from './new-comment/new-comment.component';
         RegisterComponent,
         HeaderComponent,
         FooterComponent,
-        ProfileComponent
-,
+        ProfileComponent,
         RestorePasswordComponent ,
         RememberComponent,
         CommentComponent,
-        NewCommentComponent
+        NewCommentComponent,
+        UsersListComponent,
+        ProfileEditComponent,
+        ProfileNewsComponent
     ],
   schemas: [],
     providers: [

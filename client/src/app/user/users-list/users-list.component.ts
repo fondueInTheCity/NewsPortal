@@ -17,6 +17,9 @@ export class UsersListComponent implements OnInit {
   ngOnInit() {
     this.userService.getAll().pipe(first()).subscribe(users => {
       this.users = users;
+      for (let user of users){
+        user.role = this.userService.transformRole(user.role);
+      }
     });
   }
 
@@ -28,7 +31,7 @@ export class UsersListComponent implements OnInit {
 
   changeBlockUserStatus(id: number, blocked: boolean) {
     this.loading = true;
-    this.userService.block(id, blocked).pipe(first()).subscribe(() => {
+    this.userService.block(id, !blocked).pipe(first()).subscribe(() => {
       this.loadAllUsers();
     });
   }

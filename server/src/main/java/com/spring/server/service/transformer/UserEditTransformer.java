@@ -18,6 +18,8 @@ public class UserEditTransformer {
         dto.setCity(user.getCity());
         dto.setBio(user.getBio());
         dto.setAvatar(user.getAvatar());
+        dto.setDeleted(user.isDeleted());
+        dto.setBlocked(user.isBlocked());
         return dto;
     }
 
@@ -30,6 +32,8 @@ public class UserEditTransformer {
         user.setCity(editDto.getCity());
         user.setBio(editDto.getBio());
         user.setAvatar(editDto.getAvatar());
+        user.setBlocked(editDto.isBlocked());
+        user.setDeleted(editDto.isDeleted());
         return user;
     }
 }

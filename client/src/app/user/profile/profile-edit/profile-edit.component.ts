@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../service/user.service';
 import {AlertService} from '../../../auth/service/alert.service';
 import {first} from 'rxjs/internal/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-edit',
@@ -14,6 +15,8 @@ export class ProfileEditComponent implements OnInit {
   editUserForm: FormGroup;
   loading = false;
   submitted = false;
+
+  private routeSubscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,9 +46,9 @@ export class ProfileEditComponent implements OnInit {
       return;
     }
     let user = this.editUserForm.value;
-    user.role = this.user.role;
+    user.role = this.userService.transformRoleToBackEnd(this.user.role);
     this.loading = true;
-    this.userService.update(user)
+    this.routeSubscription = this.userService.update(user)
       .pipe(first())
       .subscribe(
         data => {
@@ -59,4 +62,9 @@ export class ProfileEditComponent implements OnInit {
           this.submitted = false;
         });
   }
+
+  ngOnDestroy(): void {
+    this.routeSubscription && this.routeSubscription.unsubscribe();
+  }
+
 }

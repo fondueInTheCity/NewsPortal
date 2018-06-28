@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         .subscribe((data: User) => {
             this.user = data;
             this.isDeleted = this.user.deleted;
-            this.user.role = this.userService.transformRole(this.user.role);
+            this.user.role = this.userService.transformRoleToView(this.user.role);
 
             let currentUserJson = JSON.parse(localStorage.getItem("currentUser"));
             if ((currentUserJson.userRole === "ROLE_ADMIN") || (this.user["username"] === currentUserJson.username))

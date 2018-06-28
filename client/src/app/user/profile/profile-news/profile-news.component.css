@@ -1,0 +1,13 @@
+.ellipsis{
+  text-overflow: ellipsis;
+  width: 50px;
+}
+table {
+  table-layout: fixed;
+}
+.md-form{
+  margin-top: 12px;
+}
+.no-space{
+  margin: 0px;
+}

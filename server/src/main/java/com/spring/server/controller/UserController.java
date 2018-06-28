@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -38,7 +39,7 @@ public class UserController {
         this.userService.editUser(user);
     }
 
-    @PreAuthorize("hasRole('Admin')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable(name = "id") Long id
@@ -46,11 +47,12 @@ public class UserController {
         this.userService.deleteUser(id);
     }
 
-    @PreAuthorize("hasRole('Admin')")
-    @PostMapping("/block")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/block/{id}", method = RequestMethod.POST, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
-    public void blockUser(@RequestParam(name = "id") Long id, @RequestParam(name = "blocked") boolean blockStatus
+    public void blockUser(@PathVariable(name = "id") Long id, @RequestBody Map<String, String> blockStatus
     ) {
-        this.userService.blockUser(id, blockStatus);
+        boolean blockedStatus = Boolean.parseBoolean(blockStatus.get("blocked"));
+        this.userService.blockUser(id, blockedStatus);
     }
 }

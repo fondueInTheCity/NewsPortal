@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   userValidate(){
     let currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
-    if ((currentUserJSON != undefined) && (currentUserJSON != null) && (currentUserJSON.user.role == "Admin")){
+    if ((currentUserJSON != undefined) && (currentUserJSON != null) && (currentUserJSON.user.role == "ROLE_ADMIN")){
       this.isAdmin = true;
     }
     else

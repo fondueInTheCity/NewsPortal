@@ -80,7 +80,7 @@ public class UserService {
         encoder(user);
         newActivationCode(user);
         user.setIsActive(false);
-        user.setRole(UserRole.Reader);//.ROLE_READER);
+        user.setRole(UserRole.ROLE_READER);
         if(!mailService.isNull(user)) {
             mailService.send(user.getEmail(), Abbreviation.SUBJECT_ACTIVATION_CODE,
                     messageService.activationCode(user.getUsername(), user.getActivationCode()));

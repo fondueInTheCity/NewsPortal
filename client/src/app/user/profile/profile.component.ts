@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
           data => {
             this.user = data;
             let currentUserJson = JSON.parse(localStorage.getItem("currentUser"));
-            if ((currentUserJson.user.role === "Admin") || (this.user["username"] === currentUserJson.username))
+            if ((currentUserJson.user.role === "ROLE_ADMIN") || (this.user["username"] === currentUserJson.username))
               this.isCanEdit = true;
             else
               this.isCanEdit = false;

@@ -34,7 +34,7 @@ export class UserService   {
   }
 
   block(id: number, blocked: boolean) {
-    this.http.post(`${environment.serverUrl}users/block`, { id, blocked });
+    return this.http.post(`${environment.serverUrl}users/block/` + id, { blocked });
   }
 
 }

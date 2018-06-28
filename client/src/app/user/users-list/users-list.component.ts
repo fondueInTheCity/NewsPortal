@@ -27,10 +27,10 @@ export class UsersListComponent implements OnInit {
   }
 
   changeBlockUserStatus(id: number, blocked: boolean) {
-    // this.loading = true;
-    // this.userService.block(id, blocked).pipe(first()).subscribe(() => {
-    //   this.loadAllUsers();
-    // });
+    this.loading = true;
+    this.userService.block(id, blocked).pipe(first()).subscribe(() => {
+      this.loadAllUsers();
+    });
   }
 
   private loadAllUsers() {

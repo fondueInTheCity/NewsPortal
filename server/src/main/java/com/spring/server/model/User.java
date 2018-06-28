@@ -76,7 +76,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = UserRole.Reader;
+        this.role = UserRole.ROLE_READER;
         this.isBlocked = false;
         this.isDeleted = false;
         this.isActive = true;

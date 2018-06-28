@@ -1,7 +1,7 @@
 package com.spring.server.model;
 
 public enum UserRole {
-    Admin,
-    Writer,
-    Reader
+    ROLE_ADMIN,
+    ROLE_WRITER,
+    ROLE_READER
 }

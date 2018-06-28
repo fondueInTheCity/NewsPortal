@@ -11,6 +11,7 @@ import { AlertService } from '../service';
 export class AlertComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   message: any;
+  error: string;
 
   constructor(private alertService: AlertService) {
   }

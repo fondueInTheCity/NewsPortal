@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get formControl() { return this.loginForm.controls; }
 
   onSubmit() {
     this.submitted = true;
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authenticationService.login(this.f.username.value, this.f.password.value)
+    this.authenticationService.login(this.formControl.username.value, this.formControl.password.value)
       .pipe(first())
       .subscribe(
         data => {

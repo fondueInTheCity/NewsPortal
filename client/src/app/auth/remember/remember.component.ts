@@ -28,7 +28,7 @@ export class RememberComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.emailForm.controls; }
+  get formControl() { return this.emailForm.controls; }
 
   onSubmit() {
     this.submitted = true;
@@ -37,7 +37,7 @@ export class RememberComponent implements OnInit {
       return;
     }
 
-    this.authenticationService.sendCodeNewPassword(this.f.email.value)
+    this.authenticationService.sendCodeNewPassword(this.formControl.email.value)
       .pipe(first())
       .subscribe(
         data => {

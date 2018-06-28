@@ -13,6 +13,7 @@ export class RestorePasswordComponent implements OnInit {
   passwordForm: FormGroup;
   submitted = false;
   code: string;
+  loading = false;
   passwordConfirmError = false;
 
   constructor(
@@ -24,25 +25,25 @@ export class RestorePasswordComponent implements OnInit {
 
   ngOnInit() {
     this.passwordForm = this.formBuilder.group({
-      password: ['', Validators.required, Validators.minLength(6)],
-      passwordConfirm: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]]
+      //passwordConfirm: ['', Validators.required]
     });
 
     this.code = this.route.snapshot.paramMap.get('code');
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.passwordForm.controls; }
+  get formControl() { return this.passwordForm.controls; }
 
   onSubmit() {
     this.submitted = true;
-    this.passwordConfirmError = this.f.password.value !== this.f.passwordConfirm.value;
+    //this.passwordConfirmError = this.formControl.password.value !== this.formControl.passwordConfirm.value;
     // stop here if form is invalid
-    if (this.passwordForm.invalid || this.passwordConfirmError) {
+    if (this.passwordForm.invalid)  {
       return;
     }
-
-    this.authenticationService.sendNewPassword(this.code, this.f.password.value)
+    this.loading = true;
+    this.authenticationService.sendNewPassword(this.code, this.formControl.password.value)
       .pipe(first())
       .subscribe(
         data => {
@@ -50,6 +51,7 @@ export class RestorePasswordComponent implements OnInit {
         },
         error => {
           this.alertService.error(error);
+          this.loading = false;
         });
   }
 }

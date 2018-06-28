@@ -1,11 +1,12 @@
+<alert></alert>
 <h2>Forgot password?</h2>
 <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="email">Email</label>
-    <input type="text" id="email" formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
-    <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
-      <div *ngIf="email.errors.required">Email is required</div>
-      <div *ngIf="email.errors.email">Email must be a valid email address</div>
+    <input type="text" id="email" formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && formControl.email.errors }"/>
+    <div *ngIf="submitted && formControl.email.errors" class="invalid-feedback">
+      <div *ngIf="formControl.email.errors.required">Email is required</div>
+      <!--<div *ngIf="formControl.email.errors.email">Email must be a valid email address</div>-->
     </div>
   </div>
   <div class="form-group">

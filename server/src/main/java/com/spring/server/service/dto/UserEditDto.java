@@ -17,5 +17,7 @@ public class UserEditDto implements Dto {
     private String city;
     private String bio;
     private String avatar;
+    private boolean isDeleted;
+    private boolean isBlocked;
 
 }

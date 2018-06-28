@@ -30,7 +30,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserListDto> findAll() {
-        List<User> users = userRepository.findAll();
+//        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllExisted();
         List<UserListDto> userDtoList = new ArrayList<>();
         for (User user : users) {
             UserListDto dto = userListTransformer.makeDto(user);

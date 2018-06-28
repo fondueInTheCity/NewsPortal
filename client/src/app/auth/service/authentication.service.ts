@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Router} from '@angular/router';
 import {first} from "rxjs/internal/operators";
+import {User} from "../../models/user";
 
 
 @Injectable()
@@ -14,12 +15,12 @@ export class AuthenticationService  {
     public loggedIn = new BehaviorSubject<boolean>(false);
 
     login(username: string, password: string) {
-        let user;
+        let user, userRole;
         this.http.get(`${environment.serverUrl}users` + '/' + username)
         .pipe(first())
-            .subscribe(
-                data => {
+            .subscribe((data: User) => {
                     user = data;
+                    userRole = data.role;
                 },
                 error => {
                     console.log("error");
@@ -30,7 +31,7 @@ export class AuthenticationService  {
                 // login successful if there's a jwt token in the response
                 if (res && res.token) {
                     // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token, user }));
+                    localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token, userRole }));
                     this.loggedIn.next(true);
                 }
             }));

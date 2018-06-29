@@ -1,8 +1,8 @@
 package com.spring.server.service;
 
-import com.spring.server.model.Abbreviation;
-import com.spring.server.model.User;
-import com.spring.server.model.UserRole;
+import com.spring.server.model.*;
+import com.spring.server.repository.LanguageRepository;
+import com.spring.server.repository.ThemeRepository;
 import com.spring.server.repository.UserRepository;
 import com.spring.server.service.dto.UserEditDto;
 import com.spring.server.service.dto.UserListDto;
@@ -23,6 +23,8 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ThemeRepository themeRepository;
+    private final LanguageRepository languageRepository;
     private final MailService mailService;
     private final UserListTransformer userListTransformer;
     private final UserEditTransformer userEditTransformer;
@@ -44,6 +46,16 @@ public class UserService {
         User user = userRepository.findByUsername(username);
         UserEditDto dto = userEditTransformer.makeDto(user);
         return dto;
+    }
+
+    public List<Theme> getThemes() {
+        List<Theme> themes = themeRepository.findAll();
+        return themes;
+    }
+
+    public List<Language> getLanguages() {
+        List<Language> languages = languageRepository.findAll();
+        return languages;
     }
 
     public void deleteUser(Long id) {

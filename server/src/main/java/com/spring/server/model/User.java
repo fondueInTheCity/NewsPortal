@@ -1,5 +1,6 @@
 package com.spring.server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -72,6 +73,16 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Rating> ratings;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "id_language")
+    private Language language;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "id_theme")
+    private Theme theme;
+
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
@@ -80,6 +91,8 @@ public class User {
         this.isBlocked = false;
         this.isDeleted = false;
         this.isActive = true;
+        this.language.setId(Long.parseLong("3"));
+        this.theme.setId(Long.parseLong("1"));
     }
 
     public void applyChanges(final User inUser) {

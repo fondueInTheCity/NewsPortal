@@ -15,8 +15,12 @@ export class ProfileEditComponent implements OnInit {
   editUserForm: FormGroup;
   loading = false;
   submitted = false;
+  themes: any;
+  languages: any;
 
   private routeSubscription: Subscription;
+  private themesSubscription: Subscription;
+  private languagesSubscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,8 +38,29 @@ export class ProfileEditComponent implements OnInit {
       country: [this.user.country, Validators.pattern("^[а-яА-Яa-zA-Z ,.'-]+$")],
       city: [this.user.city, Validators.pattern("^[а-яА-Яa-zA-Z ,.'-]+$")],
       bio: [this.user.bio, Validators.maxLength(1000)],
-      avatar: [this.user.avatar]//, Validators.pattern("/^.+\.(jpe?g|gif|png)$/i")]
+      avatar: [this.user.avatar],//, Validators.pattern("/^.+\.(jpe?g|gif|png)$/i")]
+      theme: [this.user.theme],
+      language: [this.user.language]
     });
+    this.themesSubscription = this.userService.getThemes()
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.themes = data;
+        },
+        error => {
+          this.alertService.error(error);
+        });
+
+    this.languagesSubscription = this.userService.getLanguages()
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.languages = data;
+        },
+        error => {
+          this.alertService.error(error);
+        });
   }
 
   get formEditControls() { return this.editUserForm.controls; }
@@ -47,6 +72,9 @@ export class ProfileEditComponent implements OnInit {
     }
     let user = this.editUserForm.value;
     user.role = this.userService.transformRoleToBackEnd(this.user.role);
+    user.language = JSON.parse(user.language);
+    user.theme = JSON.parse(user.theme);
+
     this.loading = true;
     this.routeSubscription = this.userService.update(user)
       .pipe(first())
@@ -65,6 +93,11 @@ export class ProfileEditComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.routeSubscription && this.routeSubscription.unsubscribe();
+    this.themesSubscription && this.themesSubscription.unsubscribe();
+    this.languagesSubscription && this.languagesSubscription.unsubscribe();
   }
 
+  stringify(o:string):string {
+    return JSON.stringify(o);
+  }
 }

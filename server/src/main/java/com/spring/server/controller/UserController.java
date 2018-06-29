@@ -1,5 +1,7 @@
 package com.spring.server.controller;
 
+import com.spring.server.model.Language;
+import com.spring.server.model.Theme;
 import com.spring.server.service.UserService;
 import com.spring.server.service.dto.UserEditDto;
 import com.spring.server.service.dto.UserListDto;
@@ -25,6 +27,20 @@ public class UserController {
     public List<UserListDto> findAll(
     ) {
         return this.userService.findAll();
+    }
+
+    @GetMapping("/getThemes")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Theme> getThemes(
+    ) {
+        return this.userService.getThemes();
+    }
+
+    @GetMapping("/getLanguages")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Language> getLanguages(
+    ) {
+        return this.userService.getLanguages();
     }
 
     @GetMapping("/{username}")

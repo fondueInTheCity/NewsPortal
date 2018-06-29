@@ -20,6 +20,10 @@ public class UserEditTransformer {
         dto.setAvatar(user.getAvatar());
         dto.setDeleted(user.isDeleted());
         dto.setBlocked(user.isBlocked());
+
+        dto.setTheme(user.getTheme());
+        dto.setLanguage(user.getLanguage());
+
         return dto;
     }
 
@@ -34,6 +38,9 @@ public class UserEditTransformer {
         user.setAvatar(editDto.getAvatar());
         user.setBlocked(editDto.isBlocked());
         user.setDeleted(editDto.isDeleted());
+
+        user.setTheme(editDto.getTheme());
+        user.setLanguage(editDto.getLanguage());
         return user;
     }
 }

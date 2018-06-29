@@ -78,7 +78,28 @@
         </div>
       </div>
     </div>
-
+    <div class="row">
+      <div class="col-md-4">
+        <div class="select-box">
+          <div class="form-group">
+            <label for="language">Language:</label>
+            <select class="form-control" id="language" ng-model="user.language.id" formControlName="language">
+              <option *ngFor="let lang of languages" ngValue="{{lang.id}}">{{lang.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="select-box">
+        <div class="form-group">
+          <label for="theme">Theme:</label>
+          <select class="form-control" id="theme" ng-model="user.theme" formControlName="theme">
+            <option *ngFor="let theme of themes" ngValue="{{stringify(theme)}}">{{theme.name}}</option>
+          </select>
+        </div>
+        </div>
+      </div>
+    </div>
     <div class="text-center btn-div">
       <input value="{{user.id}}" formControlName="id" type="hidden">
       <button [disabled]="loading" class="btn btn-primary" mdbwaveseffect="" type="submit">Update</button>

@@ -43,6 +43,7 @@
               <app-profile-news [user]="user"></app-profile-news>
             </div>
             <div id="profileTab" class="tab-slider--body" *ngSwitchCase="'profileTab'">
+              <app-profile-info [user]="user"></app-profile-info>
             </div>
             <div id="editTab" class="tab-slider--body" *ngSwitchCase="'editTab'">
               <app-profile-edit [user]="user"></app-profile-edit>

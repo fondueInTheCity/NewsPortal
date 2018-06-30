@@ -19,7 +19,7 @@ export class UsersListComponent implements OnInit {
     this.userService.getAll().pipe(first()).subscribe(users => {
       this.users = users;
       for (let user of users) {
-        user.role = this.userService.transformRole(user.role);
+        user.role = this.userService.transformRoleToView(user.role);
       }
     });
   }

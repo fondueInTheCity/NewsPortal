@@ -37,9 +37,22 @@ export class UserService   {
     return this.http.post(`${environment.serverUrl}users/block/` + id, { blocked });
   }
 
-  transformRole(role: string): string {
+  getThemes() {
+    return this.http.get(`${environment.serverUrl}users/getThemes`);
+  }
+
+  getLanguages() {
+    return this.http.get(`${environment.serverUrl}users/getLanguages`);
+  }
+
+  transformRoleToView(role: string): string {
     let updatedRole = role.substring(5).toLocaleLowerCase();
     updatedRole = updatedRole.charAt(0).toUpperCase() + updatedRole.slice(1);
+    return updatedRole;
+  }
+
+  transformRoleToBackEnd(role: string): string {
+    let updatedRole = "ROLE_".concat(role.toUpperCase());
     return updatedRole;
   }
 

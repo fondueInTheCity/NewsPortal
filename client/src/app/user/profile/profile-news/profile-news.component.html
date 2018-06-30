@@ -1,3 +1,46 @@
-<p>
-  profile-news works!
-</p>
+<div class="card-body">
+  <div class="mb-1">
+    <div class="row">
+      <div class="col-sm-4">
+        <h3 id="head_name">Your news
+          <a class="pull-right">+</a>
+        </h3>
+        <hr id="head_hr" />
+      </div>
+      <div class="col-md-4 no-space ml-auto">
+        <div class="row md-form">
+          <input class="form-control" id="form5" placeholder="Search..." type="text">
+          <!--<i class="fa fa-search" aria-hidden="true"></i>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <table class="table text-center table-hover">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Comments</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Some_name</td>
+      <td class="ellipsis">alsdjkfhadskdjfhlaksdfhaskldjfhaskjldfhaksjldfhaklsjdf</td>
+      <td>21</td>
+      <td>
+        <div class="btn-group" dropdown>
+          <!--<button type="button" class="btn btn-danger waves-light" mdbWavesEffect>Action</button>-->
+          <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item">Edit</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item">Delete</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

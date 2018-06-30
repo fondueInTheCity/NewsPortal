@@ -1,5 +1,7 @@
 package com.spring.server.service.dto;
 
+import com.spring.server.model.Language;
+import com.spring.server.model.Theme;
 import com.spring.server.model.UserRole;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,4 +22,6 @@ public class UserEditDto implements Dto {
     private boolean isDeleted;
     private boolean isBlocked;
 
+    private Theme theme;
+    private Language language;
 }

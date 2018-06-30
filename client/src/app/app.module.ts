@@ -23,6 +23,8 @@ import { NewCommentComponent } from './new-comment/new-comment.component';
 import { UsersListComponent } from './user/users-list/users-list.component';
 import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.component';
 import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
+import { ModalComponent } from './modal/modal.component';
+import { Exception404Component } from './exception/exception404/exception404.component';
 @NgModule({
     imports: [
         BrowserModule,
@@ -47,7 +49,9 @@ import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.c
         NewCommentComponent,
         UsersListComponent,
         ProfileEditComponent,
-        ProfileNewsComponent
+        ProfileNewsComponent,
+        ModalComponent,
+        Exception404Component
     ],
   schemas: [],
     providers: [

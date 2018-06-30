@@ -21,27 +21,27 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
+    //@ResponseStatus(HttpStatus.OK)
     public List<UserListDto> findAll(
     ) {
         return this.userService.findAll();
     }
 
     @GetMapping("/{username}")
-    @ResponseStatus(value = HttpStatus.OK)
+    //@ResponseStatus(value = HttpStatus.OK)
     public UserEditDto findUserByUsername(@PathVariable(value = "username") String username) {
         return this.userService.findUserByUsername(username);
     }
 
     @PostMapping("/edit")
-    @ResponseStatus(value = HttpStatus.OK)
+    //@ResponseStatus(value = HttpStatus.OK)
     public void editUser(@RequestBody UserEditDto user) {
         this.userService.editUser(user);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
+    //@ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable(name = "id") Long id
     ) {
         this.userService.deleteUser(id);
@@ -49,7 +49,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/block/{id}", method = RequestMethod.POST, produces = "application/json")
-    @ResponseStatus(value = HttpStatus.OK)
+    //@ResponseStatus(value = HttpStatus.OK)
     public void blockUser(@PathVariable(name = "id") Long id, @RequestBody Map<String, String> blockStatus
     ) {
         boolean blockedStatus = Boolean.parseBoolean(blockStatus.get("blocked"));

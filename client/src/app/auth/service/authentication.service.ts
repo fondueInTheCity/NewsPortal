@@ -4,8 +4,8 @@ import {Observable, BehaviorSubject} from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Router} from '@angular/router';
-import {first} from "rxjs/internal/operators";
-import {User} from "../../models/user";
+import {first} from 'rxjs/internal/operators';
+import {User} from '../../models/user';
 
 
 @Injectable()
@@ -36,7 +36,11 @@ export class AuthenticationService  {
                 }
             }));
     }
-
+    // login(username: string, password: string) {
+    //   let headers = new Headers();
+    //   headers.append('Content-Type', 'application/json');
+    //   retun
+    // }
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

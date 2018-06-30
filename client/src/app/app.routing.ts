@@ -11,6 +11,7 @@ import {CommentComponent} from './comment/comment.component';
 import {UsersListComponent} from './user/users-list/users-list.component';
 import {ProfileEditComponent} from './user/profile/profile-edit/profile-edit.component';
 import {ProfileNewsComponent} from './user/profile/profile-news/profile-news.component';
+import {Exception404Component} from './exception/exception404/exception404.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -34,7 +35,7 @@ const appRoutes: Routes = [
       //     component: ProfileEditComponent
       //   }]},
     // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+    { path: '**', component: Exception404Component }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

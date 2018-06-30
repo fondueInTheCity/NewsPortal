@@ -11,13 +11,14 @@ import {first} from "rxjs/internal/operators";
 export class UsersListComponent implements OnInit {
   users: User[] = [];
   loading = false;
+  idDelete: number;
   constructor(private userService: UserService) {
   }
 
   ngOnInit() {
     this.userService.getAll().pipe(first()).subscribe(users => {
       this.users = users;
-      for (let user of users){
+      for (let user of users) {
         user.role = this.userService.transformRole(user.role);
       }
     });

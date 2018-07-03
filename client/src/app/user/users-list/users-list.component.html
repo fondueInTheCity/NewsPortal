@@ -35,7 +35,7 @@
               </ul>
             </li>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" (click)="deleteUser(user.id)" translate>Delete</a>
+            <a class="dropdown-item" (click)="confirmDeleteUser.show(); idDelete=user.id">Delete</a>
           </div>
         </div>
       </td>
@@ -44,3 +44,26 @@
   </table>
   </div>
 </div>
+
+<div mdbModal #confirmDeleteUser="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="heading lead">Modal Danger</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="confirmDeleteUser.hide()">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <p>You are sure want to delete this account?</p>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="deleteUser(idDelete); confirmDeleteUser.hide()">Yes</a>
+        <a type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="confirmDeleteUser.hide()" mdbWavesEffect>No</a>
+      </div>
+    </div>
+  </div>
+</div>
+

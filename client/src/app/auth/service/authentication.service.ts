@@ -35,7 +35,11 @@ export class AuthenticationService  {
                 }
             }));
     }
-
+    // login(username: string, password: string) {
+    //   let headers = new Headers();
+    //   headers.append('Content-Type', 'application/json');
+    //   retun
+    // }
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

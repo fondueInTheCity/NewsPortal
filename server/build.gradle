@@ -39,6 +39,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
     compile('org.springframework.security:spring-security-jwt:1.0.3.RELEASE')
+    compile('org.springframework.social:spring-social-web:1.1.4.RELEASE')
     compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('mysql:mysql-connector-java')

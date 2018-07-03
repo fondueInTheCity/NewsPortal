@@ -11,6 +11,7 @@ import {first} from "rxjs/internal/operators";
 export class UsersListComponent implements OnInit {
   users: User[] = [];
   loading = false;
+  idDelete: number;
   constructor(private userService: UserService) {
   }
 

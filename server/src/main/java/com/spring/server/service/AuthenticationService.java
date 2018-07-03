@@ -2,10 +2,8 @@ package com.spring.server.service;
 
 import com.spring.server.model.User;
 import com.spring.server.repository.UserRepository;
-import com.spring.server.security.SecurityHelper;
 import com.spring.server.security.model.JwtUserDetails;
 import com.spring.server.security.service.AuthenticationHelper;
-import com.spring.server.service.dto.AuthUserDto;
 import com.spring.server.service.dto.JsonException;
 import com.spring.server.service.dto.LoginRequestDto;
 import com.spring.server.service.dto.LoginResponseDto;
@@ -33,9 +31,19 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public LoginResponseDto login(final LoginRequestDto loginRequestDto) {
+
         try {
+
             if (!this.userService.userIsActive(loginRequestDto.getUsername())) {
                 throw new JsonException("User is not active.");
+            }
+
+            if (this.userService.userIsBlocked(loginRequestDto.getUsername())) {
+                throw new JsonException("User is blocked");
+            }
+
+            if (this.userService.userIsDeleted(loginRequestDto.getUsername())) {
+                throw new JsonException("User is deleted");
             }
 
             String username = Optional.ofNullable(loginRequestDto.getUsername())
@@ -60,6 +68,7 @@ public class AuthenticationService {
                 }
 
                 String token = this.authenticationHelper.generateToken(userDetails.getId());
+
 
                 return new LoginResponseDto(token);
             } else {

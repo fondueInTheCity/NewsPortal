@@ -153,6 +153,14 @@ public class UserService {
         }
     }
 
+    public Boolean userIsBlocked(String username) {
+        return userRepository.findByUsername(username).isBlocked();
+    }
+
+    public Boolean userIsDeleted(String username) {
+        return userRepository.findByUsername(username).isDeleted();
+    }
+
     private Boolean isUserExsists(User user) {
         return userRepository.findByUsername(user.getUsername()) != null;
     }
@@ -169,5 +177,7 @@ public class UserService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
     }
+
+
 
 }

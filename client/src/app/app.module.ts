@@ -23,6 +23,7 @@ import { NewCommentComponent } from './new-comment/new-comment.component';
 import { UsersListComponent } from './user/users-list/users-list.component';
 import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.component';
 import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
+import { Exception404Component } from './exception/exception404/exception404.component';
 import { ProfileInfoComponent } from './user/profile/profile-info/profile-info.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -63,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         UsersListComponent,
         ProfileEditComponent,
         ProfileNewsComponent,
+        Exception404Component,
         ProfileInfoComponent
     ],
   schemas: [],

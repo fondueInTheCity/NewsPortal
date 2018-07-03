@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 import { Router} from '@angular/router';
 import {first} from "rxjs/internal/operators";
 import {User} from "../../models/user";
-
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()
 export class AuthenticationService  {
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router, private translate: TranslateService) { }
 
     public loggedIn = new BehaviorSubject<boolean>(false);
 
@@ -28,10 +28,9 @@ export class AuthenticationService  {
         return this.http.post<any>(`${environment.serverUrl}auth/login`,
             { username: username, password: password })
             .pipe(map((res: any) => {
-                // login successful if there's a jwt token in the response
                 if (res && res.token) {
-                    // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token, userRole }));
+                    this.translate.use(user.language.name);
+                    localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token, userRole, language: user.language.name }));
                     this.loggedIn.next(true);
                 }
             }));

@@ -4,6 +4,8 @@ import { environment } from '../../environments/environment';
 
 import { User } from '../models';
 import {ActivatedRouteSnapshot, CanActivate} from '@angular/router';
+import {Language} from "../models/language";
+import {Theme} from "../models/theme";
 
 @Injectable()
 export class UserService   {
@@ -43,6 +45,18 @@ export class UserService   {
 
   getLanguages() {
     return this.http.get(`${environment.serverUrl}users/getLanguages`);
+  }
+
+  setLanguage(username: string, language: Language) {
+    return this.http.post(`${environment.serverUrl}users/setUserLanguage/` + username, language);
+  }
+
+  setTheme(username: string, theme: Theme) {
+    return this.http.post(`${environment.serverUrl}users/setUserTheme/` + username, theme);
+  }
+
+  setRole(userId: number, role: String) {
+    return this.http.post(`${environment.serverUrl}users/setUserRole/` + userId, role);
   }
 
   transformRoleToView(role: string): string {

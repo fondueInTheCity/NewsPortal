@@ -1,6 +1,6 @@
 <div class="row my-5 d-flex justify-content-center" *ngIf="isDeleted; else viewProfile">
   <div>
-  <h1>Sorry, this user has been deleted =(</h1>
+  <h1 translate>Sorry, this user has been deleted =(</h1>
 </div>
 </div>
 <!--<div class="d-flex justify-content-center m-5">-->
@@ -24,7 +24,7 @@
           <!--<h6 class="text-justify"><strong>About:</strong></h6>-->
           <!--<p class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione perferendis quod animi dignissimos...</p>-->
           <!--<div>-->
-            <button class="btn btn-outline-primary btn-rounded  btn-sm" mdbwaveseffect="" type="button">More...</button>
+          <!--<button class="btn btn-outline-primary btn-rounded  btn-sm" mdbwaveseffect="" type="button" translate>More...</button>-->
           <!--</div>-->
         </div>
       </div>
@@ -32,9 +32,9 @@
 
     <div  class="col-md-9">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item nav-link" [class.active]="viewMode == 'newsTab'" rel="newsTab" (click)="viewMode ='newsTab'">News</li>
-        <li class="nav-item nav-link" [class.active]="viewMode == 'profileTab'" rel="profileTab" (click)="viewMode ='profileTab'">Profile</li>
-        <li class="nav-item nav-link" *ngIf="isCanEdit" [class.active]="viewMode == 'editTab'" rel="editTab" (click)="viewMode ='editTab'">Edit</li>
+        <li class="nav-item nav-link" [class.active]="viewMode == 'newsTab'" rel="newsTab" (click)="viewMode ='newsTab'" translate>News</li>
+        <li class="nav-item nav-link" [class.active]="viewMode == 'profileTab'" rel="profileTab" (click)="viewMode ='profileTab'" translate>Profile</li>
+        <li class="nav-item nav-link" *ngIf="isCanEdit" [class.active]="viewMode == 'editTab'" rel="editTab" (click)="viewMode ='editTab'" translate>Edit</li>
       </ul>
       <div class="tab-content" id="myTabContent" [ngSwitch]="viewMode">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">

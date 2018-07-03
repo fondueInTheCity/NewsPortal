@@ -2,14 +2,14 @@
   <div class="mb-1">
     <div class="row">
       <div class="col-sm-4">
-        <h3 id="head_name">Your news
-          <a class="pull-right">+</a>
+        <h3 id="head_name" translate>{{user.username}} news
+          <a *ngIf="isCanAddNews()" class="pull-right">+</a>
         </h3>
         <hr id="head_hr" />
       </div>
       <div class="col-md-4 no-space ml-auto">
         <div class="row md-form">
-          <input class="form-control" id="form5" placeholder="Search..." type="text">
+          <input class="form-control" id="form5" [attr.placeholder]="'Search...' | translate" type="text">
           <!--<i class="fa fa-search" aria-hidden="true"></i>-->
         </div>
       </div>
@@ -18,10 +18,10 @@
   <table class="table text-center table-hover">
     <thead>
     <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Comments</th>
-      <th>Action</th>
+      <th translate>Title</th>
+      <th translate>Description</th>
+      <th translate>Comments</th>
+      <th translate>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -34,9 +34,9 @@
           <!--<button type="button" class="btn btn-danger waves-light" mdbWavesEffect>Action</button>-->
           <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>
           <div class="dropdown-menu">
-            <a class="dropdown-item">Edit</a>
+            <a class="dropdown-item" translate>Edit</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item">Delete</a>
+            <a class="dropdown-item" translate>Delete</a>
           </div>
         </div>
       </td>

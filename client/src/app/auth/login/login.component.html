@@ -1,24 +1,24 @@
 ﻿  <alert ></alert>
-  <h2>Login</h2>
+  <h2 translate>Big Login</h2>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="username">Username</label>
+      <label for="username" translate>Username</label>
       <input type="text" id="username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.username.errors }" />
       <div *ngIf="submitted && formControl.username.errors" class="invalid-feedback">
-        <div *ngIf="formControl.username.errors.required">Username is required</div>
+        <div *ngIf="formControl.username.errors.required" translate>Username is required</div>
       </div>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password" translate>Password</label>
       <input type="password" id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.password.errors }" />
       <div *ngIf="submitted && formControl.password.errors" class="invalid-feedback">
-        <div *ngIf="formControl.password.errors.required">Password is required</div>
+        <div *ngIf="formControl.password.errors.required" translate>Password is required</div>
       </div>
     </div>
     <div class="form-group">
-      <button [disabled]="loading" class="btn btn-primary">Login</button>
+      <button [disabled]="loading" class="btn btn-primary" translate>Login</button>
       <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-      <a [routerLink]="['/register']" class="btn btn-link">Register</a>
-      <a [routerLink]="['/remember']" class="btn btn-link">Forgot your password?</a>
+      <a [routerLink]="['/register']" class="btn btn-link" translate>Register</a>
+      <a [routerLink]="['/remember']" class="btn btn-link" translate>Forgot your password?</a>
     </div>
   </form>

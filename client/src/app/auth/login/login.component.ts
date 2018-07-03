@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService, AuthenticationService } from '../service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {

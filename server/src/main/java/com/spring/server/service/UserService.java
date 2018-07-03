@@ -32,7 +32,6 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserListDto> findAll() {
-//        List<User> users = userRepository.findAll();
         List<User> users = userRepository.findAllExisted();
         List<UserListDto> userDtoList = new ArrayList<>();
         for (User user : users) {
@@ -76,6 +75,24 @@ public class UserService {
         userRepository.save(editedUser);
     }
 
+    public void setLanguage(String username, Language language) {
+        User user = userRepository.findByUsername(username);
+        user.setLanguage(language);
+        userRepository.save(user);
+    }
+
+    public void setTheme(String username, Theme theme) {
+        User user = userRepository.findByUsername(username);
+        user.setTheme(theme);
+        userRepository.save(user);
+    }
+
+    public void setRole(Long userId, String role) {
+        User user = userRepository.findById((long)userId);
+        user.setRole(UserRole.valueOf(role));
+        userRepository.save(user);
+    }
+
     public void activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
         if (this.isNull(user)) {
@@ -96,6 +113,7 @@ public class UserService {
         user.setBlocked(false);
         user.setDeleted(false);
         user.setRole(UserRole.ROLE_READER);
+
         userRepository.save(user);
         if(!mailService.isNull(user)) {
             mailService.send(user.getEmail(), Abbreviation.SUBJECT_ACTIVATION_CODE,

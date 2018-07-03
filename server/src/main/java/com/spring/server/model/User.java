@@ -1,6 +1,5 @@
 package com.spring.server.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -73,12 +72,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Rating> ratings;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_language")
     private Language language;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_theme")
     private Theme theme;

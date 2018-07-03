@@ -1,7 +1,4 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-
-import {FormBuilder} from '@angular/forms';
-// import {Router} from '@angular/router';
 import {UserService} from '../../service/user.service';
 import {AlertService} from '../../auth/service/alert.service';
 import {User} from '../../models/user';

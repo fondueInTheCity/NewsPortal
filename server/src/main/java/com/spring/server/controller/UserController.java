@@ -43,6 +43,25 @@ public class UserController {
         return this.userService.getLanguages();
     }
 
+    @PostMapping("/setUserLanguage/{username}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void setUserLanguage(@PathVariable(name = "username") String username, @RequestBody Language language) {
+        this.userService.setLanguage(username, language);
+    }
+
+    @PostMapping("/setUserTheme/{username}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void setUserTheme(@PathVariable(name = "username") String username, @RequestBody Theme theme) {
+        this.userService.setTheme(username, theme);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/setUserRole/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void setUserRole(@PathVariable(name = "id") Long userId, @RequestBody String role) {
+        this.userService.setRole(userId, role);
+    }
+
     @GetMapping("/{username}")
     @ResponseStatus(value = HttpStatus.OK)
     public UserEditDto findUserByUsername(@PathVariable(value = "username") String username) {

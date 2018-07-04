@@ -1,9 +1,9 @@
 <div *ngIf="message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success',
   'alert-danger': message.type === 'error' }">
-  <div *ngIf="message.text.status === 401">
+  <div *ngIf="message.text.status === 401" translate>
     Invalid username or password
   </div>
-  <div *ngIf="message.text.status === 0">
+  <div *ngIf="message.text.status === 0" translate>
     We cannot connect with server
   </div>
 </div>

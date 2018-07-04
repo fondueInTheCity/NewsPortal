@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { AuthGuard } from './auth/guards';
@@ -30,6 +30,12 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { MarkdownComponent } from './markdown/markdown.component';
 import { ViewMarkdownComponent } from './view/view-markdown/view-markdown.component';
 import { EditMarkdownComponent } from './view/edit-markdown/edit-markdown.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
     imports: [
@@ -37,6 +43,13 @@ import { EditMarkdownComponent } from './view/edit-markdown/edit-markdown.compon
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        }),
         MDBBootstrapModule.forRoot(),
         MarkdownModule.forRoot({ loader: HttpClient }),
         AceEditorModule,

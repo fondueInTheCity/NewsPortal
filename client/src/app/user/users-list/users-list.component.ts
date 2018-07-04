@@ -16,16 +16,18 @@ export class UsersListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getAll().pipe(first()).subscribe(users => {
-      this.users = users;
-      for (let user of users) {
-        user.role = this.userService.transformRoleToView(user.role);
-      }
-    });
+    this.loadAllUsers();
   }
 
   deleteUser(id: number) {
     this.userService.delete(id).pipe(first()).subscribe(() => {
+      this.loadAllUsers();
+    });
+  }
+
+  setUserRole(role: string, userId: number) {
+    role = this.userService.transformRoleToBackEnd(role);
+    this.userService.setRole(userId, role).pipe(first()).subscribe(() => {
       this.loadAllUsers();
     });
   }
@@ -40,6 +42,9 @@ export class UsersListComponent implements OnInit {
   private loadAllUsers() {
     this.userService.getAll().pipe(first()).subscribe(users => {
       this.users = users;
+      for (let user of users){
+        user.role = this.userService.transformRoleToView(user.role);
+      }
       this.loading = false;
     });
   }

@@ -7,26 +7,26 @@
           </div>
           <div class="near-img">
             <h2>{{user.username}}</h2><h4 class="indigo-text">{{user.role}}</h4>
-            <dt *ngIf="user.firstName || user.lastName" class="profile-section__title">Name</dt>
+            <dt *ngIf="user.firstName || user.lastName" class="profile-section__title"  translate>Name</dt>
             <dd class="profile-section__container">
               <div class="profile-section__about-text">{{user.firstName}} {{user.lastName}}</div>
             </dd>
           </div>
         </div>
         <div *ngIf="user.country">
-          <dt class="profile-section__title">Country</dt>
+          <dt class="profile-section__title" translate>Country</dt>
           <dd class="profile-section__container">
             <div class="profile-section__about-text">{{user.country}}</div>
           </dd>
         </div>
         <div *ngIf="user.city">
-          <dt class="profile-section__title">City</dt>
+          <dt class="profile-section__title" translate>City</dt>
           <dd class="profile-section__container">
             <div class="profile-section__about-text">{{user.city}}</div>
           </dd>
         </div>
         <div *ngIf="user.bio">
-          <dt class="profile-section__title">Biography</dt>
+          <dt class="profile-section__title" translate>Biography</dt>
           <dd class="profile-section__container">
             <div class="profile-section__about-text">{{user.bio}}</div>
           </dd>

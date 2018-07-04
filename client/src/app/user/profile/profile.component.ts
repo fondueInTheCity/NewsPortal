@@ -2,9 +2,9 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 
 import {FormBuilder} from '@angular/forms';
 // import {Router} from '@angular/router';
-import {UserService} from '../../service/user.service';
-import {AlertService} from '../../auth/service/alert.service';
-import {User} from '../../models/user';
+import {UserService} from '../../service';
+import {AlertService} from '../../auth/service';
+import {User} from '../../models';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {first} from 'rxjs/internal/operators';
 import { Subscription } from 'rxjs';
@@ -36,8 +36,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.isDeleted = this.user.deleted;
             this.user.role = this.userService.transformRoleToView(this.user.role);
 
-            let currentUserJson = JSON.parse(localStorage.getItem("currentUser"));
-            if ((currentUserJson.userRole === "ROLE_ADMIN") || (this.user["username"] === currentUserJson.username))
+            let currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
+            if ((currentUserJson.userRole === 'ROLE_ADMIN') || (this.user['username'] === currentUserJson.username))
               this.isCanEdit = true;
             else
               this.isCanEdit = false;

@@ -23,7 +23,7 @@ export class AuthenticationService  {
                     userRole = data.role;
                 },
                 error => {
-                    console.log("error");
+                    console.log('error');
                 });
         return this.http.post<any>(`${environment.serverUrl}auth/login`,
             { username: username, password: password })
@@ -55,11 +55,4 @@ export class AuthenticationService  {
     sendNewPassword(code: string, password: string) {
       return this.http.post(`${environment.serverUrl}auth/changeNewPassword/` + code, password);
     }
-
-    // confirmNewPassword(code: string, password: string) {
-  //     //   return this.http.post(`${environment.serverUrl}newPassword` + '/' + code, password);
-  //     // }
-  //     // confirmNewPassword(code: string, password: string) {
-  //     //   return this.http.post(`${environment.serverUrl}newPassword` + '/' + code, password);
-  //     // }
 }

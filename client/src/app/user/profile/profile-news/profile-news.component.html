@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-4">
         <h3 id="head_name">Your news
-          <a class="pull-right">+</a>
+          <a class="pull-right" [routerLink]='["/markdown/", {authorId: user.id}]' >+</a>
         </h3>
         <hr id="head_hr" />
       </div>
@@ -19,16 +19,16 @@
     <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
-      <th>Comments</th>
+      <th>Text</th>
+      <th>Published Date</th>
       <th>Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>Some_name</td>
-      <td class="ellipsis">alsdjkfhadskdjfhlaksdfhaskldjfhaskjldfhaksjldfhaklsjdf</td>
-      <td>21</td>
+    <tr *ngFor="let post of news">
+      <td><a routerLink="news/{{post.id}}">{{post.name}}</a></td>
+      <td>{{post.text}}</td>
+      <td>{{post.publishDate}}</td>
       <td>
         <div class="btn-group" dropdown>
           <!--<button type="button" class="btn btn-danger waves-light" mdbWavesEffect>Action</button>-->

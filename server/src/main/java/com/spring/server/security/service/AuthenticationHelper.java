@@ -23,7 +23,7 @@ public class AuthenticationHelper {
     public static final String AUTHENTICATION_PARAM = "auth";
     private final String SECRET = "ChangeMeToSomethingElse";
 
-    private Long tokenExpirationTime = 3600L;
+    private Long tokenExpirationTime = 36000L;
 
     private final ObjectMapper objectMapper;
 
@@ -46,17 +46,14 @@ public class AuthenticationHelper {
             throw new InvalidTokenAuthenticationException("Token was null or blank.");
         }
 
-        // Getting JWT object from string token
         Jwt jwt = JwtHelper.decode(token);
 
-        // Validate token signature (to be sure that token has not been tampered with)
         try {
             jwt.verifySignature(new MacSigner(SECRET));
         } catch (Exception exception) {
             throw new InvalidTokenAuthenticationException("Token signature verification failed.", exception);
         }
 
-        // Getting payload of token
         String claims = jwt.getClaims();
         TokenPayload tokenPayload;
         try {

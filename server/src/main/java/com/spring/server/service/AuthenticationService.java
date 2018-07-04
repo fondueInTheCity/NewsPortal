@@ -55,10 +55,8 @@ public class AuthenticationService {
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username,
                     password);
 
-            // Try to authenticate with this token
             final Authentication authResult = this.authenticationManager.authenticate(authRequest);
 
-            // Set generated JWT token to response header
             if (authResult.isAuthenticated()) {
                 JwtUserDetails userDetails = (JwtUserDetails) authResult.getPrincipal();
 

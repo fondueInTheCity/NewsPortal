@@ -27,8 +27,12 @@ export class UserService   {
     return this.http.post(`${environment.serverUrl}auth/registration`, user);
   }
 
-  update(user: User) {
+  update(user: User){
     return this.http.post(`${environment.serverUrl}users/edit`, user);
+  }
+
+  uploadImage(image: FormData, id: number){
+    return this.http.post(`${environment.serverUrl}users/editImage/` + id, image);
   }
 
   delete(id: number) {

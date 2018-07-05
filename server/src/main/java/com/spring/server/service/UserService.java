@@ -1,5 +1,6 @@
 package com.spring.server.service;
 
+import com.dropbox.core.DbxException;
 import com.spring.server.model.*;
 import com.spring.server.repository.LanguageRepository;
 import com.spring.server.repository.ThemeRepository;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class UserService {
     private final ThemeRepository themeRepository;
     private final LanguageRepository languageRepository;
     private final MailService mailService;
+    private final StorageService storageService;
     private final UserListTransformer userListTransformer;
     private final UserEditTransformer userEditTransformer;
     private final MessageService messageService;
@@ -90,6 +93,14 @@ public class UserService {
     public void setRole(Long userId, String role) {
         User user = userRepository.findById((long)userId);
         user.setRole(UserRole.valueOf(role));
+        userRepository.save(user);
+    }
+
+    public void setUsersImage(Long userId, MultipartFile image) throws DbxException {
+        this.storageService.init();
+        String publicUrl = this.storageService.loadFileToDropbox(image);
+        User user = this.userRepository.findById((long)userId);
+        user.setAvatar(publicUrl);
         userRepository.save(user);
     }
 

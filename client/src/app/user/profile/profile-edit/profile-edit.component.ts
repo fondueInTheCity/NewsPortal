@@ -4,6 +4,7 @@ import {UserService} from '../../../service/user.service';
 import {AlertService} from '../../../auth/service/alert.service';
 import {first} from 'rxjs/internal/operators';
 import { Subscription } from 'rxjs';
+import {UserEditDto} from "../../../dto/userEditDto";
 
 @Component({
   selector: 'app-profile-edit',
@@ -11,11 +12,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
-  @Input() user: any;
+  @Input() user: UserEditDto;
   editUserForm: FormGroup;
   loading = false;
   submitted = false;
   private routeSubscription: Subscription;
+  fileToUpload: File = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,14 +51,25 @@ export class ProfileEditComponent implements OnInit {
     user.language = this.user.language;
     user.theme = this.user.theme;
 
+    let formdata: FormData = new FormData();
+    formdata.append('file', this.fileToUpload);
+
     this.loading = true;
     this.routeSubscription = this.userService.update(user)
       .pipe(first())
       .subscribe(
         data => {
-          console.log("Saved");
-          this.loading = false;
-          this.submitted = false;
+          if (this.fileToUpload !== null)
+            this.routeSubscription = this.userService.uploadImage(formdata, user.id).pipe(first()).subscribe(data => {
+              console.log("Saved");
+              this.loading = false;
+              this.submitted = false;
+          });
+          else {
+            console.log("Saved");
+            this.loading = false;
+            this.submitted = false;
+          }
         },
         error => {
           this.alertService.error(error);
@@ -69,7 +82,8 @@ export class ProfileEditComponent implements OnInit {
     this.routeSubscription && this.routeSubscription.unsubscribe();
   }
 
-  // stringify(o:string):string {
-  //   return JSON.stringify(o);
-  // }
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {User} from "../../../models/user";
 import {UserService} from "../../../service/user.service";
+import {UserEditDto} from "../../../dto/userEditDto";
 
 @Component({
   selector: 'app-profile-news',
@@ -8,7 +9,7 @@ import {UserService} from "../../../service/user.service";
   styleUrls: ['profile-news.component.css']
 })
 export class ProfileNewsComponent implements OnInit {
-  @Input() user: any;
+  @Input() user: UserEditDto;
   constructor(
       private userService: UserService) { }
 

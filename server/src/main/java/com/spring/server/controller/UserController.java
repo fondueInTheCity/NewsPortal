@@ -25,7 +25,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    //@ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public List<UserListDto> findAll(
     ) {
         return this.userService.findAll();
@@ -70,7 +70,8 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public void editUser(@RequestBody UserEditDto user) throws DbxException {
+    @ResponseStatus(HttpStatus.OK)
+    public void editUser(@RequestBody UserEditDto user) {
         this.userService.editUser(user);
     }
 
@@ -91,8 +92,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/block/{id}", method = RequestMethod.POST, produces = "application/json")
-    //@ResponseStatus(value = HttpStatus.OK)
-    public void blockUser(@PathVariable(name = "id") Long id, @RequestBody Map<String, String> blockStatus
+    @ResponseStatus(HttpStatus.OK)
+    public void blockUser(@PathVariable Long id, @RequestBody Map<String, String> blockStatus
     ) {
         boolean blockedStatus = Boolean.parseBoolean(blockStatus.get("blocked"));
         this.userService.blockUser(id, blockedStatus);

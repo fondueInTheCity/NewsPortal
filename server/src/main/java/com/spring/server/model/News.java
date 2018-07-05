@@ -3,6 +3,8 @@ package com.spring.server.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -28,7 +30,7 @@ public class News {
     private String text;
 
     @Column(name = "publishDate")
-    private Date publishDate;
+    private String publishDate;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "news_tag", joinColumns = @JoinColumn(name = "id_news", referencedColumnName = "id"),
@@ -73,6 +75,6 @@ public class News {
         this.name = name;
         this.description = description;
         this.text = text;
-        this.publishDate = new Date();
+        this.publishDate = LocalDateTime.now().toString();
     }
 }

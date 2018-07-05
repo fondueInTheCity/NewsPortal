@@ -8,7 +8,7 @@ import { routing } from './app.routing';
 import { AuthGuard } from './auth/guards';
 import { JwtInterceptor } from './auth/helpers';
 import {AlertService, AuthenticationService} from './auth/service';
-import { UserService } from './service';
+import {NewsService, UserService} from './service';
 import { HomeComponent } from './home';
 import { LoginComponent } from './auth/login';
 import { AlertComponent } from './auth/directives/alert.component';
@@ -25,6 +25,11 @@ import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.c
 import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
 import { Exception404Component } from './exception/exception404/exception404.component';
 import { ProfileInfoComponent } from './user/profile/profile-info/profile-info.component';
+import {MarkdownModule} from 'ngx-markdown';
+import { AceEditorModule } from 'ng2-ace-editor';
+import { MarkdownComponent } from './markdown/markdown.component';
+import { ViewMarkdownComponent } from './view/view-markdown/view-markdown.component';
+import { EditMarkdownComponent } from './view/edit-markdown/edit-markdown.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -46,6 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
           }
         }),
         MDBBootstrapModule.forRoot(),
+        MarkdownModule.forRoot({ loader: HttpClient }),
+        AceEditorModule,
         routing
     ],
     declarations: [
@@ -65,13 +72,17 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileEditComponent,
         ProfileNewsComponent,
         Exception404Component,
-        ProfileInfoComponent
+        ProfileInfoComponent,
+        MarkdownComponent,
+        ViewMarkdownComponent,
+        EditMarkdownComponent
     ],
   schemas: [],
     providers: [
         AuthGuard,
         AlertService,
         AuthenticationService,
+        NewsService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,

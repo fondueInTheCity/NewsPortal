@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-4">
         <h3 id="head_name" translate>{{user.username}} news
-          <a *ngIf="isCanAddNews()" class="pull-right">+</a>
+          <a *ngIf="isCanAddNews()" class="pull-right" [routerLink]='["/markdown/", {authorId: user.id}]'>+</a>
         </h3>
         <hr id="head_hr" />
       </div>
@@ -19,16 +19,16 @@
     <thead>
     <tr>
       <th translate>Title</th>
-      <th translate>Description</th>
-      <th translate>Comments</th>
+      <th>Text</th>
+      <th>Published Date</th>
       <th translate>Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>Some_name</td>
-      <td class="ellipsis">alsdjkfhadskdjfhlaksdfhaskldjfhaskjldfhaksjldfhaklsjdf</td>
-      <td>21</td>
+    <tr *ngFor="let post of news">
+      <td><a routerLink="news/{{post.id}}">{{post.name}}</a></td>
+      <td>{{post.text}}</td>
+      <td>{{post.publishDate}}</td>
       <td>
         <div class="btn-group" dropdown>
           <!--<button type="button" class="btn btn-danger waves-light" mdbWavesEffect>Action</button>-->

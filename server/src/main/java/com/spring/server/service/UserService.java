@@ -35,6 +35,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserListDto> findAll() {
+//        List<User> users = userRepository.getAll();
         List<User> users = userRepository.findAllExisted();
         List<UserListDto> userDtoList = new ArrayList<>();
         for (User user : users) {
@@ -123,6 +124,8 @@ public class UserService {
         user.setIsActive(false);
         user.setBlocked(false);
         user.setDeleted(false);
+//        user.setLanguage(new Language("EN"));
+//        user.setTheme(new Theme("Magazine"));
         user.setRole(UserRole.ROLE_READER);
 
         userRepository.save(user);

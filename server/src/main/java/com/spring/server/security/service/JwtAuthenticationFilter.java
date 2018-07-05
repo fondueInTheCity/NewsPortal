@@ -30,7 +30,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
         try {
-            // Getting JWT token from request
             String token = Optional.ofNullable(request.getHeader(AuthenticationHelper.AUTHENTICATION_HEADER))
                     .map(header -> header.substring(7)).orElse(null);
 
@@ -38,13 +37,10 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
                 throw new BadCredentialsException("Token not found in request's header.");
             }
 
-            // Create token for authentication provider
             JwtAuthenticationToken authRequest = new JwtAuthenticationToken(token);
 
-            // Return a fully authenticated object
             return this.getAuthenticationManager().authenticate(authRequest);
         } catch (AuthenticationException exception) {
-            // Go to 401 error page if exception thrown
             unsuccessfulAuthentication(request, response, exception);
         }
         return null;
@@ -54,10 +50,8 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     protected void successfulAuthentication(final HttpServletRequest request, final HttpServletResponse response,
                                             final FilterChain chain, final Authentication authResult)
         throws IOException, ServletException {
-        // Set authentication to context
         SecurityContextHolder.getContext().setAuthentication(authResult);
 
-        // Fire event
         if (this.eventPublisher != null) {
             this.eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(authResult, this.getClass()));
         }

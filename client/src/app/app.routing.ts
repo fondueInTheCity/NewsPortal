@@ -12,6 +12,8 @@ import {UsersListComponent} from './user/users-list/users-list.component';
 import {ProfileEditComponent} from './user/profile/profile-edit/profile-edit.component';
 import {ProfileNewsComponent} from './user/profile/profile-news/profile-news.component';
 import {Exception404Component} from './exception/exception404/exception404.component';
+import {MarkdownComponent} from './markdown/markdown.component';
+import {ViewMarkdownComponent} from './view/view-markdown/view-markdown.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -25,6 +27,9 @@ const appRoutes: Routes = [
     { path: 'comment', component: CommentComponent},
     { path: 'users', component: UsersListComponent },
     { path: 'profile/:username', component: ProfileComponent },
+    { path: 'markdown', component: MarkdownComponent},
+    { path: 'markdown/:id', component: MarkdownComponent},
+    { path: 'news/:id', component: ViewMarkdownComponent},
       // children: [
       //   {
       //     path: '',

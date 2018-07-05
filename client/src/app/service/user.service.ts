@@ -16,11 +16,11 @@ export class UserService   {
   }
 
   getById(id: number) {
-    return this.http.get(`${environment.serverUrl}users` + '/' + id);
+    return this.http.get(`${environment.serverUrl}users/` + id);
   }
 
   getByUsername(username: string) {
-    return this.http.get(`${environment.serverUrl}users` + '/' + username);
+    return this.http.get(`${environment.serverUrl}users/` + username);
   }
 
   addUser(user: User) {
@@ -36,7 +36,7 @@ export class UserService   {
   }
 
   delete(id: number) {
-    return this.http.delete(`${environment.serverUrl}users` + '/' + id);
+    return this.http.delete(`${environment.serverUrl}users/` + id);
   }
 
   block(id: number, blocked: boolean) {

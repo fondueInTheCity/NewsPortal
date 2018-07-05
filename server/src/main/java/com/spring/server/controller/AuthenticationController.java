@@ -6,6 +6,7 @@ import com.spring.server.service.UserService;
 import com.spring.server.service.dto.LoginRequestDto;
 import com.spring.server.service.dto.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,32 +20,32 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/login")
-    //@ResponseStatus(code = HttpStatus.OK, reason = "There is no such user")
+    @ResponseStatus(HttpStatus.OK)
     public LoginResponseDto login(
             @RequestBody final LoginRequestDto loginRequestDto) {
             return authenticationService.login(loginRequestDto);
     }
 
     @PostMapping("/registration")
-    //@ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public void addUser(@RequestBody User user) {
          userService.addUser(user);
     }
 
     @GetMapping("/activate/{code}")
-    //@ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public void activate(@PathVariable String code) {
         userService.activateUser(code);
     }
 
     @PostMapping("/sendCodeNewPassword")
-    //@ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public void codeNewPassword(@RequestBody String email) {
         userService.sendActivateNewPassword(email);
     }
 
     @PostMapping("/changeNewPassword/{code}")
-    //@ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public void changePassword(@PathVariable String code, @RequestBody String password ) {
         userService.newPassword(code, password);
     }

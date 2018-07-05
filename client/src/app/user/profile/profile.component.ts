@@ -1,10 +1,13 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {UserService} from '../../service/user.service';
-import {AlertService} from '../../auth/service/alert.service';
-import {User} from '../../models/user';
-import {Router, ActivatedRoute, Params} from '@angular/router';
-import {first} from 'rxjs/internal/operators';
-import { Subscription } from 'rxjs';
+
+import {FormBuilder} from '@angular/forms';
+// import {Router} from '@angular/router';
+import {UserService} from '../../service';
+import {AlertService} from '../../auth/service';
+import {User} from '../../models';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute, Params} from '@angular/router';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -17,12 +20,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   isCanEdit: boolean;
   isDeleted: boolean;
 
-  private routeSubscription: Subscription;
+  private routeSubscription: Subscription
 
   constructor(
-      private userService: UserService,
-      private alertService: AlertService,
-      private activatedRoute: ActivatedRoute
+    private userService: UserService,
+    private alertService: AlertService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.routeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
       let username = params['username'];
@@ -33,11 +36,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.isDeleted = this.user.deleted;
             this.user.role = this.userService.transformRoleToView(this.user.role);
 
-            let currentUserJson = JSON.parse(localStorage.getItem("currentUser"));
-            if ((currentUserJson.userRole === "ROLE_ADMIN") || (this.user["username"] === currentUserJson.username))
-              this.isCanEdit = true;
-            else
-              this.isCanEdit = false;
+            let currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
+            this.isCanEdit = ((currentUserJson.userRole === 'ROLE_ADMIN') || (this.user['username'] === currentUserJson.username));
           },
           error => {
             this.alertService.error(error);

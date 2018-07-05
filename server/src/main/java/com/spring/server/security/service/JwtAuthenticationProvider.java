@@ -27,28 +27,22 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(final Authentication authRequest) {
-        // Getting string token from authentication request object
         String token = StringUtils.trimToNull((String) authRequest.getCredentials());
 
-        //  Deserialize token
         TokenPayload tokenPayload = authenticationHelper.decodeToken(token);
 
-        // Checking if token already expired and throwing an AuthenticationException in this case
         checkIsExpired(tokenPayload.getExp());
 
-        // Getting user id from token
         Long userEntityId = tokenPayload.getUserId();
         if (Objects.isNull(userEntityId)) {
             throw new InvalidTokenAuthenticationException("Token does not contain a user id.");
         }
 
-        // Getting user from database
         Optional<User> user = userRepository.findById(userEntityId);
         if (Objects.isNull(user)) {
             throw new InvalidTokenAuthenticationException("Token does not contain existed user id.");
         }
 
-        // Return authenticated Authentication
         JwtUserDetails userDetails = new JwtUserDetails(user.get());
         return new JwtAuthenticationToken(userDetails);
     }

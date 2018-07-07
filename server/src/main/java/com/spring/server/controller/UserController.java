@@ -1,5 +1,6 @@
 package com.spring.server.controller;
 
+import com.dropbox.core.DbxException;
 import com.spring.server.model.Language;
 import com.spring.server.model.Theme;
 import com.spring.server.service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -63,8 +65,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    @ResponseStatus(HttpStatus.OK)
-    public UserEditDto findUserByUsername(@PathVariable String username) {
+    public UserEditDto findUserByUsername(@PathVariable(value = "username") String username) {
         return this.userService.findUserByUsername(username);
     }
 
@@ -74,10 +75,17 @@ public class UserController {
         this.userService.editUser(user);
     }
 
+    @PostMapping("/editImage/{id}")
+    public void editUserImage(@PathVariable(name = "id") Long userId, @RequestParam("file") MultipartFile image) throws DbxException {
+        this.userService.setUsersImage(userId, image);
+        //    @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = "multipart/form-data")
+        //    public void editUser(@RequestBody MultipartFile image){
+        //    this.userService.editUser(user);
+    }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable Long id
+    public void deleteUser(@PathVariable(name = "id") Long id
     ) {
         this.userService.deleteUser(id);
     }

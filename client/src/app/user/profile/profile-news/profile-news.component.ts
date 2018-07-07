@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {User} from '../../../model';
+import {UserEditDto} from '../../../dto/userEditDto';
 import { Router} from '@angular/router';
 import {NewsService} from '../../../service';
 import {News} from '../../../model';
@@ -11,7 +11,7 @@ import {first} from 'rxjs/internal/operators';
   styleUrls: ['profile-news.component.css']
 })
 export class ProfileNewsComponent implements OnInit {
-  @Input() user: User;
+  @Input() user: UserEditDto;
   news: News[] = [];
   constructor(private router: Router,
               private newsService: NewsService) { }

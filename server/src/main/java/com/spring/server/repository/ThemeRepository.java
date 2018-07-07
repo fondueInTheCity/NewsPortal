@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
+    Theme findById(long id);
 }

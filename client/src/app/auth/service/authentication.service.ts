@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Router} from '@angular/router';
 import {first} from "rxjs/internal/operators";
-import {User} from "../../models/user";
+import {User} from "../../model/user";
 import {TranslateService} from "@ngx-translate/core";
 
 @Injectable()

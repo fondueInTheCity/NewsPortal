@@ -18,8 +18,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { RestorePasswordComponent } from './auth/restore-password/restore-password.component';
 import { RememberComponent } from './auth/remember/remember.component';
-import { CommentComponent } from './comment/comment.component';
-import { NewCommentComponent } from './new-comment/new-comment.component';
+import { CommentComponent } from './news/comment/comment.component';
+import { NewCommentComponent } from './news/new-comment/new-comment.component';
 import { UsersListComponent } from './user/users-list/users-list.component';
 import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.component';
 import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
@@ -27,9 +27,9 @@ import { Exception404Component } from './exception/exception404/exception404.com
 import { ProfileInfoComponent } from './user/profile/profile-info/profile-info.component';
 import {MarkdownModule} from 'ngx-markdown';
 import { AceEditorModule } from 'ng2-ace-editor';
-import { MarkdownComponent } from './markdown/markdown.component';
-import { ViewMarkdownComponent } from './view/view-markdown/view-markdown.component';
-import { EditMarkdownComponent } from './view/edit-markdown/edit-markdown.component';
+import { MarkdownComponent } from './news/markdown/markdown.component';
+import { ViewMarkdownComponent } from './news/view/view-markdown/view-markdown.component';
+import { EditMarkdownComponent } from './news/view/edit-markdown/edit-markdown.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 

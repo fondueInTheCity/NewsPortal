@@ -1,0 +1,30 @@
+<!--Main wrapper-->
+<div class="comments-list text-left">
+  <div class="section-heading">
+    <h3>Comments <span class="badge blue">{{commentsShowDto?.length}}</span></h3>
+  </div>
+  <!--First row-->
+  <div class="row" *ngFor="let commentShowDto of commentsShowDto">
+    <!--Image column-->
+    <div class="col-sm-2 col-12">
+      <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg" class="avatar rounded-circle z-depth-1-half">
+    </div>
+    <!--/.Image column-->
+    <!--Content column-->
+    <div class="col-sm-10 col-12">
+      <a><h3 class="user-name">{{commentShowDto.author_name}}</h3></a>
+      <div class="card-data">
+        <ul class="pl-0 list-unstyled">
+          <li class="comment-date"><i class="fa fa-clock-o"></i> 05/10/2015</li>
+        </ul>
+      </div>
+      <p class="comment-text">{{commentShowDto?.text}}</p>
+    </div>
+    <div>
+      Author: <a routerLink="/profile/{{post.authorName}}">{{post.authorName}}</a>
+      <a class="card-link pointer m-1" (click)="addLike()"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+    </div>
+  </div>
+  <!--/.First row-->
+</div>
+<!--/.Main wrapper-->

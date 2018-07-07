@@ -4,10 +4,10 @@ import com.spring.server.model.*;
 import com.spring.server.repository.LanguageRepository;
 import com.spring.server.repository.ThemeRepository;
 import com.spring.server.repository.UserRepository;
-import com.spring.server.service.dto.UserEditDto;
-import com.spring.server.service.dto.UserListDto;
-import com.spring.server.service.transformer.UserEditTransformer;
-import com.spring.server.service.transformer.UserListTransformer;
+import com.spring.server.service.dto.UserDto.UserEditDto;
+import com.spring.server.service.dto.UserDto.UserListDto;
+import com.spring.server.service.transformer.UserTransformer.UserEditTransformer;
+import com.spring.server.service.transformer.UserTransformer.UserListTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserListDto> findAll() {
-//        List<User> users = userRepository.getAll();
+//        List<User> users = userRepository.getNews();
         List<User> users = userRepository.findAllExisted();
         List<UserListDto> userDtoList = new ArrayList<>();
         for (User user : users) {
@@ -88,8 +88,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void setRole(Long userId, String role) {
-        User user = userRepository.findById((long)userId);
+    public void setRole(long userId, String role) {
+        User user = userRepository.findById(userId);
         user.setRole(UserRole.valueOf(role));
         userRepository.save(user);
     }
@@ -113,8 +113,8 @@ public class UserService {
         user.setIsActive(false);
         user.setBlocked(false);
         user.setDeleted(false);
-//        user.setLanguage(new Language("EN"));
-//        user.setTheme(new Theme("Magazine"));
+        user.setLanguage(languageRepository.findById((long)1));
+        user.setTheme(themeRepository.findById((long)1));
         user.setRole(UserRole.ROLE_READER);
 
         userRepository.save(user);

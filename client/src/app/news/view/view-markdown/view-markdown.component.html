@@ -1,0 +1,25 @@
+<div *ngIf="post">
+  <div class="card mb-5" >
+    <div class="card-header bg-dark text-white">
+      <div *ngIf="showEdit()"
+           class="tool-box float-sm-right main-bg-bgcolor p-2 rounded">
+        <a class="card-link pointer m-1" routerLink="/markdown/{{post.id}}"><i class="material-icons md-light">&#xE254;</i></a>
+        <a class="card-link pointer m-1" (click)="deletePost(post.id)"><i class="material-icons md-light">&#xE872;</i></a>
+      </div>
+      <div class="float-sm-left">
+        <!--<a class="perm-link" [routerLink]="['/',key]"><h2 class="card-title">{{post?.title}}</h2></a>-->
+        <h2>{{post.name}}</h2>
+        <h5>{{post.publishDate | date}}</h5>
+      </div>
+    </div>
+    <div class="card-body">
+      <markdown [data]="post.text"></markdown>
+    </div>
+  </div>
+  <div *ngIf="!new">
+    Author: <a routerLink="/profile/{{post.authorName}}">{{post.authorName}}</a>
+    <a class="card-link pointer m-1" (click)="addLike()"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+  </div>
+  <app-new-comment *ngIf="showAddComment()" [post]="post"></app-new-comment>
+  <app-comment *ngIf="showComments()" [idNews]="post?.id"></app-comment>
+</div>

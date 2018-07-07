@@ -2,10 +2,10 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
-import { User } from '../models';
+import { User } from '../model';
 import {ActivatedRouteSnapshot, CanActivate} from '@angular/router';
-import {Language} from "../models/language";
-import {Theme} from "../models/theme";
+import {Language} from "../model/language";
+import {Theme} from "../model/theme";
 
 @Injectable()
 export class UserService   {

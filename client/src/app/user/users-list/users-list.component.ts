@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../models/user';
+import {User} from '../../model/user';
 import {UserService} from '../../service/user.service';
 import {first} from 'rxjs/internal/operators';
 
@@ -42,7 +42,7 @@ export class UsersListComponent implements OnInit {
   private loadAllUsers() {
     this.userService.getAll().pipe(first()).subscribe(users => {
       this.users = users;
-      for (let user of users){
+      for (let user of users) {
         user.role = this.userService.transformRoleToView(user.role);
       }
       this.loading = false;

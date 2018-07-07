@@ -1,8 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {User} from '../../../models';
+import {User} from '../../../model';
 import { Router} from '@angular/router';
 import {NewsService} from '../../../service';
-import {News} from '../../../models';
+import {News} from '../../../model';
 import {first} from 'rxjs/internal/operators';
 
 @Component({
@@ -17,9 +17,7 @@ export class ProfileNewsComponent implements OnInit {
               private newsService: NewsService) { }
 
   ngOnInit() {
-    this.newsService.getAllById(this.user.id).pipe(first()).subscribe(news => {
-    this.news = news;
-  });
+      this.loadAllNews();
   }
 
   isCanAddNews(): boolean {
@@ -29,5 +27,20 @@ export class ProfileNewsComponent implements OnInit {
     let isAdminPostsByOthers: boolean = ((currentUserJson.userRole === 'ROLE_ADMIN') &&
     (this.user['role'] === 'Writer'));
     return isSelfAddNews || isAdminPostsByOthers;
+  }
+  public deletePost(id: number) {
+    this.newsService.deletePost(id).pipe(first()).subscribe(
+      data => {
+        this.loadAllNews();
+        //this.router.navigate([`/`]);
+      },
+      error => {
+        //sdfsdfefsd
+      });
+  }
+  private loadAllNews() {
+    this.newsService.getNewsByIdUser(this.user.id).pipe(first()).subscribe(news => {
+      this.news = news;
+    });
   }
 }

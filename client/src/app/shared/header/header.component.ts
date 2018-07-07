@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../models/user";
+import {User} from "../../model/user";
 import {AuthenticationService} from "../../auth/service/authentication.service";
 import {TranslateService} from "@ngx-translate/core";
 import { Subscription } from 'rxjs';
@@ -7,8 +7,8 @@ import * as $ from "jquery";
 import {first} from "rxjs/internal/operators";
 import {UserService} from "../../service/user.service";
 import {AlertService} from "../../auth/service/alert.service";
-import {Language} from "../../models/language";
-import {Theme} from "../../models/theme";
+import {Language} from "../../model/language";
+import {Theme} from "../../model/theme";
 
 @Component({
   selector: 'app-header',

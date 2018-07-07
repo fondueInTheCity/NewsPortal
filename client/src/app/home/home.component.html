@@ -2,17 +2,15 @@
 <!--<markdown ngPreserveWhitespaces xmlns="">-->
   <!--### Markdown-->
 <!--</markdown>-->
-<app-markdown></app-markdown>
 
 <section class="py-4 text-center text-lg-left">
 
   <!--Section heading-->
-  <h2 class="h1 font-weight-bold text-center mb-5 pt-4">Recent posts</h2>
+  <h2 class="h1 font-weight-bold text-center mb-5 pt-4">Recent news</h2>
   <!--Section description-->
-  <p class="text-center mb-5 pb-3">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-    sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
   <!--Grid row-->
+  <div  *ngFor="let post of news">
   <div class="row">
 
     <!--Grid column-->
@@ -36,16 +34,14 @@
           <i class="fa fa-cutlery"></i> Food</h6>
       </a>
       <h3 class="mb-4 font-weight-bold dark-grey-text">
-        <strong>This is title of the news</strong>
+        <strong>{{post.name}}</strong>
       </h3>
-      <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime
-        placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis
-        debitis aut rerum.</p>
+      <p><markdown>{{post.description}}</markdown></p>
       <p>by
         <a>
-          <strong>Carine Fox</strong>
-        </a>, 19/08/2018</p>
-      <a class="btn btn-success btn-md mb-3 waves-light" mdbWavesEffect>Read more</a>
+          <strong>{{post.authorName}}</strong>
+        </a>, {{post.publishDate}}</p>
+      <a class="btn btn-success btn-md mb-3 waves-light" routerLink="/news/{{post.id}}" mdbWavesEffect>Read more</a>
     </div>
     <!--Grid column-->
 
@@ -53,7 +49,7 @@
   <!--Grid row-->
 
   <hr class="mb-5 mt-5 pb-3">
-
+  </div>
   <!--Grid row-->
   <div class="row">
 

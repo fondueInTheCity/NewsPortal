@@ -5,9 +5,9 @@ import com.spring.server.repository.UserRepository;
 import com.spring.server.security.model.JwtUserDetails;
 import com.spring.server.security.service.AuthenticationHelper;
 import com.spring.server.service.dto.JsonException;
-import com.spring.server.service.dto.LoginRequestDto;
-import com.spring.server.service.dto.LoginResponseDto;
-import com.spring.server.service.transformer.AuthUserTransformer;
+import com.spring.server.service.dto.LoginDto.LoginRequestDto;
+import com.spring.server.service.dto.LoginDto.LoginResponseDto;
+import com.spring.server.service.transformer.UserTransformer.AuthUserTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,7 +26,6 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final UserService userService;
-    private final AuthUserTransformer authUserTransformer;
     private final AuthenticationHelper authenticationHelper;
     private final AuthenticationManager authenticationManager;
 

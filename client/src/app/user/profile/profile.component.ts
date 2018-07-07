@@ -4,7 +4,7 @@ import {FormBuilder} from '@angular/forms';
 // import {Router} from '@angular/router';
 import {UserService} from '../../service';
 import {AlertService} from '../../auth/service';
-import {User} from '../../models';
+import {User} from '../../model';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
 import {first} from 'rxjs/operators';

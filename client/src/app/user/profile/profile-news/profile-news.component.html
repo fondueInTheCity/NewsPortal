@@ -26,7 +26,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let post of news">
-      <td><a routerLink="news/{{post.id}}">{{post.name}}</a></td>
+      <td><a routerLink="/news/{{post.id}}">{{post.name}}</a></td>
       <td>{{post.text}}</td>
       <td>{{post.publishDate}}</td>
       <td>
@@ -34,9 +34,9 @@
           <!--<button type="button" class="btn btn-danger waves-light" mdbWavesEffect>Action</button>-->
           <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" translate>Edit</a>
+            <a class="dropdown-item" routerLink="/markdown/{{post.id}}" translate>Edit</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" translate>Delete</a>
+            <a class="dropdown-item" (click)="deletePost(post.id)" translate>Delete</a>
           </div>
         </div>
       </td>

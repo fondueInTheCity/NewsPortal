@@ -69,7 +69,7 @@
           <button type="button" class="btn btn-default image-preview-clear" style="display:none;" translate>
               <span class="glyphicon glyphicon-remove"></span> Clear
           </button>
-          <div class="btn btn-default image-preview-input">
+          <div class="btn btn-browse image-preview-input">
               <span class="glyphicon glyphicon-folder-open"></span>
               <span class="image-preview-input-title" translate>Browse</span>
               <input type="file" (change)="handleFileInput($event.target.files)" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
@@ -102,7 +102,7 @@
     <!--</div>-->
     <div class="text-center btn-div">
       <input value="{{user.id}}" formControlName="id" type="hidden">
-      <button [disabled]="loading" class="btn btn-primary" mdbwaveseffect="" type="submit" translate>Update</button>
+      <button [disabled]="loading" class="btn submit-btn" mdbwaveseffect="" type="submit" translate>Update</button>
       <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
     </div>
   </form>

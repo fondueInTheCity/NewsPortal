@@ -7,12 +7,10 @@ import {HttpClient} from '@angular/common/http';
 
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit {
-    currentUser: User;
     news: News[] = [];
 
     constructor(private userService: UserService,
                 private newsService: NewsService) {
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
     ngOnInit() {

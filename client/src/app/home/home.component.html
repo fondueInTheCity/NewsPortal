@@ -1,21 +1,11 @@
-﻿<!--Section: Blog v.1-->
-<!--<markdown ngPreserveWhitespaces xmlns="">-->
-  <!--### Markdown-->
-<!--</markdown>-->
+﻿<section class="py-4 text-center text-lg-left">
 
-<section class="py-4 text-center text-lg-left">
+  <!--<app-tag></app-tag>-->
 
-  <!--Section heading-->
   <h2 class="h1 font-weight-bold text-center mb-5 pt-4">Recent news</h2>
-  <!--Section description-->
-
-  <!--Grid row-->
   <div  *ngFor="let post of news">
   <div class="row">
-
-    <!--Grid column-->
     <div class="col-lg-5 col-xl-5 pb-3">
-      <!--Featured image-->
       <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
         <img src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg" alt="Sample image for first version of blog listing"
              class="img-fluid">
@@ -24,11 +14,7 @@
         </a>
       </div>
     </div>
-    <!--Grid column-->
-
-    <!--Grid column-->
     <div class="col-lg-7 col-xl-7">
-      <!--Excerpt-->
       <a href="" class="green-text">
         <h6 class="font-weight-bold pb-1">
           <i class="fa fa-cutlery"></i> Food</h6>
@@ -41,21 +27,13 @@
         <a>
           <strong>{{post.authorName}}</strong>
         </a>, {{post.publishDate}}</p>
-      <a class="btn btn-success btn-md mb-3 waves-light" routerLink="/news/{{post.id}}" mdbWavesEffect>Read more</a>
+      <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.id}}" mdbWavesEffect>Read more</a>
     </div>
-    <!--Grid column-->
-
   </div>
-  <!--Grid row-->
-
   <hr class="mb-5 mt-5 pb-3">
   </div>
-  <!--Grid row-->
   <div class="row">
-
-    <!--Grid column-->
     <div class="col-lg-7 col-xl-7 pb-3">
-      <!--Excerpt-->
       <a href="" class="pink-text">
         <h6 class="font-weight-bold pb-1">
           <i class="fa fa-image"></i> Lifestyle</h6>
@@ -72,11 +50,7 @@
         </a>, 14/08/2018</p>
       <a class="btn btn-pink btn-md mb-3 waves-light" mdbWavesEffect>Read more</a>
     </div>
-    <!--Grid column-->
-
-    <!--Grid column-->
     <div class="col-lg-5 col-xl-5 mb-5">
-      <!--Featured image-->
       <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
         <img src="https://mdbootstrap.com/img/Photos/Others/img%20(34).jpg" alt="Second image in the first version of blog listing"
              class="img-fluid">
@@ -85,19 +59,10 @@
         </a>
       </div>
     </div>
-    <!--Grid column-->
-
   </div>
-  <!--Grid row-->
-
   <hr class="mb-5 mt-4 pb-3">
-
-  <!--Grid row-->
   <div class="row pb-5">
-
-    <!--Grid column-->
     <div class="col-lg-5 col-xl-5 pb-3">
-      <!--Featured image-->
       <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
         <img src="https://mdbootstrap.com/img/Photos/Others/img (28).jpg" alt="Thrid image in the blog listing." class="img-fluid">
         <a>
@@ -105,11 +70,7 @@
         </a>
       </div>
     </div>
-    <!--Grid column-->
-
-    <!--Grid column-->
     <div class="col-lg-7 col-xl-7">
-      <!--Excerpt-->
       <a href="" class="indigo-text">
         <h6 class="font-weight-bold pb-1">
           <i class="fa fa-suitcase"></i> Travels</h6>
@@ -126,11 +87,5 @@
         </a>, 11/08/2018</p>
       <a class="btn btn-indigo btn-md mb-3 waves-light" mdbWavesEffect>Read more</a>
     </div>
-    <!--Grid column-->
-
   </div>
-  <!--Grid row-->
-
 </section>
-<!--Section: Blog v.1-->
-

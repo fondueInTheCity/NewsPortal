@@ -31,6 +31,8 @@ import { ViewMarkdownComponent } from './news/view/view-markdown/view-markdown.c
 import { EditMarkdownComponent } from './news/view/edit-markdown/edit-markdown.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TagComponent } from './news/tag/tag.component';
+import {FileUploadModule} from 'ng2-file-upload';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -52,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MDBBootstrapModule.forRoot(),
         MarkdownModule.forRoot({ loader: HttpClient }),
         AceEditorModule,
+        FileUploadModule,
         routing
     ],
     declarations: [
@@ -73,7 +76,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileInfoComponent,
         MarkdownComponent,
         ViewMarkdownComponent,
-        EditMarkdownComponent
+        EditMarkdownComponent,
+        TagComponent
     ],
   schemas: [],
     providers: [

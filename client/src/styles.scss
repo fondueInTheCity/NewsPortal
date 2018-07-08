@@ -1,0 +1,126 @@
+@import 'app/scss/themes/themes';
+
+.themed{
+  @include themify($themes) {
+    background-color: themed('backgroundColor');
+  }
+}
+
+img{
+  @include themify($themes) {
+    -webkit-filter: themed('imgWebkitFilter');
+    filter: themed('imgFilter');
+  }
+}
+
+.action-btn{
+  @include themify($themes) {
+    background-color: themed('actionBtnColor');
+  }
+}
+
+.btn-browse{
+  @include themify($themes) {
+    background-color: themed('browseBtnColor');
+  }
+}
+
+.submit-btn{
+  @include themify($themes) {
+    background-color: themed('submitBtnColor');
+  }
+}
+
+.navbar{
+  .fa-search{
+    @include themify($themes) {
+      color: themed('iconSearchColor');
+    }
+  }
+  button{
+    @include themify($themes) {
+      background-color: themed('buttonThemeLanguageColor');
+    }
+  }
+  .fa-search{
+    @include themify($themes) {
+      color: themed('iconSearchColor');
+    }
+  }
+  @include themify($themes) {
+    background-color: themed('navBarColor');
+  }
+}
+
+section {
+  @include themify($themes) {
+    color: themed('textColor');
+  }
+  h2 {
+    @include themify($themes) {
+      font-family: themed('h2font');
+      //font-family: themed('h2font'), themed('textGeorgia'), themed('textCheltenham'), themed('textSerif'), themed('textTimes') ;
+    }
+  }
+  h3 {
+    @include themify($themes) {
+      font-family: themed('h3font');
+    }
+  }
+  p {
+    @include themify($themes) {
+      font-family: themed('pfont');
+    }
+  }
+  .title {
+    font-family: sans-serif;
+    font-weight: lighter;
+  }
+
+  .btn{
+    @include themify($themes) {
+      color: themed('buttonTextColor');
+      border-color: themed('buttonTextColor');
+      background-color: themed('buttonColor');
+      text-transform: themed('buttonTextTransform');
+    }
+  }
+}
+
+footer{
+  @include themify($themes) {
+    background-color: themed('navBarColor');
+  }
+}
+
+.container {
+  margin-top: 5px;
+  min-height:100%;
+  width: 100%;
+  position:relative;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+  //margin: 0;
+  //height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  //min-height: 100%;
+  //margin-bottom: 60px;
+}
+
+.center-container {
+  margin: 0 auto;
+}
+
+footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height: 60px;
+}

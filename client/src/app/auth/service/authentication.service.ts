@@ -30,16 +30,21 @@ export class AuthenticationService  {
             .pipe(map((res: any) => {
                 if (res && res.token) {
                     this.translate.use(user.language.name);
-                    localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token, userRole, language: user.language.name }));
+                  this.setDomTheme(user.theme.name);
+                    localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token, userRole,
+                      language: user.language.name, theme: user.theme.name }));
                     this.loggedIn.next(true);
                 }
             }));
     }
-    // login(username: string, password: string) {
-    //   let headers = new Headers();
-    //   headers.append('Content-Type', 'application/json');
-    //   retun
-    // }
+
+    setDomTheme(theme: string){
+      let themeElem = document.getElementsByName("themeElem")[0];
+      let themeClass = themeElem.classList[0];
+      themeElem.classList.remove(themeClass);
+      themeElem.classList.add("theme-" + theme.toLowerCase());
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

@@ -20,7 +20,6 @@ import java.util.List;
 public class NewsController {
 
     private final NewsService newsService;
-    private final NewsAddDtoTransformer newsAddDtoTransformer;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

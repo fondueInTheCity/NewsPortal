@@ -8,7 +8,8 @@ export class UserEditDto {
   role: string;
   city: string;
   bio: string;
-  avatar: FormData;
+  avatar: string;
   theme: Theme;
   language: Language;
+  deleted: boolean;
 }

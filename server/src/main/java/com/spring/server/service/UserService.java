@@ -192,6 +192,7 @@ public class UserService {
         user.setPassword(encoder.encode(user.getPassword()));
     }
 
-
-
+    public String getImage(long id) {
+        return this.userRepository.findById(id).getAvatar();
+    }
 }

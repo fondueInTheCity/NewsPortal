@@ -64,13 +64,13 @@ public class NewsService {
     public void addComment(CommentAddDto commentAddDto) {
         News post = this.newsRepository.findById(commentAddDto.getId_news());
 
-        Set<Comment> comments = new HashSet<>(post.getComments());
+//        Set<Comment> comments = new HashSet<>(post.getComments());
 
         Comment comment = this.commentAddDtoTransformer.makeModel(commentAddDto);
         this.commentRepository.save(comment);
-        comments.add(comment);
-        post.setComments(comments);
-        this.newsRepository.save(post);
+//        comments.add(comment);
+//        post.setComments(comments);
+//        this.newsRepository.save(post);
     }
 
     public List<CommentShowDto> showComments(long idNews) {

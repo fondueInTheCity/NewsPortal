@@ -9,6 +9,8 @@ import {UserService} from "../../service/user.service";
 import {AlertService} from "../../auth/service/alert.service";
 import {Language} from "../../model/language";
 import {Theme} from "../../model/theme";
+import {ProfileService} from '../../service';
+import {UserEditDto} from '../../dto/userEditDto';
 
 @Component({
   selector: 'app-header',
@@ -38,7 +40,8 @@ export class HeaderComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private translate: TranslateService,
     private userService: UserService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private profileService: ProfileService) {
     this.authenticationService.loggedIn.subscribe( value => {
       this.userValidate();
     });
@@ -100,5 +103,8 @@ export class HeaderComponent implements OnInit {
   ngOnDestroy(): void {
     this.themesSubscription && this.themesSubscription.unsubscribe();
     this.languagesSubscription && this.languagesSubscription.unsubscribe();
+  }
+  clearProfile() {
+    this.profileService.setUser(new UserEditDto());
   }
 }

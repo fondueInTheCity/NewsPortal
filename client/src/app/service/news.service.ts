@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {CommentAddDto} from '../dto';
 import {CommentShowDto} from '../dto/CommentShowDto';
+import {b} from '@angular/core/src/render3';
 
 @Injectable()
 export class NewsService {
@@ -32,6 +33,23 @@ export class NewsService {
   showComments(idPost: number) {
     return this.http.get<CommentShowDto[]>(`${environment.serverUrl}news/comments/` + idPost);
   }
-  addLike() {
+  sortByName(news: News[], sortType: number): News[] {
+    return news.sort(function (a: News, c: News): number  {
+      return sortType * (a.name > c.name ? 1 : -1);
+    });
+  }
+  sortByDate(news: News[], sortType: number): News[] {
+    return news.sort(function (a: News, c: News): number  {
+      return sortType * (a.publishDate > c.publishDate ? 1 : -1);
+    });
+  }
+  searchByFragment(news: News[], fragment: string): News[] {
+    let ans: News[] = [];
+    news.forEach(function (post: News) {
+      if (post.name.includes(fragment) || post.text.includes(fragment)) {
+        ans.push(post);
+      }
+    });
+    return ans;
   }
 }

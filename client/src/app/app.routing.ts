@@ -24,8 +24,8 @@ const appRoutes: Routes = [
     { path: 'comment', component: CommentComponent},
     { path: 'users', component: UsersListComponent },
     { path: 'profile/:username', component: ProfileComponent },
-    { path: 'markdown', component: MarkdownComponent},
-    { path: 'markdown/:id', component: MarkdownComponent},
+    { path: 'addPost', component: MarkdownComponent},
+    { path: 'editPost/:id', component: MarkdownComponent},
     { path: 'news/:id', component: ViewMarkdownComponent},
       // children: [
       //   {

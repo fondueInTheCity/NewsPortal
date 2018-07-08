@@ -5,6 +5,8 @@ import {AlertService} from '../../../auth/service/alert.service';
 import {first} from 'rxjs/internal/operators';
 import { Subscription } from 'rxjs';
 import {UserEditDto} from "../../../dto/userEditDto";
+import {ProfileService} from '../../../service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile-edit',
@@ -12,7 +14,8 @@ import {UserEditDto} from "../../../dto/userEditDto";
   styleUrls: ['profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
-  @Input() user: UserEditDto;
+  //@Input() user: UserEditDto;
+  user: UserEditDto;
   editUserForm: FormGroup;
   loading = false;
   submitted = false;
@@ -22,11 +25,14 @@ export class ProfileEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private profileService: ProfileService,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
+    this.user = this.profileService.getUser();
     this.editUserForm = this.formBuilder.group({
       id: [this.user.id, Validators.required],
       username: [this.user.username, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')],
@@ -60,15 +66,11 @@ export class ProfileEditComponent implements OnInit {
       .subscribe(
         data => {
           if (this.fileToUpload !== null)
-            this.routeSubscription = this.userService.uploadImage(formdata, user.id).pipe(first()).subscribe(data => {
-              console.log("Saved");
-              this.loading = false;
-              this.submitted = false;
+            this.routeSubscription = this.userService.uploadImage(formdata, user.id).pipe(first()).subscribe((data) => {
+              this.setUserData(user);
           });
           else {
-            console.log("Saved");
-            this.loading = false;
-            this.submitted = false;
+            this.setUserData(user);
           }
         },
         error => {
@@ -84,6 +86,14 @@ export class ProfileEditComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
+  }
+  setUserData(user: UserEditDto) {
+    console.log("Saved");
+    this.loading = false;
+    this.submitted = false;
+    user.role = this.userService.transformRoleToView(user.role);
+    this.profileService.setUser(user);
+    this.router.navigate([`/profile/${user.username}`]);
   }
 
 }

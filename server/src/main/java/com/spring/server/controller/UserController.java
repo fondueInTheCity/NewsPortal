@@ -98,4 +98,10 @@ public class UserController {
         boolean blockedStatus = Boolean.parseBoolean(blockStatus.get("blocked"));
         this.userService.blockUser(id, blockedStatus);
     }
+
+    @RequestMapping("/getImage/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String getImage(@PathVariable long id) {
+        return this.userService.getImage(id);
+    }
 }

@@ -3,38 +3,52 @@
     <div class="row">
       <div class="col-sm-4">
         <h3 id="head_name" translate>{{user.username}} news
-          <a *ngIf="isCanAddNews()" class="pull-right" [routerLink]='["/markdown/", {authorId: user.id}]'>+</a>
+          <a *ngIf="isCanAddNews()" class="pull-right" [routerLink]='["/addPost/", {authorId: user.id}]'>+</a>
         </h3>
         <hr id="head_hr" />
       </div>
-      <div class="col-md-4 no-space ml-auto">
+      <form [formGroup]="searchForm" class="col-md-4 no-space ml-auto" (change)="search()" >
         <div class="row md-form">
-          <input class="form-control" id="form5" [attr.placeholder]="'Search...' | translate" type="text">
+          <input class="form-control" id="search" formControlName="search" [attr.placeholder]="'Search...' | translate" type="text">
           <!--<i class="fa fa-search" aria-hidden="true"></i>-->
         </div>
-      </div>
+      </form>
     </div>
   </div>
   <table class="table text-center table-hover">
     <thead>
     <tr>
-      <th translate>Title</th>
-      <th>Text</th>
-      <th>Published Date</th>
+      <th translate>
+        <a (click)="sortByTitle()">
+          Title
+          <i *ngIf="showImageSortByNameUp()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="showImageSortByNameDown()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+        </a>
+      </th>
+      <th>Description</th>
+      <th>
+        <a (click)="sortByDate()">
+          Published Date
+          <i *ngIf="showImageSortByDateUp()" class="fa fa-long-arrow-up" aria-hidden="true"></i>
+          <i *ngIf="showImageSortByDateDown()" class="fa fa-long-arrow-down" aria-hidden="true"></i>
+        </a>
+      </th>
       <th translate>Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let post of news">
-      <td><a routerLink="/news/{{post.id}}">{{post.name}}</a></td>
-      <td>{{post.text}}</td>
+    <tr *ngFor="let post of newsInSearch">
+      <td>
+        <a routerLink="/news/{{post.id}}">{{post.name}}</a>
+      </td>
+      <td>{{post.description}}</td>
       <td>{{post.publishDate}}</td>
       <td>
         <div class="btn-group" dropdown>
           <!--<button type="button" class="btn btn-danger waves-light" mdbWavesEffect>Action</button>-->
           <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" routerLink="/markdown/{{post.id}}" translate>Edit</a>
+            <a class="dropdown-item" routerLink="/editPost/{{post.id}}" translate>Edit</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" (click)="deletePost(post.id)" translate>Delete</a>
           </div>

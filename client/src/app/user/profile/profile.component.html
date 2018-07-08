@@ -40,13 +40,13 @@
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
           <div class="card card-cascade narrower">
             <div id="newsTab" class="tab-slider--body" *ngSwitchCase="'newsTab'">
-              <app-profile-news [user]="user"></app-profile-news>
+              <app-profile-news ></app-profile-news>
             </div>
             <div id="profileTab" class="tab-slider--body" *ngSwitchCase="'profileTab'">
-              <app-profile-info [user]="user"></app-profile-info>
+              <app-profile-info ></app-profile-info>
             </div>
             <div id="editTab" class="tab-slider--body" *ngSwitchCase="'editTab'">
-              <app-profile-edit [user]="user"></app-profile-edit>
+              <app-profile-edit></app-profile-edit>
             </div>
           </div>
         </div>

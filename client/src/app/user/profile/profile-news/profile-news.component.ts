@@ -1,9 +1,10 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {UserEditDto} from '../../../dto/userEditDto';
-import { Router} from '@angular/router';
-import {NewsService} from '../../../service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {NewsService, ProfileService, UserService} from '../../../service';
 import {News} from '../../../model';
 import {first} from 'rxjs/internal/operators';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-profile-news',
@@ -11,15 +12,28 @@ import {first} from 'rxjs/internal/operators';
   styleUrls: ['profile-news.component.css']
 })
 export class ProfileNewsComponent implements OnInit {
-  @Input() user: UserEditDto;
+  //@Input() user: UserEditDto = new UserEditDto();
+  user: UserEditDto;
   news: News[] = [];
+  searchForm: FormGroup;
+  newsInSearch: News[] = [];
+  sortByNameType = 1;
+  sortByDateType = 1;
+  clickSortByName = false;
+  clickSortByDate = false;
+  username: string;
   constructor(private router: Router,
-              private newsService: NewsService) { }
-
+              private newsService: NewsService,
+              private formBuilder: FormBuilder,
+              private profileService: ProfileService) {}
   ngOnInit() {
-      this.loadAllNews();
+    //this.profileService.loadUserByUsername(this.username);
+    this.user = this.profileService.getUser();
+    this.searchForm = this.formBuilder.group({
+      search: ['', Validators.required]
+    });
+    this.loadAllNews();
   }
-
   isCanAddNews(): boolean {
     let currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
     let isSelfAddNews: boolean = (((currentUserJson.userRole === 'ROLE_ADMIN') ||
@@ -40,7 +54,35 @@ export class ProfileNewsComponent implements OnInit {
   }
   private loadAllNews() {
     this.newsService.getNewsByIdUser(this.user.id).pipe(first()).subscribe(news => {
-      this.news = news;
+      this.news = this.newsInSearch = news;
     });
+  }
+  sortByTitle() {
+    this.clickSortByName = true;
+    this.clickSortByDate = false;
+    this.news = this.newsService.sortByName(this.news, this.sortByNameType);
+    this.sortByNameType *= -1;
+  }
+  sortByDate() {
+    this.clickSortByName = false;
+    this.clickSortByDate = true;
+    this.news = this.newsService.sortByDate(this.news, this.sortByDateType);
+    this.sortByDateType *= -1;
+  }
+  showImageSortByNameDown(): boolean {
+    return this.clickSortByName && this.sortByNameType === 1;
+  }
+  showImageSortByNameUp(): boolean {
+    return this.clickSortByName && this.sortByNameType === -1;
+  }
+  showImageSortByDateDown(): boolean {
+    return this.clickSortByDate && this.sortByDateType === 1;
+  }
+  showImageSortByDateUp(): boolean {
+    return this.clickSortByDate && this.sortByDateType === -1;
+  }
+  search() {
+    this.newsInSearch = this.news;
+    this.newsInSearch = this.newsService.searchByFragment(this.news, this.searchForm.controls.search.value);
   }
 }

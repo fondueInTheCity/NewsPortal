@@ -2,12 +2,13 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 
 import {FormBuilder} from '@angular/forms';
 // import {Router} from '@angular/router';
-import {UserService} from '../../service';
+import {ProfileService, UserService} from '../../service';
 import {AlertService} from '../../auth/service';
 import {User} from '../../model';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
 import {first} from 'rxjs/operators';
+import {UserEditDto} from '../../dto/userEditDto';
 
 @Component({
   selector: 'app-profile',
@@ -15,27 +16,28 @@ import {first} from 'rxjs/operators';
   styleUrls: ['profile.component.css']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  user = new  User();
+  user = new  UserEditDto();
   viewMode = 'newsTab';
   isCanEdit: boolean;
   isDeleted: boolean;
+  username: string;
 
   private routeSubscription: Subscription
 
   constructor(
     private userService: UserService,
     private alertService: AlertService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private profileService: ProfileService
   ) {
     this.routeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-      let username = params['username'];
-      this.userService.getByUsername(username)
+      this.username = params['username'];
+      this.userService.getByUsername(this.username)
         .pipe(first())
-        .subscribe((data: User) => {
+        .subscribe((data: UserEditDto) => {
             this.user = data;
             this.isDeleted = this.user.deleted;
             this.user.role = this.userService.transformRoleToView(this.user.role);
-
             let currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
             this.isCanEdit = ((currentUserJson.userRole === 'ROLE_ADMIN') || (this.user['username'] === currentUserJson.username));
           },
@@ -46,6 +48,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.userService.getByUsername(this.username).pipe(first()).subscribe(user => {
+      user.role = this.userService.transformRoleToView(user.role);
+      this.profileService.setUser(user);
+    });
+    //this.user = this.profileService.loadUserByUsername(this.username);
   }
 
   ngOnDestroy(): void {

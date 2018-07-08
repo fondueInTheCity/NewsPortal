@@ -6,6 +6,7 @@ import { User } from '../model';
 import {ActivatedRouteSnapshot, CanActivate} from '@angular/router';
 import {Language} from "../model/language";
 import {Theme} from "../model/theme";
+import {UserEditDto} from '../dto/userEditDto';
 
 @Injectable()
 export class UserService   {
@@ -20,18 +21,18 @@ export class UserService   {
   }
 
   getByUsername(username: string) {
-    return this.http.get(`${environment.serverUrl}users/` + username);
+    return this.http.get<UserEditDto>(`${environment.serverUrl}users/` + username);
   }
 
   addUser(user: User) {
     return this.http.post(`${environment.serverUrl}auth/registration`, user);
   }
 
-  update(user: User){
+  update(user: User) {
     return this.http.post(`${environment.serverUrl}users/edit`, user);
   }
 
-  uploadImage(image: FormData, id: number){
+  uploadImage(image: FormData, id: number) {
     return this.http.post(`${environment.serverUrl}users/editImage/` + id, image);
   }
 
@@ -74,4 +75,7 @@ export class UserService   {
     return updatedRole;
   }
 
+  // getImage(id: number): string {
+  //   return this.http.get(`${environment.serverUrl}users/getImage` + id);
+  // }
 }

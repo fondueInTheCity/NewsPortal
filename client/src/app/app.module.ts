@@ -8,7 +8,7 @@ import { routing } from './app.routing';
 import { AuthGuard } from './auth/guards';
 import { JwtInterceptor } from './auth/helpers';
 import {AlertService, AuthenticationService} from './auth/service';
-import {NewsService, UserService} from './service';
+import {NewsService, UserService, ProfileService} from './service';
 import { HomeComponent } from './home';
 import { LoginComponent } from './auth/login';
 import { AlertComponent } from './auth/directives/alert.component';
@@ -19,7 +19,6 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { RestorePasswordComponent } from './auth/restore-password/restore-password.component';
 import { RememberComponent } from './auth/remember/remember.component';
 import { CommentComponent } from './news/comment/comment.component';
-import { NewCommentComponent } from './news/new-comment/new-comment.component';
 import { UsersListComponent } from './user/users-list/users-list.component';
 import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.component';
 import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
@@ -67,7 +66,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         RestorePasswordComponent ,
         RememberComponent,
         CommentComponent,
-        NewCommentComponent,
         UsersListComponent,
         ProfileEditComponent,
         ProfileNewsComponent,
@@ -83,12 +81,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         AlertService,
         AuthenticationService,
         NewsService,
+        ProfileService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
             multi: true
-        },
+        }
     ],
     bootstrap: [AppComponent]
 })

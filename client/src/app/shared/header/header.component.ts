@@ -74,10 +74,25 @@ export class HeaderComponent implements OnInit {
       this.themesSubscription = this.userService.setTheme(currentUserJSON.username, theme)
         .pipe(first())
         .subscribe(
+          data => {
+            currentUserJSON.theme = theme.name;
+            localStorage.setItem('currentUser', JSON.stringify(currentUserJSON));
+            this.setDomTheme(theme.name);
+          },
           (error: string) => {
             this.alertService.error(error);
           });
     }
+    else{
+      this.setDomTheme(theme.name);
+    }
+  }
+
+  setDomTheme(theme: string){
+    let themeElem = document.getElementsByName("themeElem")[0];
+    let themeClass = themeElem.classList[0];
+    themeElem.classList.remove(themeClass);
+    themeElem.classList.add("theme-" + theme.toLowerCase());
   }
 
   switchLanguage(language: Language) {
@@ -86,6 +101,10 @@ export class HeaderComponent implements OnInit {
       this.languagesSubscription = this.userService.setLanguage(currentUserJSON.username, language)
         .pipe(first())
         .subscribe(
+          data => {
+            currentUserJSON.language = language.name;
+            localStorage.setItem('currentUser', JSON.stringify(currentUserJSON));
+          },
           (error: string) => {
             this.alertService.error(error);
           });

@@ -1,4 +1,5 @@
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark default-color ie-nav" [containerInside]="false">
+<div class="{{theme}}">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark ie-nav" [containerInside]="false">
   <logo>
     <a class="logo navbar-brand" routerLink="/"><strong>ITnews</strong></a>
   </logo>
@@ -20,7 +21,7 @@
     </div>
 
     <div class="btn-group" dropdown>
-      <button type="button" dropdownToggle class="btn btn-secondary dropdown-toggle" mdbWavesEffect translate>
+      <button type="button" dropdownToggle class="btn dropdown-toggle" mdbWavesEffect translate>
         Theme
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -29,7 +30,7 @@
     </div>
 
     <div class="btn-group" dropdown>
-      <button type="button" dropdownToggle class="btn btn-secondary dropdown-toggle" mdbWavesEffect translate>
+      <button type="button" dropdownToggle class="btn dropdown-toggle" mdbWavesEffect translate>
         Language
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -48,7 +49,7 @@
         <a class="nav-link"><i class="fa fa-vk"></i></a>
       </li>
       <li class="nav-item waves-light" mdbWavesEffect>
-        <a class="nav-link" href="/login" translate>Login</a>
+        <a class="nav-link" routerLink="/login" translate>Login</a>
       </li>
     </ul>
     <ul class="navbar-nav" *ngIf="currentUser != null">
@@ -61,3 +62,4 @@
     </ul>
   </links>
 </mdb-navbar>
+</div>

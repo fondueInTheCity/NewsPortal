@@ -1,0 +1,61 @@
+$themes: (
+  magazine: (
+    backgroundColor: white,
+    textColor: #408bbd,
+    navBarColor: #2bbbad,
+    buttonTextColor: white,
+    buttonTextTransform: uppercase,
+    buttonTextHoverColor: #ddd,
+    buttonThemeLanguageColor: #aa66cc,
+    buttonColor: #5cb85c,
+    buttonBorder: 1px solid #4cae4c,
+    iconSearchColor: black,
+    h2font: default,
+    h3font: default,
+    pfont: default,
+    imgWebkitFilter: none,
+    imgFilter: none,
+    actionBtnColor: red,
+    browseBtnColor: #2bbbad,
+    submitBtnColor: #408bbd
+  ),
+  newspaper: (
+    backgroundColor: #EDE5F4,
+    textColor: #333,
+    navBarColor: #333,
+    iconSearchColor: white,
+    buttonTextColor: white,
+    buttonTextTransform: none,
+    buttonThemeLanguageColor: #7B7E77,
+    buttonTextHoverColor: #ddd,
+    buttonColor: #333,
+    buttonBorder: 1px solid #333,
+    //hfont: "cheltenham-normal-500" georgia "times new roman" times serif,
+    imgWebkitFilter: grayscale(100%), /* Safari 6.0 - 9.0 */
+    imgFilter: grayscale(100%),
+    h2font: "times new roman",
+    h3font: "times new roman",
+    pfont: "times new roman",
+    actionBtnColor: #7B7E77,
+    browseBtnColor: #7B7E77,
+    submitBtnColor: #333
+  ),
+);
+
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}

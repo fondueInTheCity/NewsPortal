@@ -1,16 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {News} from '../../../model/index';
-import {first} from 'rxjs/operators';
+import {News} from '../../model';
+import {FileUploader} from 'ng2-file-upload/ng2-file-upload';
+import {NewsService} from '../../service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NewsService} from '../../../service/index';
-import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import {first} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-edit-markdown',
-  templateUrl: './edit-markdown.component.html',
-  styleUrls: ['./edit-markdown.component.css']
+  selector: 'app-edit-news',
+  templateUrl: './edit-news.component.html',
+  styleUrls: ['./edit-news.component.css']
 })
-export class EditMarkdownComponent implements OnInit {
+export class EditNewsComponent implements OnInit {
   @Input() news = new News();
   @Input() new;
   viewMode = 'editTab';

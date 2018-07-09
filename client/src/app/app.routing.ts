@@ -6,11 +6,10 @@ import {RegisterComponent} from './auth/register';
 import {ProfileComponent} from './user/profile/profile.component';
 import {RestorePasswordComponent} from './auth/restore-password/restore-password.component';
 import {RememberComponent} from './auth/remember/remember.component';
-import {CommentComponent} from './news/comment/comment.component';
 import {UsersListComponent} from './user/users-list/users-list.component';
 import {Exception404Component} from './exception/exception404/exception404.component';
 import {MarkdownComponent} from './news/markdown/markdown.component';
-import {ViewMarkdownComponent} from './news/view/view-markdown/view-markdown.component';
+import {ViewNewsComponent} from './news/view-news/view-news.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent }, //, canActivate: [AuthGuard]
@@ -21,12 +20,11 @@ const appRoutes: Routes = [
     { path: 'restorePassword/:code', component: RestorePasswordComponent},
     { path: 'remember', component: RememberComponent},
     { path: 'restore/:code', component: RestorePasswordComponent},
-    { path: 'comment', component: CommentComponent},
     { path: 'users', component: UsersListComponent },
     { path: 'profile/:username', component: ProfileComponent },
     { path: 'addPost', component: MarkdownComponent},
     { path: 'editPost/:id', component: MarkdownComponent},
-    { path: 'news/:id', component: ViewMarkdownComponent},
+    { path: 'news/:id', component: ViewNewsComponent},
       // children: [
       //   {
       //     path: '',

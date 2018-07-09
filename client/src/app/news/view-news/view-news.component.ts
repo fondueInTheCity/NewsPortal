@@ -1,21 +1,27 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {News} from '../../../model/index';
+import {News} from '../../model';
+import {CommentAddDto, CommentShowDto} from '../../dto';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NewsService} from '../../service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NewsService} from '../../../service/index';
 import {first} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-view-markdown',
-  templateUrl: './view-markdown.component.html',
-  styleUrls: ['./view-markdown.component.css']
+  selector: 'app-view-news',
+  templateUrl: './view-news.component.html',
+  styleUrls: ['./view-news.component.css']
 })
-export class ViewMarkdownComponent implements OnInit {
+export class ViewNewsComponent implements OnInit {
   @Input() post: News;
+  commentForm: FormGroup;
+  commentAddDto = new CommentAddDto();
+  commentsShowDto: CommentShowDto[] = [];
   new = true;
   id: number;
   currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
   constructor(private route: ActivatedRoute,
               private newsService: NewsService,
+              private formBuilder: FormBuilder,
               private router: Router) { }
 
   ngOnInit() {
@@ -33,6 +39,12 @@ export class ViewMarkdownComponent implements OnInit {
             );
           }
         });
+    }
+    this.commentForm = this.formBuilder.group({
+      comment: ['', Validators.required]
+    });
+    if (this.showComments()) {
+      this.loadAllComments();
     }
   }
   deletePost(id: number) {
@@ -58,5 +70,25 @@ export class ViewMarkdownComponent implements OnInit {
     return !this.new;
   }
   addLike() {
+  }
+  get formControl() { return this.commentForm.controls; }
+  onSubmit() {
+    this.commentAddDto.text = this.formControl.comment.value;
+    this.commentAddDto.id_user = this.post.id_user;
+    this.commentAddDto.id_news = this.post.id;
+    this.newsService.addComment(this.commentAddDto).pipe(first()).subscribe(
+      data => {
+        this.formControl.comment.reset();
+        this.loadAllComments();
+      },
+      error => {
+        //sdfsdfefsd
+      });
+  }
+
+  loadAllComments() {
+    this.newsService.showComments(this.id).pipe(first()).subscribe(commentsShowDto => {
+      this.commentsShowDto = commentsShowDto;
+    });
   }
 }

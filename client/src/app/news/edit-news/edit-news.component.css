@@ -17,3 +17,7 @@ a.perm-link {
 .multiselect-container>li>a>label {
   padding: 4px 20px 3px 20px;
 }
+
+.padd{
+  padding-left: 15px;
+}

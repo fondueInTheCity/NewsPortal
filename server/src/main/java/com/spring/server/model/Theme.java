@@ -7,9 +7,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-@NoArgsConstructor
 public class Theme {
 
     @Id
@@ -19,12 +16,9 @@ public class Theme {
     @Column(name = "name")
     private String name;
 
-//    @JsonManagedReference
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL)
-//    private Set<User> users;
-
     public Theme(String name){
         this.name = name;
+    }
+    public Theme(){
     }
 }

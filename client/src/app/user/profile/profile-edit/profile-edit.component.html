@@ -61,7 +61,6 @@
       </div>
     </div>
     <div class="row">
-
       <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="input-group image-preview">
           <input type="text" [attr.placeholder]="'Upload avatar' | translate" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
@@ -78,28 +77,6 @@
         </div>
       </div>
     </div>
-    <!--<div class="row">-->
-      <!--<div class="col-md-4">-->
-        <!--<div class="select-box">-->
-          <!--<div class="form-group">-->
-            <!--<label for="language" translate>Language:</label>-->
-            <!--<select class="form-control" id="language" ng-model="user.language.id" formControlName="language">-->
-              <!--<option *ngFor="let lang of languages" ngValue="{{lang.id}}">{{lang.name}}</option>-->
-            <!--</select>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="col-md-4">-->
-        <!--<div class="select-box">-->
-        <!--<div class="form-group">-->
-          <!--<label for="theme" translate>Theme:</label>-->
-          <!--<select class="form-control" id="theme" ng-model="user.theme" formControlName="theme">-->
-            <!--<option *ngFor="let theme of themes" ngValue="{{stringify(theme)}}">{{theme.name}}</option>-->
-          <!--</select>-->
-        <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
     <div class="text-center btn-div">
       <input value="{{user.id}}" formControlName="id" type="hidden">
       <button [disabled]="loading" class="btn submit-btn" mdbwaveseffect="" type="submit" translate>Update</button>

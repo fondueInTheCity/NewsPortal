@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString
 @NoArgsConstructor
 public class Language {
@@ -18,12 +17,6 @@ public class Language {
 
     @Column(name = "name")
     private String name;
-
-//    @JsonManagedReference
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "language", cascade = CascadeType.ALL)
-//    private Set<User> users;
-
     public Language(String name){
         this.name = name;
     }

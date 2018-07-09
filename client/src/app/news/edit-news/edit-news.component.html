@@ -1,3 +1,38 @@
+<div class="row padd">
+  <div class="col-md-4">
+    <div class="md-form">
+      <input class="form-control" id="postCategory" type="text">
+      <label class="active" for="postCategory" translate>Category</label>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="md-form">
+      <input class="form-control" id="postTags" (onChange)="addTagToDom(this.value)" type="text">
+      <label class="active" for="postTags" translate>Tags</label>
+    </div>
+  </div>
+</div>
+
+<ul class="d-flex flex-wrap align-content-start">
+  <li class="p-1 bg-light rounded d-flex m-1">
+    <span class="text-dark">Tag</span>
+    <i class="close fa fa-times my-auto mx-1"></i>
+  </li>
+</ul>
+
+<div class="col-md-8">
+  <div class="md-form">
+    <input value="{{news.name}}" [(ngModel)]="news.name" class="form-control" required id="postName" [attr.placeholder]="'Title' | translate" type="text">
+    <label class="active" for="postName" translate>Title</label>
+  </div>
+</div>
+<div class="col-md-8">
+  <div class="md-form">
+    <input value="{{news.description}}" class="form-control" required id="postDescription" [attr.placeholder]="'Description' | translate" type="text">
+    <label class="active" for="postDescription" translate>Description</label>
+  </div>
+</div>
+
 <div class="card mt-5">
   <div class="card-header">
     <div class="btn-group float-right" >
@@ -14,35 +49,31 @@
       <li class="nav-item"><a class="nav-link" [class.active]="viewMode == 'previewTab'" rel="previewTab" (click)="viewMode ='previewTab'">Preview</a></li>
     </ul>
   </div>
-
-  <!--<form #f="ngForm">-->
   <div class="tab-content" [ngSwitch]="viewMode">
     <div class="tab-pane fade show active" id="edit-markdown-edit" *ngSwitchCase="'editTab'">
-      <div class="input-group">
-        <span class="input-group-addon bg-dark text-white" id="sizing-addon1"><h5>Title</h5></span>
-        <input type="text"
-               class="form-control"
-               placeholder="Enter title"
-               aria-describedby="sizing-addon1"
-               [(ngModel)]="news.name"
-               required
-               ndModel
-               name="title">
-      </div>
-
-      <div class="card">
-        <div class="card-header bg-dark text-white">
-          <h5 class="card-title float-sm-left">Description</h5>
-        </div>
-        <div class="card-body">
-          <div class="md-form">
-            <textarea type="text" id="form7" class="md-textarea form-control"
-                      [(ngModel)]="news.description"
-                      style=" width:100%; overflow: auto;"></textarea>
-          </div>
-        </div>
-      </div>
-
+      <!--<div class="input-group">-->
+        <!--<span class="input-group-addon bg-dark text-white" id="sizing-addon1"><h5>Title</h5></span>-->
+        <!--<input type="text"-->
+               <!--class="form-control"-->
+               <!--placeholder="Enter title"-->
+               <!--aria-describedby="sizing-addon1"-->
+               <!--[(ngModel)]="news.name"-->
+               <!--required-->
+               <!--ndModel-->
+               <!--name="title">-->
+      <!--</div>-->
+      <!--<div class="card">-->
+        <!--<div class="card-header bg-dark text-white">-->
+          <!--<h5 class="card-title float-sm-left">Description</h5>-->
+        <!--</div>-->
+        <!--<div class="card-body">-->
+          <!--<div class="md-form">-->
+            <!--<textarea type="text" id="form7" class="md-textarea form-control"-->
+                      <!--[(ngModel)]="news.description"-->
+                      <!--style=" width:100%; overflow: auto;"></textarea>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="card">
         <div class="card-header bg-dark text-white">
           <h5 class="card-title float-sm-left">Content</h5>
@@ -53,15 +84,13 @@
                [theme]="'eclipse'"
                (fileOver)="fileOverAnother($event)"
                [uploader]="uploader"
-               style="min-height: 150px; width:100%; overflow: auto;">
+               style="min-height: 300px; width:100%; overflow: auto;" name="markdownEditor">
           </div>
         </div>
       </div>
     </div>
-
     <div *ngSwitchCase="'previewTab'">
       <app-view-news [post]="news" ></app-view-news>
     </div>
   </div>
-  <!--</form>-->
 </div>

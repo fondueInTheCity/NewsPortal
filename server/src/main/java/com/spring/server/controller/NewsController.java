@@ -1,15 +1,17 @@
 package com.spring.server.controller;
 
+import com.dropbox.core.DbxException;
 import com.spring.server.service.NewsService;
+import com.spring.server.service.StorageService;
 import com.spring.server.service.dto.CommentDto.CommentAddDto;
 import com.spring.server.service.dto.CommentDto.CommentShowDto;
 import com.spring.server.service.dto.NewsDto.NewsAddDto;
 import com.spring.server.service.dto.NewsDto.NewsEditDto;
-import com.spring.server.service.transformer.NewsTransformer.NewsAddDtoTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class NewsController {
 
     private final NewsService newsService;
+    private final StorageService storageService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -44,6 +47,12 @@ public class NewsController {
     @ResponseStatus(HttpStatus.OK)
     public NewsAddDto getPostById(@PathVariable Long id) {
         return this.newsService.getPostById(id);
+    }
+
+    @PostMapping("/addImageToPost")
+    @ResponseStatus(HttpStatus.OK)
+    public String addImageToPost(@RequestParam("file") MultipartFile image) throws DbxException {
+        return this.storageService.uploadImage(image);
     }
 
     @PostMapping("/edit")

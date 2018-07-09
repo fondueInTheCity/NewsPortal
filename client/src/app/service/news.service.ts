@@ -5,6 +5,8 @@ import {environment} from '../../environments/environment';
 import {CommentAddDto} from '../dto';
 import {CommentShowDto} from '../dto/CommentShowDto';
 import {b} from '@angular/core/src/render3';
+import {Headers} from "@angular/http";
+import {HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class NewsService {
@@ -23,6 +25,12 @@ export class NewsService {
   }
   getPostById(id: number) {
     return this.http.get<News>(`${environment.serverUrl}news/` + id);
+  }
+  addImageToPost(image: FormData) {
+    // let headers = new Headers();
+    // headers.set('responseType', 'text');
+    // let headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.http.post<string>(`${environment.serverUrl}news/addImageToPost`, image, {responseType: 'text'});
   }
   deletePost(id: number) {
     return this.http.delete(`${environment.serverUrl}news/deletePost/` + id);

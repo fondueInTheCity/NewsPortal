@@ -9,9 +9,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-@NoArgsConstructor
 public class Rating {
 
     @Id
@@ -24,24 +21,15 @@ public class Rating {
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
-    public User getUser() {
-        return this.user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     @ManyToOne
     @JoinColumn(name = "id_news")
     private News news;
-    public News getNews() {
-        return this.news;
-    }
-    public void setNews(News news) {
-        this.news = news;
-    }
 
     public Rating(int value) {
         this.value = value;
+    }
+    public Rating() {
+
     }
 }

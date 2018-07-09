@@ -1,22 +1,14 @@
 package com.spring.server.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-@NoArgsConstructor
 public class News {
 
     @Id
@@ -32,6 +24,9 @@ public class News {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "ratingValue")
+    private Float ratingValue;
+
     @Column(name = "publishDate")
     private String publishDate;
 
@@ -39,47 +34,35 @@ public class News {
     @JoinTable(name = "news_tag", joinColumns = @JoinColumn(name = "id_news", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_tag", referencedColumnName = "id"))
     public Set<Tag> tags;
-    public Set<Tag> getTag() {
-        return tags;
-    }
-    public void setTag(Set<Tag> tags){
-        this.tags = tags;
-    }
 
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
-    public User getUser() {
-        return this.user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
-    //@JoinColumn(name = "comment_id")
-    @JsonManagedReference
     private Set<Comment> comments;
-    public Set<Comment> getComments() {
-        return this.comments;
-    }
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
     private Set<Rating> rating;
-    public Set<Rating> getRatings() {
-        return this.rating;
-    }
-    public void setRatings(Set<Rating> rating) {
-        this.rating = rating;
-    }
 
     public News(String name, String description, String text) {
         this.name = name;
         this.description = description;
         this.text = text;
         this.publishDate = LocalDateTime.now().toString();
+    }
+
+    public News() {
+    }
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", text='" + text + '\'' +
+                ", publishDate='" + publishDate + '\'' +
+                '}';
     }
 }

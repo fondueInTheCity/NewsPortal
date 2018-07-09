@@ -98,8 +98,7 @@ public class UserService {
     }
 
     public void setUsersImage(Long userId, MultipartFile image) throws DbxException {
-        this.storageService.init();
-        String publicUrl = this.storageService.loadFileToDropbox(image);
+        String publicUrl = this.storageService.uploadImage(image);
         User user = this.userRepository.findById((long)userId);
         user.setAvatar(publicUrl);
         userRepository.save(user);

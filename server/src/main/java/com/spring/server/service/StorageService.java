@@ -51,6 +51,12 @@ public class StorageService {
         return convFile;
     }
 
+    public String uploadImage(MultipartFile image) throws DbxException {
+        init();
+        String publicUrl = loadFileToDropbox(image);
+        return publicUrl;
+    }
+
     public void init() {
         try {
             DbxRequestConfig config = new DbxRequestConfig("dropbox/java-tutorial", "en_US");

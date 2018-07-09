@@ -8,9 +8,6 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-@NoArgsConstructor
 public class User {
 
     @Id
@@ -92,12 +89,27 @@ public class User {
         this.theme.setId(Long.parseLong("1"));
     }
 
-    public void applyChanges(final User inUser) {
-        this.setUsername(inUser.getUsername());
-        this.setPassword(inUser.getPassword());
-        this.setFirstName(inUser.getFirstName());
-        this.setLastName(inUser.getLastName());
-        this.setEmail(inUser.getEmail());
-        this.setRole(inUser.getRole());
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password=" + password +
+                ", firstName='" + firstName + '\'' +
+                ", lastName=" + lastName +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", activationCode='" + activationCode + '\'' +
+                ", country='" + country + '\'' +
+                ", city=" + city +
+                ", bio='" + bio + '\'' +
+                ", avatar=" + avatar +
+                ", isActive=" + isActive +
+                ", isBlocked='" + isBlocked + '\'' +
+                ", isDeleted='" + isDeleted + '\'' +
+                '}';
     }
 }

@@ -40,13 +40,14 @@ export class NewsService {
   }
   sortByDate(news: News[], sortType: number): News[] {
     return news.sort(function (a: News, c: News): number  {
-      return sortType * (a.publishDate > c.publishDate ? 1 : -1);
+      return sortType * (a.publishDate.toLowerCase() > c.publishDate.toLowerCase() ? 1 : -1);
     });
   }
   searchByFragment(news: News[], fragment: string): News[] {
     let ans: News[] = [];
     news.forEach(function (post: News) {
-      if (post.name.includes(fragment) || post.text.includes(fragment)) {
+      if (post.name.toLowerCase().includes(fragment.toLowerCase())
+        || post.text.toLowerCase().includes(fragment.toLowerCase())) {
         ans.push(post);
       }
     });

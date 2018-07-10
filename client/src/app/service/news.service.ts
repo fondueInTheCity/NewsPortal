@@ -19,7 +19,7 @@ export class NewsService {
     return this.http.get<NewsInfoDto[]>(`${environment.serverUrl}news`);
   }
   getNewsByIdUser(idUser: number) {
-    return this.http.get<News[]>(`${environment.serverUrl}news/author/` + idUser);
+    return this.http.get<NewsInfoDto[]>(`${environment.serverUrl}news/author/` + idUser);
   }
   editPost(post: NewsInfoDto) {
     return this.http.post(`${environment.serverUrl}news/edit`, post);

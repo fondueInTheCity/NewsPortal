@@ -1,6 +1,9 @@
 package com.spring.server.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,18 +34,22 @@ public class News {
     private String publishDate;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     @JoinTable(name = "news_tag", joinColumns = @JoinColumn(name = "id_news", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_tag", referencedColumnName = "id"))
     public Set<Tag> tags;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "id_user")
     private User user;
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Rating> rating;
 
     public News(String name, String description, String text) {

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {News} from '../../model';
-import {CommentAddDto, CommentShowDto} from '../../dto';
+import {CommentAddDto, CommentShowDto, LikeDto} from '../../dto';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsService} from '../../service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -14,8 +14,6 @@ import {first} from 'rxjs/operators';
 export class ViewNewsComponent implements OnInit {
   @Input() post: News;
   commentForm: FormGroup;
-  commentAddDto = new CommentAddDto();
-  commentsShowDto: CommentShowDto[] = [];
   new = true;
   id: number;
   currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
@@ -43,9 +41,6 @@ export class ViewNewsComponent implements OnInit {
     this.commentForm = this.formBuilder.group({
       comment: ['', Validators.required]
     });
-    if (this.showComments()) {
-      this.loadAllComments();
-    }
   }
   deletePost(id: number) {
     this.newsService.deletePost(id).pipe(first())
@@ -68,27 +63,5 @@ export class ViewNewsComponent implements OnInit {
   }
   showComments(): boolean {
     return !this.new;
-  }
-  addLike() {
-  }
-  get formControl() { return this.commentForm.controls; }
-  onSubmit() {
-    this.commentAddDto.text = this.formControl.comment.value;
-    this.commentAddDto.id_user = this.post.id_user;
-    this.commentAddDto.id_news = this.post.id;
-    this.newsService.addComment(this.commentAddDto).pipe(first()).subscribe(
-      data => {
-        this.formControl.comment.reset();
-        this.loadAllComments();
-      },
-      error => {
-        //sdfsdfefsd
-      });
-  }
-
-  loadAllComments() {
-    this.newsService.showComments(this.id).pipe(first()).subscribe(commentsShowDto => {
-      this.commentsShowDto = commentsShowDto;
-    });
   }
 }

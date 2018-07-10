@@ -5,6 +5,7 @@ import com.spring.server.service.NewsService;
 import com.spring.server.service.StorageService;
 import com.spring.server.service.dto.CommentDto.CommentAddDto;
 import com.spring.server.service.dto.CommentDto.CommentShowDto;
+import com.spring.server.service.dto.LikeDto.LikeDto;
 import com.spring.server.service.dto.NewsDto.NewsAddDto;
 import com.spring.server.service.dto.NewsDto.NewsEditDto;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -75,7 +77,17 @@ public class NewsController {
 
     @GetMapping("/comments/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<CommentShowDto> showComments(@PathVariable long id) {
+    public Set<CommentShowDto> showComments(@PathVariable long id) {
         return this.newsService.showComments(id);
     }
+
+    @PostMapping("/addLike")
+    @ResponseStatus(HttpStatus.OK)
+    public void addLike(@RequestBody LikeDto likeDto) {
+        this.newsService.addLike(likeDto);
+    }
+
+//    @GetMapping("/showLikes")
+//    @ResponseStatus(HttpStatus.OK)
+//    public  showLikes()
 }

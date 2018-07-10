@@ -1,6 +1,10 @@
 package com.spring.server.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,6 +23,9 @@ public class Comment {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "publish_date")
+    private String publish_date;
+
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
@@ -28,7 +35,8 @@ public class Comment {
     private News news;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Like> likes;
+    @JsonBackReference
+    protected Set<Like> likes;
 
     public Comment(String text, News news) {
         this.text = text;

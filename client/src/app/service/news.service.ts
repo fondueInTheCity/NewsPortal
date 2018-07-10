@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {News} from '../model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {CommentAddDto} from '../dto';
+import {CommentAddDto, LikeDto} from '../dto';
 import {CommentShowDto} from '../dto/CommentShowDto';
 import {b} from '@angular/core/src/render3';
 import {Headers} from "@angular/http";
@@ -60,5 +60,13 @@ export class NewsService {
       }
     });
     return ans;
+  }
+  addLike(likeDto: LikeDto) {
+    return this.http.post(`${environment.serverUrl}news/addLike`, likeDto);
+  }
+  sortComments(commentsShowDto: CommentShowDto[]) {
+    return commentsShowDto.sort(function (a: CommentShowDto, c: CommentShowDto): number {
+      return (a.publish_date > c.publish_date ? 1 : -1);
+    });
   }
 }

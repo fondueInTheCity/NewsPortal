@@ -1,6 +1,8 @@
 package com.spring.server.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -19,6 +21,7 @@ public class Like {
     private User user;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "id_comment")
     private Comment comment;
 
@@ -28,5 +31,12 @@ public class Like {
     }
 
     public Like(){
+    }
+
+    @Override
+    public String toString() {
+        return "Like{" +
+                "id=" + id +
+                '}';
     }
 }

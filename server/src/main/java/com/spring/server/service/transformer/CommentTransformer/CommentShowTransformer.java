@@ -5,8 +5,8 @@ import com.spring.server.service.dto.CommentDto.CommentShowDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -16,13 +16,14 @@ public class CommentShowTransformer {
         CommentShowDto commentShowDto = new CommentShowDto();
         commentShowDto.setId(comment.getId());
         commentShowDto.setText(comment.getText());
-        commentShowDto.setId_user(comment.getUser().getId());
         commentShowDto.setAuthor_name(comment.getUser().getUsername());
+        commentShowDto.setLikes(comment.getLikes());
+        commentShowDto.setPublish_date(comment.getPublish_date());
         return commentShowDto;
     }
 
-    public List<CommentShowDto> makeListDto(List<Comment> comments) {
-        List<CommentShowDto> commentsShowDto = new ArrayList<>();
+    public Set<CommentShowDto> makeSetDto(Set<Comment> comments) {
+        Set<CommentShowDto> commentsShowDto = new HashSet<>();
         for(Comment comment : comments) {
             commentsShowDto.add(makeDto(comment));
         }

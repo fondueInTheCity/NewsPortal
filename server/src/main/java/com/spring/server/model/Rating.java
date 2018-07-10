@@ -1,6 +1,8 @@
 package com.spring.server.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -19,10 +21,12 @@ public class Rating {
     private int value;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "id_user")
     private User user;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "id_news")
     private News news;
 

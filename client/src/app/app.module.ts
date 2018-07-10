@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -32,12 +33,15 @@ import { TagComponent } from './news/tag/tag.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import { EditNewsComponent } from './news/edit-news/edit-news.component';
 import { ViewNewsComponent } from './news/view-news/view-news.component';
+import { CommentComponent } from './news/comment/comment.component';
+import { RatingComponent } from './news/rating/rating.component';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
     imports: [
+        NgbModule.forRoot(),
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
@@ -74,7 +78,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         MarkdownComponent,
         TagComponent,
         EditNewsComponent,
-        ViewNewsComponent
+        ViewNewsComponent,
+        CommentComponent,
+        RatingComponent
     ],
   schemas: [],
     providers: [

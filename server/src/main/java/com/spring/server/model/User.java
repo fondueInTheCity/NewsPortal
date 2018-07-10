@@ -1,6 +1,9 @@
 package com.spring.server.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -58,22 +61,28 @@ public class User {
     private boolean isDeleted;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<News> news;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Like> likes;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Rating> ratings;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "id_language")
     private Language language;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "id_theme")
     private Theme theme;
 

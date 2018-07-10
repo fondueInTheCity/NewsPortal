@@ -9,5 +9,5 @@ import lombok.Setter;
 public class CommentAddDto implements Dto {
     private String text;
     private long id_news;
-    private long id_user;
+    private String username;
 }

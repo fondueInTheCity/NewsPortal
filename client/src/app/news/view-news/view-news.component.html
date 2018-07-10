@@ -5,67 +5,18 @@
       <a class="card-link pointer m-1" routerLink="/editPost/{{post.id}}"><i class="material-icons md-light">&#xE254;</i></a>
       <a class="card-link pointer m-1" (click)="deletePost(post.id)"><i class="material-icons md-light">&#xE872;</i></a>
     </div>
-    <div class="float-sm-left">
-      <!--<a class="perm-link" [routerLink]="['/',key]"><h2 class="card-title">{{post?.title}}</h2></a>-->
+      <div class="float-sm-left">
       <h2>{{post.name}}</h2>
       <h5>{{post.publishDate | date}}</h5>
+
+        <div *ngIf="!new">
+          <a routerLink="/profile/{{post?.authorName}}"><h1>{{post?.authorName}}</h1></a>
+        </div>
     </div>
   </div>
   <div class="card-body">
     <markdown [data]="post.text"></markdown>
   </div>
 </div>
-<div *ngIf="!new">
-  Author: <a routerLink="/profile/{{post?.authorName}}">{{post?.authorName}}</a>
-  <a class="card-link pointer m-1" (click)="addLike()"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
-</div>
-
-<div class="reply-form" *ngIf="showAddComment()">
-  <h2 class="h1 section-heading">Leave a reply </h2>
-  <div class="row">
-    <div class="col-sm-2 col-12">
-      <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg" class="avatar rounded-circle z-depth-1-half">
-    </div>
-    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="col-sm-10 col-12">
-      <div class="md-form">
-        <textarea type="text" id="areaComment" formControlName="comment" class="md-textarea form-control" mdbInputDirective></textarea>
-        <label for="areaComment">Your message</label>
-      </div>
-      <div class="text-center mx-auto">
-        <button class="btn btn-primary waves-light"  mdbWavesEffect>Send comment</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!--Main wrapper-->
-<div class="comments-list text-left bottom-offset" *ngIf="showComments() && id">
-  <div class="section-heading">
-    <h3>Comments <span class="badge blue">{{commentsShowDto.length}}</span></h3>
-  </div>
-  <!--First row-->
-  <div class="row" *ngFor="let commentShowDto of commentsShowDto">
-    <!--Image column-->
-    <div class="col-sm-2 col-12">
-      <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg" class="avatar rounded-circle z-depth-1-half">
-    </div>
-    <!--/.Image column-->
-    <!--Content column-->
-    <div class="col-sm-10 col-12">
-      <a><h3 class="user-name">{{commentShowDto?.author_name}}</h3></a>
-      <div class="card-data">
-        <ul class="pl-0 list-unstyled">
-          <li class="comment-date"><i class="fa fa-clock-o"></i> 05/10/2015</li>
-        </ul>
-      </div>
-      <p class="comment-text">{{commentShowDto.text}}</p>
-    </div>
-    <div>
-      Author: <a routerLink="/profile/{{commentShowDto?.author_name}}">{{commentShowDto?.author_name}}</a>
-      <a class="card-link pointer m-1" (click)="addLike()"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
-    </div>
-  </div>
-  <!--/.First row-->
-</div>
-<!--/.Main wrapper-->
+<app-comment *ngIf="showComments()" [idPost]="id" [addComment]="showAddComment()"></app-comment>
 

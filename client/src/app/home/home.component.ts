@@ -4,10 +4,11 @@ import { first } from 'rxjs/operators';
 import {News, User} from '../model';
 import {NewsService, UserService} from '../service';
 import {HttpClient} from '@angular/common/http';
+import {NewsInfoDto} from "../dto/newsInfoDto";
 
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit {
-    news: News[] = [];
+    news: NewsInfoDto[] = [];
 
     constructor(private userService: UserService,
                 private newsService: NewsService) {

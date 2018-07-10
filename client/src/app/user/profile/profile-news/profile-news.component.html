@@ -39,17 +39,17 @@
     <tbody>
     <tr *ngFor="let post of newsInSearch">
       <td>
-        <a routerLink="/news/{{post.id}}">{{post.name}}</a>
+        <a routerLink="/news/{{post.post.id}}">{{post.post.name}}</a>
       </td>
-      <td>{{post.description}}</td>
-      <td>{{post.publishDate}}</td>
+      <td>{{post.post.description}}</td>
+      <td>{{post.post.publishDate}}</td>
       <td>
         <div class="btn-group" dropdown>
           <button type="button" dropdownToggle class="btn action-btn dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" routerLink="/editPost/{{post.id}}" translate>Edit</a>
+            <a class="dropdown-item" routerLink="/editPost/{{post.post.id}}" translate>Edit</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" (click)="deletePost(post.id)" translate>Delete</a>
+            <a class="dropdown-item" (click)="deletePost(post.post.id)" translate>Delete</a>
           </div>
         </div>
       </td>

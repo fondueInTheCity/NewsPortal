@@ -6,6 +6,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import * as $ from 'jquery';
+import {NewsInfoDto} from "../../dto/newsInfoDto";
+import {SectionService} from "../../service/section.service";
+import {Category} from "../../model/category";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-edit-news',
@@ -13,8 +18,20 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./edit-news.component.css']
 })
 export class EditNewsComponent implements OnInit, OnDestroy {
-  @Input() news = new News();
+  @Input() news = new NewsInfoDto();
   @Input() new;
+  private postInfo = new NewsInfoDto();
+  private tags: String[] = [];
+  private categories: {
+    id: number;
+    name: string;
+    isActive: boolean;
+  }[] = [];
+  // private categories: Object[];
+  newsForm: FormGroup;
+
+
+
   viewMode = 'editTab';
   public uploader:FileUploader = new FileUploader({});
   public hasBaseDropZoneOver:boolean = false;
@@ -37,7 +54,21 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               private newsService: NewsService,
+              private sectionService: SectionService,
               private router: Router) {
+    this.newsForm = this.formBuilder.group({
+      tag: ['']
+    });
+    this.sectionService.getCategories().pipe(first()).subscribe((categories : Category[]) => {
+      for (let category of categories) {
+        this.categories.push({id: category.id, name: category.name, isActive: false});
+        let activeCategory = this.news.categories.filter(obj => {
+          return obj["name"] === category.name
+        });
+        if (activeCategory.length != 0 )
+          this.categories[this.categories.length].isActive = true;
+      }
+    });
   }
 
   imageUpload(files: string){
@@ -51,19 +82,34 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   }
 
   pasteImageInMarkdown(url: string){
-    if (this.news.text === undefined)
-      this.news.text = "";
-    this.news.text += ' <img class="img-fluid" src="' + url + '">';
+    if (this.news.post.text === undefined)
+      this.news.post.text = "";
+    this.news.post.text += ' <img class="img-fluid" src="' + url + '">';
   }
 
-  addTagToDom(tagName: string) {
+  addTag() {
+    this.news.tags.push({id: null, name: this.newsForm.controls.tag.value});
+  }
 
+  removeTag(tag: string){
+    let removableTag = this.news.tags.filter(obj => {
+      return obj["name"] === tag
+    });
+    if (removableTag.length != 0) {
+      let index = this.news.tags.indexOf(removableTag, 0);
+      this.news.tags.splice(index, 1);
+    }
   }
 
   ngOnInit() {
   }
 
   onSubmit() {
+    // for (let category of this.categories) {
+    //   this.news.categories;
+    //   this.categories.push({id: category.id, name: category.name, isActive: false});
+    // }
+
     this.newsService.addPost(this.news).pipe(first())
       .subscribe(
         data => {
@@ -78,7 +124,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     this.newsService.editPost(this.news).pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([`/news/${this.news.id}`]);
+          this.router.navigate([`/news/${this.news.post.id}`]);
         },
         error => {
           //sdfsdfefsd
@@ -92,4 +138,5 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.uploadSubscription && this.uploadSubscription.unsubscribe();
   }
+
 }

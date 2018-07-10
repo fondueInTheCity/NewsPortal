@@ -1,5 +1,6 @@
 package com.spring.server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,10 +31,17 @@ public class News {
     @Column(name = "publishDate")
     private String publishDate;
 
+    @JsonBackReference(value="news-tag")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "news_tag", joinColumns = @JoinColumn(name = "id_news", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_tag", referencedColumnName = "id"))
     public Set<Tag> tags;
+
+    @JsonBackReference(value="news-category")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "news_category", joinColumns = @JoinColumn(name = "id_news", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_category", referencedColumnName = "id"))
+    public Set<Category> categories;
 
     @ManyToOne
     @JoinColumn(name = "id_user")

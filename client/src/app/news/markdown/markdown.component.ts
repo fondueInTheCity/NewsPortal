@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NewsService} from '../../service/index';
 import {News} from '../../model/index';
 import {first} from 'rxjs/operators';
+import {NewsInfoDto} from "../../dto/newsInfoDto";
 
 @Component({
   selector: 'app-markdown',
@@ -10,7 +11,7 @@ import {first} from 'rxjs/operators';
   styleUrls: ['./markdown.component.css']
 })
 export class MarkdownComponent implements OnInit {
-  @Input() news = new News();
+  @Input() news = new NewsInfoDto();
   public new = true;
   private id: number;
   public authorId: number;
@@ -25,12 +26,12 @@ export class MarkdownComponent implements OnInit {
           this.new = false;
           const news = this.newsService.getPostById(this.id);
           news.subscribe(
-            (snapshot) => {
+            (snapshot: NewsInfoDto) => {
               this.news = snapshot;
             }
           );
         }
       });
-    this.news.id_user = this.authorId;
+    this.news.post.id_user = this.authorId;
   }
 }

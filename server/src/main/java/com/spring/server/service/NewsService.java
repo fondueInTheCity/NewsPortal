@@ -7,8 +7,7 @@ import com.spring.server.repository.NewsRepository;
 import com.spring.server.repository.UserRepository;
 import com.spring.server.service.dto.CommentDto.CommentAddDto;
 import com.spring.server.service.dto.CommentDto.CommentShowDto;
-import com.spring.server.service.dto.NewsDto.NewsAddDto;
-import com.spring.server.service.dto.NewsDto.NewsEditDto;
+import com.spring.server.service.dto.NewsDto.NewsInfoDto;
 import com.spring.server.service.transformer.CommentTransformer.CommentAddDtoTransformer;
 import com.spring.server.service.transformer.CommentTransformer.CommentShowTransformer;
 import com.spring.server.service.transformer.NewsTransformer.NewsAddDtoTransformer;
@@ -33,26 +32,26 @@ public class NewsService {
     private final CommentAddDtoTransformer commentAddDtoTransformer;
     private final CommentShowTransformer commentShowTransformer;
 
-    public List<NewsAddDto> getNews() {
+    public List<NewsInfoDto> getNews() {
         return newsAddDtoTransformer.makeListDto(newsRepository.findAll());
     }
 
-    public void addPost( NewsAddDto newsAddDto) {
+    public void addPost( NewsInfoDto newsAddDto) {
         News post = newsAddDtoTransformer.makeModel(newsAddDto);
         post.setPublishDate(LocalDateTime.now().toString());
         this.newsRepository.save(post);
     }
 
-    public List<NewsAddDto> getNewsByIdUser(long id) {
+    public List<NewsInfoDto> getNewsByIdUser(long id) {
         return  newsAddDtoTransformer.makeListDto(newsRepository.findAllByUser(userRepository.findById(id)));
     }
 
-    public NewsAddDto getPostById(long id) {
+    public NewsInfoDto getPostById(long id) {
         return newsAddDtoTransformer.makeDto(newsRepository.findById(id));
     }
 
-    public void editPost(NewsEditDto newsEditDto) {
-        News news = newsEditDtoTransformer.makeModel(newsEditDto);
+    public void editPost(NewsInfoDto newsInfoDto) {
+        News news = newsEditDtoTransformer.makeEditModel(newsInfoDto);
         news.setPublishDate(LocalDateTime.now().toString());
         newsRepository.save(news);
     }

@@ -1,12 +1,14 @@
 package com.spring.server.service.dto.NewsDto;
 
-import com.spring.server.service.dto.Dto;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Created by Юрий on 10.07.2018.
+ */
 @Getter
 @Setter
-public class NewsAddDto implements Dto {
+public class PostInfoDto {
     private Long id;
     private String name;
     private String description;

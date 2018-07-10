@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Tag {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,13 +19,13 @@ public class Tag {
     @Column(name = "name")
     private String name;
 
-    @JsonBackReference(value="news-tag")
-    @ManyToMany(mappedBy = "tags")
+    @JsonBackReference(value="news-category")
+    @ManyToMany(mappedBy = "categories")
     public Set<News> news;
 
-    public Tag(String name) {
+    public Category(String name) {
         this.name = name;
     }
-    public Tag() {
+    public Category() {
     }
 }

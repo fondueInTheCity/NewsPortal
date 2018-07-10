@@ -32,6 +32,7 @@ import { TagComponent } from './news/tag/tag.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import { EditNewsComponent } from './news/edit-news/edit-news.component';
 import { ViewNewsComponent } from './news/view-news/view-news.component';
+import {SectionService} from "./service/section.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -84,6 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AuthenticationService,
         NewsService,
         ProfileService,
+        SectionService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,

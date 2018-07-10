@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsService} from '../../service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
+import {NewsInfoDto} from "../../dto/newsInfoDto";
 
 @Component({
   selector: 'app-view-news',
@@ -31,8 +32,8 @@ export class ViewNewsComponent implements OnInit {
             this.new = false;
             const news = this.newsService.getPostById(this.id);
             news.subscribe(
-              (snapshot) => {
-                this.post = snapshot;
+              (snapshot : NewsInfoDto) => {
+                this.post = snapshot.post;
               }
             );
           }

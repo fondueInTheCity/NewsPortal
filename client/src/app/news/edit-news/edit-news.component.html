@@ -1,96 +1,86 @@
-<div class="row padd">
-  <div class="col-md-4">
+<div class="mt-5 mb-5">
+
+  <div class="col-md-8">
     <div class="md-form">
-      <input class="form-control" id="postCategory" type="text">
-      <label class="active" for="postCategory" translate>Category</label>
+      <input value="{{news.post.name}}" [(ngModel)]="news.post.name" class="form-control" required id="postName" [attr.placeholder]="'Title' | translate" type="text">
+      <label class="active" for="postName" translate>Title</label>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-8">
     <div class="md-form">
-      <input class="form-control" id="postTags" (onChange)="addTagToDom(this.value)" type="text">
-      <label class="active" for="postTags" translate>Tags</label>
+      <input value="{{news.post.description}}" [(ngModel)]="news.post.description" class="form-control" required id="postDescription" [attr.placeholder]="'Description' | translate" type="text">
+      <label class="active" for="postDescription" translate>Description</label>
     </div>
   </div>
-</div>
 
-<ul class="d-flex flex-wrap align-content-start">
-  <li class="p-1 bg-light rounded d-flex m-1">
-    <span class="text-dark">Tag</span>
-    <i class="close fa fa-times my-auto mx-1"></i>
-  </li>
-</ul>
-
-<div class="col-md-8">
-  <div class="md-form">
-    <input value="{{news.name}}" [(ngModel)]="news.name" class="form-control" required id="postName" [attr.placeholder]="'Title' | translate" type="text">
-    <label class="active" for="postName" translate>Title</label>
-  </div>
-</div>
-<div class="col-md-8">
-  <div class="md-form">
-    <input value="{{news.description}}" class="form-control" required id="postDescription" [attr.placeholder]="'Description' | translate" type="text">
-    <label class="active" for="postDescription" translate>Description</label>
-  </div>
-</div>
-
-<div class="card mt-5">
-  <div class="card-header">
-    <div class="btn-group float-right" >
-      <button *ngIf="new" type="button" class="btn btn-success pointer" (click)="onSubmit()" dgTooltip="Publish">
-        <i class="material-icons">&#xE163;</i></button>
-      <button *ngIf="!new" type="button" class="btn btn-success pointer"  (click)="onSave()" dgTooltip="Save">
-        <i class="material-icons">&#xE161;</i></button>
-      <button type="button" class="btn btn-default pointer" (click)="onCancel()" dgTooltip="Cancel">
-        <i class="material-icons">&#xE5C9;</i></button>
+  <div class="row padd">
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light h-50 mt-4" mdbWavesEffect>
+        Select category
+      </button>
+      <div class="dropdown-menu dropdown-primary">
+        <a class="dropdown-item m-left" *ngFor="let category of categories" (click)="category.isActive = !category.isActive">
+            <input class="form-check-input mr-1 drop-checkbox position-static" [checked]="category.isActive" (change)="category.isActive = !category.isActive" type="checkbox">
+          {{category.name}}
+        </a>
+      </div>
     </div>
-
-    <ul class="nav nav-pills" id="editPill">
-      <li class="nav-item"><a class="nav-link" [class.active]="viewMode == 'editTab'" (click)="viewMode ='editTab'" rel="editTab">Edit</a></li>
-      <li class="nav-item"><a class="nav-link" [class.active]="viewMode == 'previewTab'" rel="previewTab" (click)="viewMode ='previewTab'">Preview</a></li>
-    </ul>
+    <form [formGroup]="newsForm" class="col-md-6" (change)="addTag()" >
+      <!--<div class="col-md-4">-->
+      <!--<div class="row">-->
+      <div class="md-form">
+        <input class="form-control" id="postTags" required formControlName="tag" type="text">
+        <label class="active" for="postTags" translate>Tags</label>
+      </div>
+      <!--<button class="btn submit-btn h-75 mt-3" formControlName="tag" type="submit">Add tag</button>-->
+      <!--</div>-->
+    <!--</div>-->
+    </form>
   </div>
-  <div class="tab-content" [ngSwitch]="viewMode">
-    <div class="tab-pane fade show active" id="edit-markdown-edit" *ngSwitchCase="'editTab'">
-      <!--<div class="input-group">-->
-        <!--<span class="input-group-addon bg-dark text-white" id="sizing-addon1"><h5>Title</h5></span>-->
-        <!--<input type="text"-->
-               <!--class="form-control"-->
-               <!--placeholder="Enter title"-->
-               <!--aria-describedby="sizing-addon1"-->
-               <!--[(ngModel)]="news.name"-->
-               <!--required-->
-               <!--ndModel-->
-               <!--name="title">-->
-      <!--</div>-->
-      <!--<div class="card">-->
-        <!--<div class="card-header bg-dark text-white">-->
-          <!--<h5 class="card-title float-sm-left">Description</h5>-->
-        <!--</div>-->
-        <!--<div class="card-body">-->
-          <!--<div class="md-form">-->
-            <!--<textarea type="text" id="form7" class="md-textarea form-control"-->
-                      <!--[(ngModel)]="news.description"-->
-                      <!--style=" width:100%; overflow: auto;"></textarea>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <div class="card">
-        <div class="card-header bg-dark text-white">
-          <h5 class="card-title float-sm-left">Content</h5>
-        </div>
-        <div class="card-body">
-          <div ace-editor ng2FileDrop (onFileDrop)="imageUpload($event)"
-               [(text)]="news.text"
-               [theme]="'eclipse'"
-               (fileOver)="fileOverAnother($event)"
-               [uploader]="uploader"
-               style="min-height: 300px; width:100%; overflow: auto;" name="markdownEditor">
+
+  <ul class="d-flex flex-wrap align-content-start ml-2">
+    <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of news.tags">
+      <span class="text-dark">{{tag.name}}</span>
+      <i class="close fa fa-times my-auto mx-1" (click)="removeTag(tag.name)"></i>
+    </li>
+  </ul>
+
+  <div class="card mt-5">
+    <div class="card-header">
+      <div class="btn-group float-right" >
+        <button *ngIf="new" type="button" class="btn btn-success pointer" (click)="onSubmit()" dgTooltip="Publish">
+          <i class="material-icons">&#xE163;</i></button>
+        <button *ngIf="!new" type="button" class="btn btn-success pointer"(click)="onSave()" dgTooltip="Save">
+          <i class="material-icons">&#xE161;</i></button>
+        <button type="button" class="btn btn-default pointer" (click)="onCancel()" dgTooltip="Cancel">
+          <i class="material-icons">&#xE5C9;</i></button>
+      </div>
+
+      <ul class="nav nav-pills" id="editPill">
+        <li class="nav-item"><a class="nav-link" [class.active]="viewMode == 'editTab'" (click)="viewMode ='editTab'" rel="editTab">Edit</a></li>
+        <li class="nav-item"><a class="nav-link" [class.active]="viewMode == 'previewTab'" rel="previewTab" (click)="viewMode ='previewTab'">Preview</a></li>
+      </ul>
+    </div>
+    <div class="tab-content" [ngSwitch]="viewMode">
+      <div class="tab-pane fade show active" id="edit-markdown-edit" *ngSwitchCase="'editTab'">
+        <div class="card">
+          <div class="card-header bg-dark text-white">
+            <h5 class="card-title float-sm-left">Content</h5>
+          </div>
+          <div class="card-body">
+            <div ace-editor ng2FileDrop (onFileDrop)="imageUpload($event)"
+                 [(text)]="news.post.text"
+                 [theme]="'eclipse'"
+                 (fileOver)="fileOverAnother($event)"
+                 [uploader]="uploader"
+                 style="min-height: 300px; width:100%; overflow: auto;" name="markdownEditor">
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div *ngSwitchCase="'previewTab'">
-      <app-view-news [post]="news" ></app-view-news>
+      <div *ngSwitchCase="'previewTab'">
+        <app-view-news [post]="news.post" ></app-view-news>
+      </div>
     </div>
   </div>
 </div>

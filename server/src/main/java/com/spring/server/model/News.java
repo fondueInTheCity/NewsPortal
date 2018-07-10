@@ -1,7 +1,6 @@
 package com.spring.server.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,23 +32,27 @@ public class News {
     @Column(name = "publishDate")
     private String publishDate;
 
+    @JsonBackReference(value="news-tag")
     @ManyToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference
     @JoinTable(name = "news_tag", joinColumns = @JoinColumn(name = "id_news", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_tag", referencedColumnName = "id"))
     public Set<Tag> tags;
 
+    @JsonBackReference(value="news-category")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "news_category", joinColumns = @JoinColumn(name = "id_news", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_category", referencedColumnName = "id"))
+    public Set<Category> categories;
+
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "id_user")
     private User user;
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference(value="news-comments")
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
-    @JsonBackReference
     private Set<Rating> rating;
 
     public News(String name, String description, String text) {

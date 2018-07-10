@@ -20,14 +20,14 @@
           <i class="fa fa-cutlery"></i> Food</h6>
       </a>
       <h3 class="mb-4 font-weight-bold dark-grey-text">
-        <strong>{{post.name}}</strong>
+        <strong>{{post.post.name}}</strong>
       </h3>
-      <p><markdown>{{post.description}}</markdown></p>
+      <p><markdown>{{post.post.description}}</markdown></p>
       <p>by
         <a>
-          <strong>{{post.authorName}}</strong>
-        </a>, {{post.publishDate | date}}</p>
-      <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.id}}" mdbWavesEffect>Read more</a>
+          <strong>{{post.post.authorName}}</strong>
+        </a>, {{post.post.publishDate | date}}</p>
+      <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.post.id}}" mdbWavesEffect>Read more</a>
     </div>
   </div>
   <hr class="mb-5 mt-5 pb-3">

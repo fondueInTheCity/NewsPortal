@@ -35,6 +35,7 @@ import { EditNewsComponent } from './news/edit-news/edit-news.component';
 import { ViewNewsComponent } from './news/view-news/view-news.component';
 import { CommentComponent } from './news/comment/comment.component';
 import { RatingComponent } from './news/rating/rating.component';
+import {SectionService} from './service/section.service';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -89,6 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AuthenticationService,
         NewsService,
         ProfileService,
+        SectionService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,

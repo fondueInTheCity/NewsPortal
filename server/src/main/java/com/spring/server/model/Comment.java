@@ -43,9 +43,6 @@ public class Comment {
         this.news = news;
     }
 
-//    public Comment() {
-//    }
-
     @Override
     public String toString() {
         return "Comment{" +

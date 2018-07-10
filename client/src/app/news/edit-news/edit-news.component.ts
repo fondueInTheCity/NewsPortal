@@ -6,11 +6,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import * as $ from 'jquery';
 import {NewsInfoDto} from "../../dto/newsInfoDto";
 import {SectionService} from "../../service/section.service";
 import {Category} from "../../model/category";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-edit-news',

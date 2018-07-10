@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -42,7 +41,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
     imports: [
-        NgbModule.forRoot(),
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,

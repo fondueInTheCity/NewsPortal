@@ -5,6 +5,7 @@ import {NewsService, ProfileService, UserService} from '../../../service';
 import {News} from '../../../model';
 import {first} from 'rxjs/internal/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NewsInfoDto} from "../../../dto/newsInfoDto";
 
 @Component({
   selector: 'app-profile-news',
@@ -14,9 +15,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class ProfileNewsComponent implements OnInit {
   //@Input() user: UserEditDto = new UserEditDto();
   user: UserEditDto;
-  news: News[] = [];
+  news: NewsInfoDto[] = [];
   searchForm: FormGroup;
-  newsInSearch: News[] = [];
+  newsInSearch: NewsInfoDto[] = [];
   sortByNameType = 1;
   sortByDateType = 1;
   clickSortByName = false;

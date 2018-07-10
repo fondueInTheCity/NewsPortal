@@ -42,21 +42,21 @@ export class NewsService {
   showComments(idPost: number) {
     return this.http.get<CommentShowDto[]>(`${environment.serverUrl}news/comments/` + idPost);
   }
-  sortByName(news: News[], sortType: number): News[] {
-    return news.sort(function (a: News, c: News): number  {
-      return sortType * (a.name > c.name ? 1 : -1);
+  sortByName(news: NewsInfoDto[], sortType: number): NewsInfoDto[] {
+    return news.sort(function (a: NewsInfoDto, c: NewsInfoDto): number  {
+      return sortType * (a.post.name > c.post.name ? 1 : -1);
     });
   }
-  sortByDate(news: News[], sortType: number): News[] {
-    return news.sort(function (a: News, c: News): number  {
-      return sortType * (a.publishDate.toLowerCase() > c.publishDate.toLowerCase() ? 1 : -1);
+  sortByDate(news: NewsInfoDto[], sortType: number): NewsInfoDto[] {
+    return news.sort(function (a: NewsInfoDto, c: NewsInfoDto): number  {
+      return sortType * (a.post.publishDate.toLowerCase() > c.post.publishDate.toLowerCase() ? 1 : -1);
     });
   }
-  searchByFragment(news: News[], fragment: string): News[] {
-    let ans: News[] = [];
-    news.forEach(function (post: News) {
-      if (post.name.toLowerCase().includes(fragment.toLowerCase())
-        || post.text.toLowerCase().includes(fragment.toLowerCase())) {
+  searchByFragment(news: NewsInfoDto[], fragment: string): NewsInfoDto[] {
+    let ans: NewsInfoDto[] = [];
+    news.forEach(function (post: NewsInfoDto) {
+      if (post.post.name.toLowerCase().includes(fragment.toLowerCase())
+        || post.post.text.toLowerCase().includes(fragment.toLowerCase())) {
         ans.push(post);
       }
     });

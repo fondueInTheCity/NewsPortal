@@ -26,7 +26,7 @@
       <p>by
         <a>
           <strong>{{post.post.authorName}}</strong>
-        </a>, {{post.post.publishDate}}</p>
+        </a>, {{post.post.publishDate | date}}</p>
       <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.post.id}}" mdbWavesEffect>Read more</a>
     </div>
   </div>

@@ -25,7 +25,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     name: string;
     isActive: boolean;
   }[] = [];
-  // private categories: Object[];
+  isFirstTimeOpen: boolean = true;
   newsForm: FormGroup;
 
 
@@ -55,16 +55,11 @@ export class EditNewsComponent implements OnInit, OnDestroy {
               private sectionService: SectionService,
               private router: Router) {
     this.newsForm = this.formBuilder.group({
-      tag: ['']
+      tag: ['', Validators.required]
     });
     this.sectionService.getCategories().pipe(first()).subscribe((categories : Category[]) => {
       for (let category of categories) {
         this.categories.push({id: category.id, name: category.name, isActive: false});
-        let activeCategory = this.news.categories.filter(obj => {
-          return obj["name"] === category.name
-        });
-        if (activeCategory.length != 0 )
-          this.categories[this.categories.length].isActive = true;
       }
     });
   }
@@ -86,7 +81,13 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   }
 
   addTag() {
-    this.news.tags.push({id: null, name: this.newsForm.controls.tag.value});
+    let tagName = this.newsForm.controls.tag.value;
+    tagName = tagName.trim();
+    let existedTag = this.news.tags.filter(obj => {
+      return obj["name"] === tagName
+    });
+    if ((tagName.length !== 0) && (tagName.length < 24) && (existedTag.length === 0))
+      this.news.tags.push({id: null, name: tagName});
   }
 
   removeTag(tag: string){
@@ -94,8 +95,21 @@ export class EditNewsComponent implements OnInit, OnDestroy {
       return obj["name"] === tag
     });
     if (removableTag.length != 0) {
-      let index = this.news.tags.indexOf(removableTag, 0);
+      let index = this.news.tags.indexOf(removableTag[0], 0);
       this.news.tags.splice(index, 1);
+    }
+  }
+
+  pasteChecked(){
+    if (this.isFirstTimeOpen){
+      for (let category of this.categories) {
+        let activeCategory = this.news.categories.filter(obj => {
+          return obj["name"] === category.name
+        });
+        if (activeCategory.length != 0 )
+          this.categories[category.id - 1].isActive = true;
+      }
+      this.isFirstTimeOpen = false
     }
   }
 
@@ -103,11 +117,8 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // for (let category of this.categories) {
-    //   this.news.categories;
-    //   this.categories.push({id: category.id, name: category.name, isActive: false});
-    // }
     this.news.post.value_rating = 0;
+    this.setNewsCategories();
     this.newsService.addPost(this.news).pipe(first())
       .subscribe(
         data => {
@@ -119,6 +130,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
+    this.setNewsCategories();
     this.newsService.editPost(this.news).pipe(first())
       .subscribe(
         data => {
@@ -127,6 +139,14 @@ export class EditNewsComponent implements OnInit, OnDestroy {
         error => {
           //sdfsdfefsd
         });
+  }
+
+  setNewsCategories(){
+    this.news.categories = [];
+    for (let category of this.categories) {
+      if (category.isActive)
+        this.news.categories.push({id: category.id, name: category.name});
+    }
   }
 
   onCancel() {

@@ -1,10 +1,11 @@
-import {News} from '../model/news';
+import {News} from '../model';
+import {Category} from '../model/category';
 export class NewsInfoDto {
   post: News;
   tags: Object[];
-  categories: Object[];
+  categories: Category[];
 
-  constructor(){
+  constructor() {
     this.post = new News();
     this.tags = [];
     this.categories = [];

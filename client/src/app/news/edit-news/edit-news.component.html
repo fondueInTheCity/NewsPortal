@@ -14,12 +14,12 @@
   </div>
 
   <div class="row padd">
-    <div class="btn-group" dropdown>
-      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light h-50 mt-4" mdbWavesEffect>
+    <div class="btn-group h-50" dropdown>
+      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light h-50 mt-4" (click)="pasteChecked()" mdbWavesEffect>
         Select category
       </button>
       <div class="dropdown-menu dropdown-primary">
-        <a class="dropdown-item m-left" *ngFor="let category of categories" (click)="category.isActive = !category.isActive">
+        <a class="dropdown-item col-md-11 m-left" *ngFor="let category of categories" (click)="category.isActive = !category.isActive">
             <input class="form-check-input mr-1 drop-checkbox position-static" [checked]="category.isActive" (change)="category.isActive = !category.isActive" type="checkbox">
           {{category.name}}
         </a>
@@ -38,7 +38,7 @@
     </form>
   </div>
 
-  <ul class="d-flex flex-wrap align-content-start ml-2">
+  <ul class="d-flex flex-wrap align-content-start tags-pos">
     <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of news.tags">
       <span class="text-dark">{{tag.name}}</span>
       <i class="close fa fa-times my-auto mx-1" (click)="removeTag(tag.name)"></i>
@@ -84,3 +84,8 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).on('click', '.dropdown-menu', function (e) {
+    e.stopPropagation();
+  });
+</script>

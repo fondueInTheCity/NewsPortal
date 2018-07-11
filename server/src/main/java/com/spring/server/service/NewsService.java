@@ -32,6 +32,7 @@ public class NewsService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final LikeRepository likeRepository;
+    private final SectionService sectionService;
     private final NewsAddDtoTransformer newsAddDtoTransformer;
     private final NewsEditDtoTransformer newsEditDtoTransformer;
     private final CommentAddDtoTransformer commentAddDtoTransformer;
@@ -46,6 +47,10 @@ public class NewsService {
     public void addPost( NewsInfoDto newsAddDto) {
         News post = newsAddDtoTransformer.makeModel(newsAddDto);
         post.setPublishDate(LocalDateTime.now().toString());
+        Set<Tag> tags = this.sectionService.mergeTagsToDb(newsAddDto.getTags());
+        Set<Category> categories = this.sectionService.getMergedCategories(newsAddDto.getCategories());
+        post.setTags(tags);
+        post.setCategories(categories);
         this.newsRepository.save(post);
     }
 
@@ -60,11 +65,17 @@ public class NewsService {
     public void editPost(NewsInfoDto newsInfoDto) {
         News news = newsEditDtoTransformer.makeEditModel(newsInfoDto);
         news.setPublishDate(LocalDateTime.now().toString());
+        Set<Tag> tags = this.sectionService.mergeTagsToDb(newsInfoDto.getTags());
+        news.setTags(tags);
         newsRepository.save(news);
     }
 
     public void deletePost(long id) {
-        newsRepository.delete(newsRepository.findById(id));
+        News deletePost = newsRepository.findById(id);
+        deletePost.setTags(null);
+        deletePost.setCategories(null);
+        newsRepository.save(deletePost);
+        newsRepository.delete(deletePost);
     }
 
     public void addComment(CommentAddDto commentAddDto) {

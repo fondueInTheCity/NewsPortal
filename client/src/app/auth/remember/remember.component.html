@@ -1,19 +1,23 @@
-<alert></alert>
-<h2 translate>Forgot password?</h2>
-<form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="email" translate>Email</label>
-    <input type="text" id="email" formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && formControl.email.errors }"/>
-    <div *ngIf="submitted && formControl.email.errors" class="invalid-feedback">
-      <div *ngIf="formControl.email.errors.required" translate>Email is required</div>
-      <!--<div *ngIf="formControl.email.errors.email">Email must be a valid email address</div>-->
-    </div>
+<div class="mt-5">
+  <div class="col-md-6 m-auto">
+    <alert></alert>
+    <h2 translate>Forgot password?</h2>
+    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email" translate>Email</label>
+        <input type="text" id="email" formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && formControl.email.errors }"/>
+        <div *ngIf="submitted && formControl.email.errors" class="invalid-feedback">
+          <div *ngIf="formControl.email.errors.required" translate>Email is required</div>
+          <!--<div *ngIf="formControl.email.errors.email">Email must be a valid email address</div>-->
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" translate>Send code on email for confirm</button>
+      </div>
+      <div class="form-group">
+        <a [routerLink]="['/login']" class="btn btn-link" translate>Login</a>
+        <a [routerLink]="['/register']" class="btn btn-link" translate>Register</a>
+      </div>
+    </form>
   </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary" translate>Send code on email for confirm</button>
-  </div>
-  <div class="form-group">
-    <a [routerLink]="['/login']" class="btn btn-link" translate>Login</a>
-    <a [routerLink]="['/register']" class="btn btn-link" translate>Register</a>
-  </div>
-</form>
+</div>

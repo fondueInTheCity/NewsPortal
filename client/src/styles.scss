@@ -93,33 +93,22 @@ footer{
   }
 }
 
-.theme-newspaper, .themed {
-  height: 100%;
-}
-
 .container {
   margin-top: 5px;
   min-height:100%;
-  width: 100%;
+  width: 80%;
   position:relative;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-  //margin: 0;
-  //height: 100%;
+html { height:100%; }
+body {  height:100%; }
+
+.theme-newspaper {
+  height: 100%;
 }
 
-body {
-  height: 100vh;
-  /*position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;*/
-  //min-height: 100%;
-  //margin-bottom: 60px;
+.themed {
+  position:relative; min-height: 100%;
 }
 
 .center-container {

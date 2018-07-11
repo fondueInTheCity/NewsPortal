@@ -24,11 +24,13 @@ public class NewsAddDtoTransformer {
         news.setText(newsAddDto.getPost().getText());
         news.setPublishDate(newsAddDto.getPost().getPublishDate());
         news.setUser(this.userRepository.findById(newsAddDto.getPost().getId_user()));
-        news.setTags(newsAddDto.getTags());
         news.setRatingValue(newsAddDto.getPost().getValue_rating());
-        news.setCategories(newsAddDto.getCategories());
+//        news.setTags(newsAddDto.getTags());
+//        news.setCategories(newsAddDto.getCategories());
         return news;
     }
+
+
 
     public NewsInfoDto makeDto(News news) {
         NewsInfoDto newsAddDto = new NewsInfoDto();

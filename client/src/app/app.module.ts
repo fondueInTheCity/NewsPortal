@@ -29,7 +29,6 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { MarkdownComponent } from './news/markdown/markdown.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TagComponent } from './news/tag/tag.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import { EditNewsComponent } from './news/edit-news/edit-news.component';
 import { ViewNewsComponent } from './news/view-news/view-news.component';
@@ -77,7 +76,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         Exception404Component,
         ProfileInfoComponent,
         MarkdownComponent,
-        TagComponent,
         EditNewsComponent,
         ViewNewsComponent,
         CommentComponent,

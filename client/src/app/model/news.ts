@@ -6,14 +6,18 @@ export class News {
   publishDate: string;
   id_user: number;
   authorName: string;
+  idUsers: number[];
+  value_rating: number;
 
-  constructor(){
+  constructor() {
     this.id = null;
-    this.name = "";
-    this.description = "";
-    this.text = "";
-    this.publishDate = "";
+    this.name = '';
+    this.description = '';
+    this.text = '';
+    this.publishDate = '';
     this.id_user = null;
-    this.authorName = "";
+    this.authorName = '';
+    this.idUsers = null;
+    this.value_rating = null;
   }
 }

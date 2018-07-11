@@ -55,10 +55,11 @@ public class News {
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
     private Set<Rating> rating;
 
-    public News(String name, String description, String text) {
+    public News(String name, String description, String text, Float ratingValue) {
         this.name = name;
         this.description = description;
         this.text = text;
+        this.ratingValue = ratingValue;
         this.publishDate = LocalDateTime.now().toString();
     }
 

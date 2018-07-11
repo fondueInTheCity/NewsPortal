@@ -6,6 +6,7 @@ import {News} from '../../../model';
 import {first} from 'rxjs/internal/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsInfoDto} from "../../../dto/newsInfoDto";
+import {AlertService} from '../../../auth/service';
 
 @Component({
   selector: 'app-profile-news',
@@ -14,6 +15,7 @@ import {NewsInfoDto} from "../../../dto/newsInfoDto";
 })
 export class ProfileNewsComponent implements OnInit {
   //@Input() user: UserEditDto = new UserEditDto();
+  //@Input() news: NewsInfoDto[] = [];
   user: UserEditDto;
   news: NewsInfoDto[] = [];
   searchForm: FormGroup;
@@ -26,14 +28,29 @@ export class ProfileNewsComponent implements OnInit {
   constructor(private router: Router,
               private newsService: NewsService,
               private formBuilder: FormBuilder,
+              private userService: UserService,
+              private alertService: AlertService,
+              private activatedRoute: ActivatedRoute,
               private profileService: ProfileService) {}
   ngOnInit() {
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.username = params['username'];
+      this.userService.getByUsername(this.username)
+        .pipe(first())
+        .subscribe((data: UserEditDto) => {
+            this.user = data;
+            this.loadAllNews();
+            this.user.role = this.userService.transformRoleToView(this.user.role);
+            this.profileService.setUser(this.user);
+          },
+          error => {
+            this.alertService.error(error);
+          });
+    });
     //this.profileService.loadUserByUsername(this.username);
-    this.user = this.profileService.getUser();
     this.searchForm = this.formBuilder.group({
       search: ['', Validators.required]
     });
-    this.loadAllNews();
   }
   isCanAddNews(): boolean {
     let currentUserJson = JSON.parse(localStorage.getItem('currentUser'));

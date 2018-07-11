@@ -1,5 +1,4 @@
-import {News} from "../model/news";
-import {Comment} from "../model/comment";
+import {News} from '../model/news';
 export class NewsInfoDto {
   post: News;
   tags: Object[];

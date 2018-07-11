@@ -1,9 +1,6 @@
 package com.spring.server.service;
 
-import com.spring.server.model.Comment;
-import com.spring.server.model.Like;
-import com.spring.server.model.News;
-import com.spring.server.model.User;
+import com.spring.server.model.*;
 import com.spring.server.repository.CommentRepository;
 import com.spring.server.repository.LikeRepository;
 import com.spring.server.repository.NewsRepository;
@@ -12,11 +9,13 @@ import com.spring.server.service.dto.CommentDto.CommentAddDto;
 import com.spring.server.service.dto.CommentDto.CommentShowDto;
 import com.spring.server.service.dto.LikeDto.LikeDto;
 import com.spring.server.service.dto.NewsDto.NewsInfoDto;
+import com.spring.server.service.dto.RatingDto.RatingSetDto;
 import com.spring.server.service.transformer.CommentTransformer.CommentAddDtoTransformer;
 import com.spring.server.service.transformer.CommentTransformer.CommentShowTransformer;
 import com.spring.server.service.transformer.LikeTransformer.LikeDtoTransformer;
 import com.spring.server.service.transformer.NewsTransformer.NewsAddDtoTransformer;
 import com.spring.server.service.transformer.NewsTransformer.NewsEditDtoTransformer;
+import com.spring.server.service.transformer.RatingDtoTransformer.RatingSetDtoTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +37,7 @@ public class NewsService {
     private final CommentAddDtoTransformer commentAddDtoTransformer;
     private final CommentShowTransformer commentShowTransformer;
     private final LikeDtoTransformer likeDtoTransformer;
+    private final RatingSetDtoTransformer ratingSetDtoTransformer;
 
     public List<NewsInfoDto> getNews() {
         return newsAddDtoTransformer.makeListDto(newsRepository.findAll());
@@ -106,4 +106,38 @@ public class NewsService {
         commentRepository.save(comment);
         userRepository.save(user);
     }
+
+    public float setPostRating(RatingSetDto ratingSetDto) {
+        News news = newsRepository.findById(ratingSetDto.getIdPost());
+        Boolean newRating = true;
+        for(Rating rating : news.getRating()) {
+            if(rating.getUser().getUsername().equals(ratingSetDto.getUsername())) {
+                newRating = false;
+                rating.setValue(ratingSetDto.getRating());
+            }
+        }
+        if(newRating) {
+            news.getRating().add(ratingSetDtoTransformer.makeModel(ratingSetDto));
+        }
+        news.setRatingValue(currentRating(news.getRating()));
+        newsRepository.save(news);
+        return  news.getRatingValue();
+    }
+
+    private float currentRating(Set<Rating> ratings) {
+        float currentRating = 0;
+        for(Rating rating : ratings) {
+            currentRating += rating.getValue();
+        }
+        return currentRating / ratings.size();
+    }
+
+    public float getPostRating(long id) {
+        return newsRepository.findById(id).getRatingValue();
+    }
+
+//    public void setPostRating(long id) {
+//         newsRepository.findById();
+//    }
+
 }

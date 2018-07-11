@@ -107,7 +107,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     //   this.news.categories;
     //   this.categories.push({id: category.id, name: category.name, isActive: false});
     // }
-
+    this.news.post.value_rating = 0;
     this.newsService.addPost(this.news).pipe(first())
       .subscribe(
         data => {

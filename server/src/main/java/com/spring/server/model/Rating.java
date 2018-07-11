@@ -1,5 +1,6 @@
 package com.spring.server.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ public class Rating {
     private User user;
 
     @ManyToOne
+    @JsonBackReference(value = "rating-news")
     @JoinColumn(name = "id_news")
     private News news;
 
@@ -32,5 +34,13 @@ public class Rating {
     }
     public Rating() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                '}';
     }
 }

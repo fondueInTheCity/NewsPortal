@@ -7,6 +7,7 @@ import com.spring.server.service.dto.CommentDto.CommentAddDto;
 import com.spring.server.service.dto.CommentDto.CommentShowDto;
 import com.spring.server.service.dto.LikeDto.LikeDto;
 import com.spring.server.service.dto.NewsDto.NewsInfoDto;
+import com.spring.server.service.dto.RatingDto.RatingSetDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -86,7 +87,15 @@ public class NewsController {
         this.newsService.addLike(likeDto);
     }
 
-//    @GetMapping("/showLikes")
-//    @ResponseStatus(HttpStatus.OK)
-//    public  showLikes()
+    @PostMapping("/setPostRating")
+    @ResponseStatus(HttpStatus.OK)
+    public float getPostRating(@RequestBody RatingSetDto ratingSetDto) {
+        return this.newsService.setPostRating(ratingSetDto);
+    }
+
+    @GetMapping("/getPostRating/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public float getPostRating(@PathVariable long id) {
+        return this.newsService.getPostRating(id);
+    }
 }

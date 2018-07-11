@@ -72,7 +72,7 @@ public class User {
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    @JsonBackReference
+    @JsonBackReference(value="user-rating")
     private Set<Rating> ratings;
 
     @ManyToOne

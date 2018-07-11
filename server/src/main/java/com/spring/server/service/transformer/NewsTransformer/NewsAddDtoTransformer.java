@@ -25,6 +25,7 @@ public class NewsAddDtoTransformer {
         news.setPublishDate(newsAddDto.getPost().getPublishDate());
         news.setUser(this.userRepository.findById(newsAddDto.getPost().getId_user()));
         news.setTags(newsAddDto.getTags());
+        news.setRatingValue(newsAddDto.getPost().getValue_rating());
         news.setCategories(newsAddDto.getCategories());
         return news;
     }
@@ -39,8 +40,12 @@ public class NewsAddDtoTransformer {
         postInfo.setPublishDate(news.getPublishDate());
         postInfo.setId_user(news.getUser().getId());
         postInfo.setAuthorName(news.getUser().getUsername());
+        postInfo.setValue_rating(news.getRatingValue());
         newsAddDto.setPost(postInfo);
         newsAddDto.setTags(news.getTags());
+//        for(Rating rating : news.getRating()) {
+//            newsAddDto.getPost().getIdUsers().add(rating.getUser().getId());
+//        }
         newsAddDto.setCategories(news.getCategories());
         return newsAddDto;
     }
@@ -54,7 +59,7 @@ public class NewsAddDtoTransformer {
     }
 
     public List<News> makeListModel(List<NewsInfoDto> newsAddDtoList) {
-        List<News> newsList = new ArrayList();
+        List<News> newsList = new ArrayList<>();
         for(NewsInfoDto newsAddDto : newsAddDtoList) {
             newsList.add(makeModel(newsAddDto));
         }

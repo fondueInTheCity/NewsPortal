@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {News} from '../model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {CommentAddDto, LikeDto} from '../dto';
+import {CommentAddDto, LikeDto, RatingSetDto} from '../dto';
 import {CommentShowDto} from '../dto/CommentShowDto';
 import {b} from '@angular/core/src/render3';
 import {Headers} from "@angular/http";
@@ -69,5 +69,11 @@ export class NewsService {
     return commentsShowDto.sort(function (a: CommentShowDto, c: CommentShowDto): number {
       return (a.publish_date > c.publish_date ? 1 : -1);
     });
+  }
+  setRatingPost(ratingSetDto: RatingSetDto) {
+    return this.http.post<number>(`${environment.serverUrl}news/setPostRating`, ratingSetDto);
+  }
+  getPostRating(idPost: number) {
+    return this.http.get<number>(`${environment.serverUrl}news/getPostRating/` + idPost);
   }
 }

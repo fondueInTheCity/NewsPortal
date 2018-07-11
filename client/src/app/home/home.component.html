@@ -15,10 +15,11 @@
       </div>
     </div>
     <div class="col-lg-7 col-xl-7">
-      <a href="" class="green-text">
-        <h6 class="font-weight-bold pb-1">
-          <i class="fa fa-cutlery"></i> Food</h6>
-      </a>
+      <ul class="d-flex flex-wrap align-content-start tags-pos p-0">
+        <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let category of post.categories">
+          <span class="badge badge-primary">{{category.name}}</span>
+        </li>
+      </ul>
       <h3 class="mb-4 font-weight-bold dark-grey-text">
         <strong>{{post.post.name}}</strong>
       </h3>
@@ -28,64 +29,13 @@
           <strong>{{post.post.authorName}}</strong>
         </a>, {{post.post.publishDate | date}}</p>
       <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.post.id}}" mdbWavesEffect>Read more</a>
+      <ul class="d-flex flex-wrap align-content-start tags-pos p-0">
+        <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of post.tags">
+          <span class="text-dark">{{tag.name}}</span>
+        </li>
+      </ul>
     </div>
   </div>
   <hr class="mb-5 mt-5 pb-3">
-  </div>
-  <div class="row">
-    <div class="col-lg-7 col-xl-7 pb-3">
-      <a href="" class="pink-text">
-        <h6 class="font-weight-bold pb-1">
-          <i class="fa fa-image"></i> Lifestyle</h6>
-      </a>
-      <h3 class="mb-4 font-weight-bold dark-grey-text">
-        <strong>This is title of the news</strong>
-      </h3>
-      <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-        deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
-        provident et dolorum fuga.</p>
-      <p>by
-        <a>
-          <strong>Carine Fox</strong>
-        </a>, 14/08/2018</p>
-      <a class="btn btn-pink btn-md mb-3 waves-light" mdbWavesEffect>Read more</a>
-    </div>
-    <div class="col-lg-5 col-xl-5 mb-5">
-      <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
-        <img src="https://mdbootstrap.com/img/Photos/Others/img%20(34).jpg" alt="Second image in the first version of blog listing"
-             class="img-fluid">
-        <a>
-          <div class="mask rgba-white-slight"></div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <hr class="mb-5 mt-4 pb-3">
-  <div class="row pb-5">
-    <div class="col-lg-5 col-xl-5 pb-3">
-      <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
-        <img src="https://mdbootstrap.com/img/Photos/Others/img (28).jpg" alt="Thrid image in the blog listing." class="img-fluid">
-        <a>
-          <div class="mask rgba-white-slight"></div>
-        </a>
-      </div>
-    </div>
-    <div class="col-lg-7 col-xl-7">
-      <a href="" class="indigo-text">
-        <h6 class="font-weight-bold pb-1">
-          <i class="fa fa-suitcase"></i> Travels</h6>
-      </a>
-      <h3 class="mb-4 font-weight-bold dark-grey-text">
-        <strong>This is title of the news</strong>
-      </h3>
-      <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
-        magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro qui dolorem ipsum quia sit
-        amet, consectetur.</p>
-      <p>by
-        <a>
-          <strong>Carine Fox</strong>
-        </a>, 11/08/2018</p>
-      <a class="btn btn-indigo btn-md mb-3 waves-light" mdbWavesEffect>Read more</a>
-    </div>
   </div>
 </section>

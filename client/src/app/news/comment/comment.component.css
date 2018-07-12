@@ -20,3 +20,7 @@
 :hover.fa-thumbs-up{
   color: mediumblue;
 }
+
+.avatar{
+  width: 129px;
+}

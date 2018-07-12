@@ -19,6 +19,7 @@ public class CommentShowTransformer {
         commentShowDto.setAuthor_name(comment.getUser().getUsername());
         commentShowDto.setLikes(comment.getLikes());
         commentShowDto.setPublish_date(comment.getPublish_date());
+        commentShowDto.setAvatar(comment.getUser().getAvatar());
         return commentShowDto;
     }
 

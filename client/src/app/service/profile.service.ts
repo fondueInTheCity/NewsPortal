@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {UserEditDto} from '../dto/userEditDto';
+import {UserEditDto} from '../dto';
 
 @Injectable({
   providedIn: 'root'

@@ -9,14 +9,14 @@
     <div class="col-md-3">
       <div class="card card-cascade narrower">
         <div class="view overlay hm-white-slight waves-light waves-effect" mdbwaveseffect="">
-          <img class="img-fluid" src={{user.avatar}}>
+          <img class="img-fluid" src={{user?.avatar}}>
           <a><div class="mask">
           </div>
           </a>
         </div>
         <div class="card-body text-center">
-          <h4 class="card-title mb-2 font-bold"><strong>{{user.username}}</strong></h4>
-          <h5 class="indigo-text"><strong>{{user.role}}</strong></h5>
+          <h4 class="card-title mb-2 font-bold"><strong>{{user?.username}}</strong></h4>
+          <h5 class="indigo-text"><strong>{{user?.role}}</strong></h5>
           <!--<h6 class="text-justify"><strong>First name:</strong></h6>-->
           <!--<p class="text-justify">{{user.firstName}}</p>-->
           <!--<h6 class="text-justify"><strong>Second name:</strong></h6>-->

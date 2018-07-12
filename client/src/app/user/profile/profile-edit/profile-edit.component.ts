@@ -1,12 +1,11 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../../../service/user.service';
-import {AlertService} from '../../../auth/service/alert.service';
+import {AlertService} from '../../../auth/service';
 import {first} from 'rxjs/internal/operators';
 import { Subscription } from 'rxjs';
-import {UserEditDto} from "../../../dto/userEditDto";
-import {ProfileService} from '../../../service';
-import {Router} from '@angular/router';
+import {UserEditDto} from '../../../dto';
+import {NewsService, ProfileService, UserService} from '../../../service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile-edit',
@@ -19,20 +18,35 @@ export class ProfileEditComponent implements OnInit {
   editUserForm: FormGroup;
   loading = false;
   submitted = false;
+  username: string;
   private routeSubscription: Subscription;
   fileToUpload: File = null;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private alertService: AlertService,
-    private profileService: ProfileService,
-    private router: Router
-  ) {
-  }
+  constructor(private router: Router,
+              private newsService: NewsService,
+              private formBuilder: FormBuilder,
+              private userService: UserService,
+              private alertService: AlertService,
+              private activatedRoute: ActivatedRoute,
+              private profileService: ProfileService) {}
 
   ngOnInit() {
-    this.user = this.profileService.getUser();
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.username = params['username'];
+      this.user = this.profileService.getUser();
+      if (this.user.username !== this.username) {
+        this.userService.getByUsername(this.username)
+          .pipe(first())
+          .subscribe((data: UserEditDto) => {
+              this.user = data;
+              this.user.role = this.userService.transformRoleToView(this.user.role);
+              this.profileService.setUser(this.user);
+            },
+            error => {
+              this.alertService.error(error);
+            });
+      }
+    });
     this.editUserForm = this.formBuilder.group({
       id: [this.user.id, Validators.required],
       username: [this.user.username, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')],
@@ -65,12 +79,12 @@ export class ProfileEditComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          if (this.fileToUpload !== null)
-            this.routeSubscription = this.userService.uploadImage(formdata, user.id).pipe(first()).subscribe((data) => {
-              this.setUserData(user);
+          if (this.fileToUpload !== null) {
+            this.routeSubscription = this.userService.uploadImage(formdata, user.id).pipe(first()).subscribe(() => {
+              this.setUserData(user.username);
           });
-          else {
-            this.setUserData(user);
+          } else {
+            this.setUserData(user.username);
           }
         },
         error => {
@@ -87,13 +101,18 @@ export class ProfileEditComponent implements OnInit {
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
   }
-  setUserData(user: UserEditDto) {
-    console.log("Saved");
-    this.loading = false;
-    this.submitted = false;
-    user.role = this.userService.transformRoleToView(user.role);
-    this.profileService.setUser(user);
-    this.router.navigate([`/profile/${user.username}`]);
+  setUserData(username: string) {
+    this.userService.getByUsername(username).pipe(first()).subscribe((user) => {
+      this.user = user;
+      this.user.role = this.userService.transformRoleToView(this.user.role);
+      this.profileService.setUser(this.user);
+      console.log('Saved');
+      this.loading = false;
+      this.submitted = false;
+      this.router.navigate([`/profile/${username}`]);
+    });
   }
+
+
 
 }

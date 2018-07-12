@@ -21,9 +21,8 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public LoginResponseDto login(
-            @RequestBody final LoginRequestDto loginRequestDto) {
-            return authenticationService.login(loginRequestDto);
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
+        return authenticationService.login(loginRequestDto);
     }
 
     @PostMapping("/registration")

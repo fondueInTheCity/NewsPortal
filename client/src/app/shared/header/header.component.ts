@@ -10,7 +10,7 @@ import {AlertService} from "../../auth/service/alert.service";
 import {Language} from "../../model/language";
 import {Theme} from "../../model/theme";
 import {ProfileService} from '../../service';
-import {UserEditDto} from '../../dto/userEditDto';
+import {UserEditDto} from '../../dto/UserEditDto';
 
 @Component({
   selector: 'app-header',

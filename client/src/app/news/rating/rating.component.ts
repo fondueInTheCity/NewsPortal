@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {NewsService} from '../../service';
-import {NewsInfoDto} from '../../dto/newsInfoDto';
 import {ActivatedRoute} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {RatingSetDto} from '../../dto';
@@ -14,8 +13,8 @@ import {RatingSetDto} from '../../dto';
 export class RatingComponent implements OnInit {
   @Input() username: string;
   currentRating: number;
-  flag = 2;
-  ctrl = new FormControl();
+  changeRatingControl = 2;
+  ratingControl = new FormControl();
   idPost: number;
   constructor(private newsService: NewsService,
               private route: ActivatedRoute) {}
@@ -38,19 +37,17 @@ export class RatingComponent implements OnInit {
   }
 
   setRating() {
-    if (this.flag === 0) {
-      this.newsService.setRatingPost(new RatingSetDto(this.idPost, this.username, this.ctrl.value)).pipe(first())
+    if (this.changeRatingControl === 0) {
+      this.newsService.setRatingPost(new RatingSetDto(this.idPost, this.username, this.ratingControl.value)).pipe(first())
         .subscribe(
-          data => {
-            this.currentRating = data;
-            // this.ctrl = new FormControl(this.currentRating);
+          (currentRating) => {
+            this.currentRating = currentRating;
           },
           error => {
             //sdfsdfefsd
           });
     } else {
-      --this.flag;
-      // this.ctrl = new FormControl(this.currentRating);
+      --this.changeRatingControl;
     }
   }
 }

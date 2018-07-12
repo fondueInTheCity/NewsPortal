@@ -1,5 +1,5 @@
-import {News} from '../model';
-import {Category} from '../model/category';
+import {News, Category} from '../model';
+
 export class NewsInfoDto {
   post: News;
   tags: Object[];

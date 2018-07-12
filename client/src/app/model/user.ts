@@ -6,6 +6,7 @@
     firstName: string;
     lastName: string;
     role: string;
+    amountLike: number;
     email: string;
     deleted: boolean;
     blocked: boolean;

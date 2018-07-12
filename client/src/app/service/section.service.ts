@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Category} from "../model/category";
-import {environment} from "../../environments/environment";
+import {HttpClient} from '@angular/common/http';
+import {Category} from '../model';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class SectionService {

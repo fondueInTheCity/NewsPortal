@@ -3,13 +3,12 @@
     <div *ngIf="showEdit()"
          class="tool-box float-sm-right main-bg-bgcolor p-2 rounded">
       <a class="card-link pointer m-1" routerLink="/editPost/{{post.id}}"><i class="material-icons md-light">&#xE254;</i></a>
-      <a class="card-link pointer m-1" (click)="deletePost(post.id)"><i class="material-icons md-light">&#xE872;</i></a>
+      <a class="card-link pointer m-1" (click)="confirmDeletePost.show()"><i class="material-icons md-light">&#xE872;</i></a>
     </div>
       <div class="float-sm-left">
       <h2>{{post.name}}</h2>
       <h5>{{post.publishDate | date}}</h5>
         <app-rating *ngIf="showRating()"  [username]="currentUserJson?.username" ></app-rating>
-
         <div *ngIf="!new">
           <a routerLink="/profile/{{post?.authorName}}"><h1>{{post?.authorName}}</h1></a>
         </div>
@@ -21,3 +20,24 @@
 </div>
 <app-comment *ngIf="showComments()" [idPost]="id" [addComment]="showAddComment()"></app-comment>
 
+<div mdbModal #confirmDeletePost="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="heading lead">Modal Danger</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="confirmDeletePost.hide()">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <p>You are sure want to delete this Post?</p>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="deletePost(post.id); confirmDeletePost.hide()">Yes</a>
+        <a type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="confirmDeletePost.hide()" mdbWavesEffect>No</a>
+      </div>
+    </div>
+  </div>
+</div>

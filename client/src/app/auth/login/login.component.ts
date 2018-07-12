@@ -2,7 +2,6 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
 import { AlertService, AuthenticationService } from '../service';
 import {TranslateService} from "@ngx-translate/core";
 
@@ -27,16 +26,14 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    // reset login status
     this.authenticationService.logout();
 
-    // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.code = this.route.snapshot.paramMap.get('code');
     if (this.code != null) {
       this.authenticationService.activate(this.code).pipe(first())
         .subscribe(
-          data => {
+          () => {
             this.alertService.success('Registration successful', true);
             this.router.navigate(['/login']);
           },
@@ -47,13 +44,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // convenience getter for easy access to form fields
   get formControl() { return this.loginForm.controls; }
 
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
@@ -62,7 +57,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.formControl.username.value, this.formControl.password.value)
       .pipe(first())
       .subscribe(
-        data => {
+        () => {
           this.router.navigate([this.returnUrl]);
         },
         error => {

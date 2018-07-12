@@ -28,8 +28,7 @@ public class NewsController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<NewsInfoDto> getNews(
-    ) {
+    public List<NewsInfoDto> getNews() {
         return this.newsService.getNews();
     }
 
@@ -45,10 +44,10 @@ public class NewsController {
         return this.newsService.getNewsByIdUser(idUser);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{idPost}")
     @ResponseStatus(HttpStatus.OK)
-    public NewsInfoDto getPostById(@PathVariable Long id) {
-        return this.newsService.getPostById(id);
+    public NewsInfoDto getPostById(@PathVariable Long idPost) {
+        return this.newsService.getPostById(idPost);
     }
 
     @PostMapping("/addImageToPost")
@@ -63,10 +62,10 @@ public class NewsController {
         this.newsService.editPost(newsInfoDto);
     }
 
-    @DeleteMapping("/deletePost/{id}")
+    @DeleteMapping("/deletePost/{idPost}")
     @ResponseStatus(HttpStatus.OK)
-    public void deletePost(@PathVariable Long id) {
-        this.newsService.deletePost(id);
+    public void deletePost(@PathVariable Long idPost) {
+        this.newsService.deletePost(idPost);
     }
 
     @PostMapping("/comment")
@@ -75,10 +74,10 @@ public class NewsController {
         this.newsService.addComment(commentAddDto);
     }
 
-    @GetMapping("/comments/{id}")
+    @GetMapping("/comments/{idPost}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<CommentShowDto> showComments(@PathVariable long id) {
-        return this.newsService.showComments(id);
+    public Set<CommentShowDto> showComments(@PathVariable long idPost) {
+        return this.newsService.showComments(idPost);
     }
 
     @PostMapping("/addLike")
@@ -93,9 +92,9 @@ public class NewsController {
         return this.newsService.setPostRating(ratingSetDto);
     }
 
-    @GetMapping("/getPostRating/{id}")
+    @GetMapping("/getPostRating/{idPost}")
     @ResponseStatus(HttpStatus.OK)
-    public float getPostRating(@PathVariable long id) {
-        return this.newsService.getPostRating(id);
+    public float getPostRating(@PathVariable long idPost) {
+        return this.newsService.getPostRating(idPost);
     }
 }

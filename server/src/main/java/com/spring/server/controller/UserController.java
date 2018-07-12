@@ -47,25 +47,25 @@ public class UserController {
 
     @PostMapping("/setUserLanguage/{username}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void setUserLanguage(@PathVariable(name = "username") String username, @RequestBody Language language) {
+    public void setUserLanguage(@PathVariable String username, @RequestBody Language language) {
         this.userService.setLanguage(username, language);
     }
 
     @PostMapping("/setUserTheme/{username}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void setUserTheme(@PathVariable(name = "username") String username, @RequestBody Theme theme) {
+    public void setUserTheme(@PathVariable String username, @RequestBody Theme theme) {
         this.userService.setTheme(username, theme);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/setUserRole/{id}")
+    @PostMapping("/setUserRole/{idUser}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void setUserRole(@PathVariable(name = "id") Long userId, @RequestBody String role) {
-        this.userService.setRole(userId, role);
+    public void setUserRole(@PathVariable Long idUser, @RequestBody String role) {
+        this.userService.setRole(idUser, role);
     }
 
     @GetMapping("/{username}")
-    public UserEditDto findUserByUsername(@PathVariable(value = "username") String username) {
+    public UserEditDto findUserByUsername(@PathVariable String username) {
         return this.userService.findUserByUsername(username);
     }
 
@@ -75,33 +75,33 @@ public class UserController {
         this.userService.editUser(user);
     }
 
-    @PostMapping("/editImage/{id}")
-    public void editUserImage(@PathVariable(name = "id") Long userId, @RequestParam("file") MultipartFile image) throws DbxException {
-        this.userService.setUsersImage(userId, image);
+    @PostMapping("/editImage/{idUser}")
+    public void editUserImage(@PathVariable Long idUser, @RequestParam("file") MultipartFile image) throws DbxException {
+        this.userService.setUsersImage(idUser, image);
         //    @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = "multipart/form-data")
         //    public void editUser(@RequestBody MultipartFile image){
         //    this.userService.editUser(user);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable(name = "id") Long id
+    @DeleteMapping("/{idUser}")
+    public void deleteUser(@PathVariable Long idUser
     ) {
-        this.userService.deleteUser(id);
+        this.userService.deleteUser(idUser);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/block/{id}", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/block/{idUser}", method = RequestMethod.POST, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public void blockUser(@PathVariable Long id, @RequestBody Map<String, String> blockStatus
+    public void blockUser(@PathVariable Long idUser, @RequestBody Map<String, String> blockStatus
     ) {
         boolean blockedStatus = Boolean.parseBoolean(blockStatus.get("blocked"));
-        this.userService.blockUser(id, blockedStatus);
+        this.userService.blockUser(idUser, blockedStatus);
     }
 
-    @RequestMapping("/getImage/{id}")
+    @RequestMapping("/getImage/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public String getImage(@PathVariable long id) {
-        return this.userService.getImage(id);
+    public String getImage(@PathVariable String username) {
+        return this.userService.getImage(username);
     }
 }

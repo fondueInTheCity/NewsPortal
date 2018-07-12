@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../model/user';
-import {UserService} from '../../service/user.service';
+import {User} from '../../model';
+import {UserService} from '../../service';
 import {first} from 'rxjs/internal/operators';
 
 @Component({
@@ -10,17 +10,15 @@ import {first} from 'rxjs/internal/operators';
 })
 export class UsersListComponent implements OnInit {
   users: User[] = [];
-  loading = false;
   idDelete: number;
-  constructor(private userService: UserService) {
-  }
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.loadAllUsers();
   }
 
-  deleteUser(id: number) {
-    this.userService.delete(id).pipe(first()).subscribe(() => {
+  deleteUser(idUser: number) {
+    this.userService.delete(idUser).pipe(first()).subscribe(() => {
       this.loadAllUsers();
     });
   }
@@ -32,9 +30,8 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  changeBlockUserStatus(id: number, blocked: boolean) {
-    this.loading = true;
-    this.userService.block(id, !blocked).pipe(first()).subscribe(() => {
+  changeBlockUserStatus(userId: number, blocked: boolean) {
+    this.userService.block(userId, !blocked).pipe(first()).subscribe(() => {
       this.loadAllUsers();
     });
   }
@@ -42,10 +39,9 @@ export class UsersListComponent implements OnInit {
   private loadAllUsers() {
     this.userService.getAll().pipe(first()).subscribe(users => {
       this.users = users;
-      for (let user of users) {
+      for (const user of users) {
         user.role = this.userService.transformRoleToView(user.role);
       }
-      this.loading = false;
     });
   }
 }

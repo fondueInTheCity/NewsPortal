@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {NewsService} from '../../service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {News} from '../../model';
+import {NewsService, UserService} from '../../service';
+import {ActivatedRoute} from '@angular/router';
 import {CommentAddDto, CommentShowDto, LikeDto} from '../../dto';
 
 @Component({
@@ -18,19 +17,22 @@ export class CommentComponent implements OnInit {
   likeDto = new LikeDto();
   commentAddDto = new CommentAddDto();
   commentsShowDto: CommentShowDto[] = [];
+  currentImage: string;
+  image = 'https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg';
   currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
 
   constructor(private route: ActivatedRoute,
               private newsService: NewsService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private userService: UserService) { }
 
   ngOnInit() {
     this.commentForm = this.formBuilder.group({
       comment: ['', Validators.required]
     });
+    this.getImage(this.currentUserJson.username);
     this.loadAllComments();
   }
-
 
   addLike(idComment: number) {
     if (this.currentUserJson === null) {
@@ -47,7 +49,9 @@ export class CommentComponent implements OnInit {
           //sdfsdfefsd
         });
   }
+
   get formControl() { return this.commentForm.controls; }
+
   onSubmit() {
     this.commentAddDto.text = this.formControl.comment.value;
     this.commentAddDto.username = this.currentUserJson.username;
@@ -61,10 +65,17 @@ export class CommentComponent implements OnInit {
         //sdfsdfefsd
       });
   }
+
   loadAllComments() {
     this.newsService.showComments(this.idPost).pipe(first()).subscribe(commentsShowDto => {
       this.commentsShowDto = commentsShowDto;
       this.commentsShowDto = this.newsService.sortComments(this.commentsShowDto);
+    });
+  }
+
+  getImage(username: string) {
+    this.userService.getImage(username).pipe(first()).subscribe((urlImage: string) => {
+      this.currentImage = urlImage;
     });
   }
 }

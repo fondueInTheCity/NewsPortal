@@ -2,12 +2,12 @@
   <div class="mb-1">
     <div class="row">
       <div class="col-sm-4">
-        <h3 id="head_name" translate>{{user.username}} news
-          <a *ngIf="isCanAddNews()" class="pull-right" [routerLink]='["/addPost/", {authorId: user.id}]'>+</a>
+        <h3 id="head_name" translate>{{user?.username}} news
+          <a *ngIf="isCanAddNews()" class="pull-right" [routerLink]='["/addPost/", {authorId: user?.id}]'>+</a>
         </h3>
         <hr id="head_hr" />
       </div>
-      <form [formGroup]="searchForm" class="col-md-4 no-space ml-auto" (change)="search()" >
+      <form *ngIf="isCanAddNews()" [formGroup]="searchForm" class="col-md-4 no-space ml-auto" (change)="search()" >
         <div class="row md-form">
           <input class="form-control" id="search" formControlName="search" [attr.placeholder]="'Search...' | translate" type="text">
           <!--<i class="fa fa-search" aria-hidden="true"></i>-->
@@ -15,7 +15,7 @@
       </form>
     </div>
   </div>
-  <table class="table text-center table-hover">
+  <table *ngIf="isCanAddNews()" class="table text-center table-hover">
     <thead>
     <tr>
       <th translate>
@@ -39,21 +39,22 @@
     <tbody>
     <tr *ngFor="let post of newsInSearch">
       <td>
-        <a routerLink="/news/{{post.post.id}}">{{post.post.name}}</a>
+        <a routerLink="/news/{{post.post?.id}}">{{post.post?.name}}</a>
       </td>
-      <td>{{post.post.description}}</td>
-      <td>{{post.post.publishDate}}</td>
+      <td>{{post.post?.description}}</td>
+      <td>{{post.post?.publishDate}}</td>
       <td>
         <div class="btn-group" dropdown>
           <button type="button" dropdownToggle class="btn action-btn dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" routerLink="/editPost/{{post.post.id}}" translate>Edit</a>
+            <a class="dropdown-item" routerLink="/editPost/{{post.post?.id}}" translate>Edit</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" (click)="deletePost(post.post.id)" translate>Delete</a>
+            <a class="dropdown-item" (click)="deletePost(post.post?.id)" translate>Delete</a>
           </div>
         </div>
       </td>
     </tr>
     </tbody>
   </table>
+  <div *ngIf="!isCanAddNews()">Sorry you can't create news</div>
 </div>

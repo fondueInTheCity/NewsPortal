@@ -38,7 +38,6 @@ export class RestorePasswordComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     //this.passwordConfirmError = this.formControl.password.value !== this.formControl.passwordConfirm.value;
-    // stop here if form is invalid
     if (this.passwordForm.invalid)  {
       return;
     }

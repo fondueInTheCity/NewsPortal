@@ -19,8 +19,7 @@ public class SectionController {
 
     @GetMapping("/getAllCategories")
     @ResponseStatus(HttpStatus.OK)
-    public List<Category> getAllCategories(
-    ) {
+    public List<Category> getAllCategories() {
         return this.sectionService.getAllCategories();
     }
 }

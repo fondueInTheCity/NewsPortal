@@ -31,6 +31,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "amount_like")
+    private long amountLike;
+
     @Column
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -107,6 +110,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName=" + lastName +
                 ", email='" + email + '\'' +
+                ", amountLike='" + amountLike + '\'' +
                 ", role=" + role +
                 ", activationCode='" + activationCode + '\'' +
                 ", country='" + country + '\'' +

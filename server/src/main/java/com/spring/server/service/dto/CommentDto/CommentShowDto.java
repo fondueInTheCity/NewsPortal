@@ -13,5 +13,6 @@ public class CommentShowDto {
     private String text;
     private String author_name;
     private String publish_date;
+    private String avatar;
     private Set<Like> likes;
 }

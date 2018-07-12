@@ -1,12 +1,9 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-
-import { User } from '../model';
+import { User, Language, Theme } from '../model';
 import {ActivatedRouteSnapshot, CanActivate} from '@angular/router';
-import {Language} from "../model/language";
-import {Theme} from "../model/theme";
-import {UserEditDto} from '../dto/userEditDto';
+import {UserEditDto} from '../dto';
 
 @Injectable()
 export class UserService   {
@@ -16,9 +13,9 @@ export class UserService   {
     return this.http.get<User[]>(`${environment.serverUrl}users`);
   }
 
-  getById(id: number) {
-    return this.http.get(`${environment.serverUrl}users/` + id);
-  }
+  // getById(id: number) {
+  //   return this.http.get(`${environment.serverUrl}users/` + id);
+  // }
 
   getByUsername(username: string) {
     return this.http.get<UserEditDto>(`${environment.serverUrl}users/` + username);
@@ -75,7 +72,7 @@ export class UserService   {
     return updatedRole;
   }
 
-  // getImage(id: number): string {
-  //   return this.http.get(`${environment.serverUrl}users/getImage` + id);
-  // }
+  getImage(username: string) {
+    return this.http.get<string>(`${environment.serverUrl}users/getImage/` + username, {responseType: 'text'});
+  }
 }

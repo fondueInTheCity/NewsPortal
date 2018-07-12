@@ -2,11 +2,11 @@
   <h2 class="h1 section-heading">Leave a reply </h2>
   <div class="row">
     <div class="col-sm-2 col-12">
-      <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg" class="avatar rounded-circle z-depth-1-half">
+      <img src="{{currentImage}}" class="avatar z-depth-1-half">
     </div>
     <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="col-sm-10 col-12">
       <div class="md-form">
-        <textarea type="text" id="areaComment" formControlName="comment" class="md-textarea form-control" mdbInputDirective></textarea>
+        <textarea type="text" id="areaComment" formControlName="comment" class="md-textarea form-control"></textarea>
         <label for="areaComment">Your message</label>
       </div>
       <div class="text-center mx-auto">
@@ -22,10 +22,13 @@
   </div>
   <div class="row mb-4" *ngFor="let commentShowDto of commentsShowDto">
     <div class="photo">
-      <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg" class="avatar rounded-circle z-depth-1-half">
+      <img src="{{commentShowDto.avatar}}" class="avatar z-depth-1-half">
     </div>
     <div class="col-md-6">
-      <div class="row"><a routerLink="/profile/{{commentShowDto?.author_name}}"><h3 class="user-name">{{commentShowDto?.author_name}}</h3></a>
+      <div class="row"><a routerLink="/profile/{{commentShowDto?.author_name}}">
+        <h3 class="user-name">{{commentShowDto?.author_name}}</h3>
+        <i class="fa fa-thumbs-up" aria-hidden="true">{{commentShowDto.likes.length}}</i>
+      </a>
       </div>
       <div class="row comment p-0">
           <p class="comment-text">{{commentShowDto.text}}</p>

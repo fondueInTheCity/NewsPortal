@@ -2,8 +2,8 @@
 import { first } from 'rxjs/operators';
 import {NewsService, UserService} from '../service';
 import {HttpClient} from '@angular/common/http';
-import {NewsInfoDto} from "../dto/newsInfoDto";
 import {ActivatedRoute, Params} from "@angular/router";
+import {NewsInfoDto} from '../dto';
 
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit {

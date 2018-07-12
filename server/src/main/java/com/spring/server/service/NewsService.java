@@ -13,7 +13,7 @@ import com.spring.server.service.dto.RatingDto.RatingSetDto;
 import com.spring.server.service.transformer.CommentTransformer.CommentAddDtoTransformer;
 import com.spring.server.service.transformer.CommentTransformer.CommentShowTransformer;
 import com.spring.server.service.transformer.LikeTransformer.LikeDtoTransformer;
-import com.spring.server.service.transformer.NewsTransformer.NewsAddDtoTransformer;
+import com.spring.server.service.transformer.NewsTransformer.NewsInfoDtoTransformer;
 import com.spring.server.service.transformer.NewsTransformer.NewsEditDtoTransformer;
 import com.spring.server.service.transformer.RatingDtoTransformer.RatingSetDtoTransformer;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class NewsService {
     private final CommentRepository commentRepository;
     private final LikeRepository likeRepository;
     private final SectionService sectionService;
-    private final NewsAddDtoTransformer newsAddDtoTransformer;
+    private final NewsInfoDtoTransformer newsInfoDtoTransformer;
     private final NewsEditDtoTransformer newsEditDtoTransformer;
     private final CommentAddDtoTransformer commentAddDtoTransformer;
     private final CommentShowTransformer commentShowTransformer;
@@ -41,25 +41,25 @@ public class NewsService {
     private final RatingSetDtoTransformer ratingSetDtoTransformer;
 
     public List<NewsInfoDto> getNews() {
-        return newsAddDtoTransformer.makeListDto(newsRepository.findAll());
+        return newsInfoDtoTransformer.makeListDto(newsRepository.findAll());
     }
 
-    public void addPost( NewsInfoDto newsAddDto) {
-        News post = newsAddDtoTransformer.makeModel(newsAddDto);
+    public void addPost( NewsInfoDto newsInfoDto) {
+        News post = newsInfoDtoTransformer.makeModel(newsInfoDto);
         post.setPublishDate(LocalDateTime.now().toString());
-        Set<Tag> tags = this.sectionService.mergeTagsToDb(newsAddDto.getTags());
-        Set<Category> categories = this.sectionService.getMergedCategories(newsAddDto.getCategories());
+        Set<Tag> tags = this.sectionService.mergeTagsToDb(newsInfoDto.getTags());
+        Set<Category> categories = this.sectionService.getMergedCategories(newsInfoDto.getCategories());
         post.setTags(tags);
         post.setCategories(categories);
         this.newsRepository.save(post);
     }
 
     public List<NewsInfoDto> getNewsByIdUser(long id) {
-        return  newsAddDtoTransformer.makeListDto(newsRepository.findAllByUser(userRepository.findById(id)));
+        return  newsInfoDtoTransformer.makeListDto(newsRepository.findAllByUser(userRepository.findById(id)));
     }
 
-    public NewsInfoDto getPostById(long id) {
-        return newsAddDtoTransformer.makeDto(newsRepository.findById(id));
+    public NewsInfoDto getPostById(long idPost) {
+        return newsInfoDtoTransformer.makeDto(newsRepository.findById(idPost));
     }
 
     public void editPost(NewsInfoDto newsInfoDto) {
@@ -75,6 +75,9 @@ public class NewsService {
         deletePost.setTags(null);
         deletePost.setCategories(null);
         newsRepository.save(deletePost);
+        for(Comment comment : deletePost.getComments()) {
+            deleteLikes(comment.getLikes());
+        }
         newsRepository.delete(deletePost);
     }
 
@@ -106,8 +109,10 @@ public class NewsService {
         }
         if (!isExist) {
             likes.add(like);
+            like.getUser().setAmountLike(like.getUser().getAmountLike() + 1);
         } else {
             likes.remove(delLike);
+            like.getUser().setAmountLike(like.getUser().getAmountLike() - 1);
         }
         comment.setLikes(likes);
         user.setLikes(likes);
@@ -147,8 +152,11 @@ public class NewsService {
         return newsRepository.findById(id).getRatingValue();
     }
 
-//    public void setPostRating(long id) {
-//         newsRepository.findById();
-//    }
+    public void deleteLikes(Set<Like> likes) {
+        for(Like like : likes) {
+            User user = like.getComment().getUser();
+            user.setAmountLike(user.getAmountLike() - 1);
+        }
+    }
 
 }

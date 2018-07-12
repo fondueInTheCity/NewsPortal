@@ -6,5 +6,6 @@ export class CommentShowDto {
   id_user: number;
   author_name: string;
   publish_date: string;
+  avatar: string;
   likes: Like[];
 }

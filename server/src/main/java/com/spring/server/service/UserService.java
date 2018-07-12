@@ -115,11 +115,12 @@ public class UserService {
     }
 
     public void addUser(User user) {
-        if (this.isUserExsists(user)) {
+        if (this.isUserExsists(user) || this.isEmailExsists(user.getEmail())) {
             return;
         }
         encoder(user);
         newActivationCode(user);
+        user.setAmountLike(0);
         user.setIsActive(false);
         user.setBlocked(false);
         user.setDeleted(false);
@@ -141,6 +142,7 @@ public class UserService {
     public boolean userIsActive(String username) {
         return userRepository.findByUsername(username).getIsActive();
     }
+
     public void sendActivateNewPassword(String email) {
         User user = userRepository.findByEmail(email);
         if(this.isNull(user)) {
@@ -178,6 +180,10 @@ public class UserService {
         return userRepository.findByUsername(user.getUsername()) != null;
     }
 
+    private Boolean isEmailExsists(String email) {
+        return userRepository.findByEmail(email) != null;
+    }
+
     private Boolean isNull(User user) {
         return userRepository.findByUsername(user.getUsername()) == null;
     }
@@ -191,7 +197,7 @@ public class UserService {
         user.setPassword(encoder.encode(user.getPassword()));
     }
 
-    public String getImage(long id) {
-        return this.userRepository.findById(id).getAvatar();
+    public String getImage(String username) {
+        return this.userRepository.findByUsername(username).getAvatar();
     }
 }

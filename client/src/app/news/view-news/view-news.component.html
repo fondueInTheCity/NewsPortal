@@ -1,4 +1,4 @@
-<div *ngIf="post" class="card mb-5">
+<div *ngIf="post" class="card mb-5 mt-5">
   <div class="card-header bg-dark text-white">
     <div *ngIf="showEdit()"
          class="tool-box float-sm-right main-bg-bgcolor p-2 rounded">
@@ -20,4 +20,5 @@
   </div>
 </div>
 <app-comment *ngIf="showComments()" [idPost]="id" [addComment]="showAddComment()"></app-comment>
+
 

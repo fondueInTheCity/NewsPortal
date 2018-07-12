@@ -35,14 +35,31 @@ import { ViewNewsComponent } from './news/view-news/view-news.component';
 import { CommentComponent } from './news/comment/comment.component';
 import { RatingComponent } from './news/rating/rating.component';
 import {SectionService} from './service/section.service';
+import {AccordionModule} from 'primeng/accordion';
+import {SliderModule} from 'primeng/slider';
+import {RouterModule, Routes} from "@angular/router";
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+    // canActivate: [AuthenticationGuard],
+    // runGuardsAndResolvers: ‘always’,
+  }
+]
+
 @NgModule({
     imports: [
+      RouterModule.forRoot(routes, {
+          onSameUrlNavigation: 'reload'
+        }),
         NgbModule.forRoot(),
         BrowserModule,
+        AccordionModule,
+        SliderModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,

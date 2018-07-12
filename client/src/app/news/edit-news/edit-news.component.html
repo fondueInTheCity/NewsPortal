@@ -79,7 +79,10 @@
         </div>
       </div>
       <div *ngSwitchCase="'previewTab'">
-        <app-view-news [post]="news.post" ></app-view-news>
+        <div class="card-body">
+          <markdown [data]="news.post.text"></markdown>
+        </div>
+        <!--<app-view-news [post]="news.post" ></app-view-news>-->
       </div>
     </div>
   </div>

@@ -13,11 +13,8 @@
       </li>
     </ul>
     <div class="no-space row">
-      <!--<form class="form-inline md-form form-sm">-->
-        <input class="form-control form-control-sm mr-3 w-75" type="text" [attr.placeholder]="'Search' | translate" aria-label="Search" mdbInputDirective>
-        <!--<button class="btn btn-primary">Search</button>-->
+        <input class="form-control form-control-sm mr-3 w-75" (keyup)="search($event)" type="text" [attr.placeholder]="'Search' | translate" aria-label="Search" mdbInputDirective>
         <i class="fa fa-search" aria-hidden="true"></i>
-      <!--</form>-->
     </div>
 
     <div class="btn-group" dropdown>

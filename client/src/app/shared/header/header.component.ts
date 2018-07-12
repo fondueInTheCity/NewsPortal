@@ -11,6 +11,7 @@ import {Language} from "../../model/language";
 import {Theme} from "../../model/theme";
 import {ProfileService} from '../../service';
 import {UserEditDto} from '../../dto/userEditDto';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit {
     private translate: TranslateService,
     private userService: UserService,
     private alertService: AlertService,
+    private router: Router,
     private profileService: ProfileService) {
     this.authenticationService.loggedIn.subscribe( value => {
       this.userValidate();
@@ -117,6 +119,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.userValidate();
+  }
+
+  search($event) {
+    let searchText = $event.target.value;
+    this.router.navigate(['/'], { queryParams: { search: searchText } } );
   }
 
   ngOnDestroy(): void {

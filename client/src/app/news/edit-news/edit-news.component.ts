@@ -49,8 +49,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     maxLines: 28,
     showLineNumbers: false
   };
-  constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private newsService: NewsService,
               private sectionService: SectionService,
               private router: Router) {

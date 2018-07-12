@@ -13,6 +13,7 @@ import {ViewNewsComponent} from './news/view-news/view-news.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent }, //, canActivate: [AuthGuard]
+
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'auth/activate/:code', component: LoginComponent},

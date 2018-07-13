@@ -1,36 +1,67 @@
 <div class="card-body">
   <div class="row">
     <div class="ml-5">
-        <div class="row">
+      <div class="row">
+        <div >
+          <img class="img-fluid" src={{user.avatar}}>
+        </div>
+        <div class="near-img">
           <div>
-            <img class="img-fluid" src={{user.avatar}}>
+            <dt class="profile-section__title" translate>Username</dt>
+            <h2 *ngIf="!showSection(0)" (click)="editSection(0)">{{user.username}}</h2>
+            <input *ngIf="showSection(0)" (mouseleave)="saveChanges(0)" [(ngModel)]="user.username" class="form-control" [attr.placeholder]="'Username' | translate" id="Username" type="text">
+            <h4 class="indigo-text">{{role}}</h4>
           </div>
-          <div class="near-img">
-            <h2>{{user.username}}</h2><h4 class="indigo-text">{{user.role}}</h4>
-            <dt *ngIf="user.firstName || user.lastName" class="profile-section__title"  translate>Name</dt>
-            <dd class="profile-section__container">
-              <div class="profile-section__about-text">{{user.firstName}} {{user.lastName}}</div>
-            </dd>
+
+          <div *ngIf="user.firstName || addNewInformation">
+            <dt class="profile-section__title" translate>First Name</dt>
+            <dd *ngIf="!showSection(1)" class="profile-section__about-text" (click)="editSection(1)">{{user.firstName}}</dd>
+            <input *ngIf="showSection(1)" value="{{user.firstName}}" [(ngModel)]="user.firstName" (mouseleave)="saveChanges(1)" class="form-control" id="FirstName"  [attr.placeholder]="'First Name' | translate" type="text">
+          </div>
+          <div *ngIf="user.lastName || addNewInformation">
+            <dt class="profile-section__title" translate>Last Name</dt>
+            <dd *ngIf="!showSection(2)" class="profile-section__about-text" (click)="editSection(2)">{{user.lastName}}</dd>
+            <input *ngIf="showSection(2)" value="{{user.lastName}}" [(ngModel)]="user.lastName" (mouseleave)="saveChanges(2)" class="form-control" id="LastName"  [attr.placeholder]="'Last Name' | translate" type="text">
           </div>
         </div>
-        <div *ngIf="user.country">
-          <dt class="profile-section__title" translate>Country</dt>
-          <dd class="profile-section__container">
-            <div class="profile-section__about-text">{{user.country}}</div>
-          </dd>
-        </div>
-        <div *ngIf="user.city">
-          <dt class="profile-section__title" translate>City</dt>
-          <dd class="profile-section__container">
-            <div class="profile-section__about-text">{{user.city}}</div>
-          </dd>
-        </div>
-        <div *ngIf="user.bio">
-          <dt class="profile-section__title" translate>Biography</dt>
-          <dd class="profile-section__container">
-            <div class="profile-section__about-text">{{user.bio}}</div>
-          </dd>
-        </div>
+      </div>
+
+      <div *ngIf="user.country || addNewInformation">
+        <dt class="profile-section__title" translate>Country</dt>
+        <dd *ngIf="!showSection(3)" class="profile-section__about-text" (click)="editSection(3)">{{user.country}}</dd>
+        <input *ngIf="showSection(3)" value="{{user.country}}" [(ngModel)]="user.country" (mouseleave)="saveChanges(3)" class="form-control" id="Country"  [attr.placeholder]="'Country' | translate" type="text">
+      </div>
+
+      <div *ngIf="user.city || addNewInformation">
+        <dt class="profile-section__title" translate>City</dt>
+        <dd *ngIf="!showSection(4)" class="profile-section__about-text" (click)="editSection(4)">{{user.city}}</dd>
+        <input *ngIf="showSection(4)" value="{{user.city}}" [(ngModel)]="user.city" (mouseleave)="saveChanges(4)" class="form-control" id="City"  [attr.placeholder]="'City' | translate" type="text">
+      </div>
+
+      <div *ngIf="user.bio || addNewInformation">
+        <dt class="profile-section__title" translate>Bio</dt>
+        <dd *ngIf="!showSection(5)" class="profile-section__about-text" (click)="editSection(5)">{{user.bio}}</dd>
+        <input *ngIf="showSection(5)" value="{{user.bio}}" [(ngModel)]="user.bio" (mouseleave)="saveChanges(5)" class="form-control" id="Bio"  [attr.placeholder]="'Bio' | translate" type="text">
+      </div>
+      <div *ngIf="addNewInformation" class="input-group image-preview my-3">
+        <input type="hidden" [attr.placeholder]="'Upload avatar' | translate" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default image-preview-clear" style="display:none;" translate>
+              <span class="glyphicon glyphicon-remove"></span> Clear
+          </button>
+          <div class="btn btn-browse image-preview-input">
+              <span class="glyphicon glyphicon-folder-open "></span>
+              <span class="image-preview-input-title load" translate>Browse</span>
+              <input type="file" (change)="handleFileInput($event.target.files)" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+          </div>
+        </span>
+      </div>
+      <a *ngIf="!addNewInformation && this.canEdit()" class="text-success" (click)="showNewInformation()" >
+        + Add information in profile
+      </a>
+      <a *ngIf="addNewInformation" class="text-success" (click)="showNewInformation()">
+        Save changes
+      </a>
     </div>
   </div>
 </div>

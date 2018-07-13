@@ -20,7 +20,6 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { RestorePasswordComponent } from './auth/restore-password/restore-password.component';
 import { RememberComponent } from './auth/remember/remember.component';
 import { UsersListComponent } from './user/users-list/users-list.component';
-import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.component';
 import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
 import { Exception404Component } from './exception/exception404/exception404.component';
 import { ProfileInfoComponent } from './user/profile/profile-info/profile-info.component';
@@ -33,7 +32,6 @@ import { EditNewsComponent } from './news/edit-news/edit-news.component';
 import { ViewNewsComponent } from './news/view-news/view-news.component';
 import { CommentComponent } from './news/comment/comment.component';
 import { RatingComponent } from './news/rating/rating.component';
-import {SectionService} from './service/section.service';
 import {AccordionModule} from 'primeng/accordion';
 import {SliderModule} from 'primeng/slider';
 import {RouterModule, Routes} from "@angular/router";
@@ -88,7 +86,6 @@ export const routes: Routes = [
         RestorePasswordComponent ,
         RememberComponent,
         UsersListComponent,
-        ProfileEditComponent,
         ProfileNewsComponent,
         Exception404Component,
         ProfileInfoComponent,

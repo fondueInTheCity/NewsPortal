@@ -34,7 +34,6 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item nav-link" [class.active]="viewMode == 'newsTab'" rel="newsTab" (click)="viewMode ='newsTab'" translate>News</li>
         <li class="nav-item nav-link" [class.active]="viewMode == 'profileTab'" rel="profileTab" (click)="viewMode ='profileTab'" translate>Profile</li>
-        <li class="nav-item nav-link" *ngIf="isCanEdit" [class.active]="viewMode == 'editTab'" rel="editTab" (click)="viewMode ='editTab'" translate>Edit</li>
       </ul>
       <div class="tab-content" id="myTabContent" [ngSwitch]="viewMode">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -44,9 +43,6 @@
             </div>
             <div id="profileTab" class="tab-slider--body" *ngSwitchCase="'profileTab'">
               <app-profile-info ></app-profile-info>
-            </div>
-            <div id="editTab" class="tab-slider--body" *ngSwitchCase="'editTab'">
-              <app-profile-edit></app-profile-edit>
             </div>
           </div>
         </div>

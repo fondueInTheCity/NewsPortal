@@ -13,10 +13,6 @@ export class UserService   {
     return this.http.get<User[]>(`${environment.serverUrl}users`);
   }
 
-  // getById(id: number) {
-  //   return this.http.get(`${environment.serverUrl}users/` + id);
-  // }
-
   getByUsername(username: string) {
     return this.http.get<UserEditDto>(`${environment.serverUrl}users/` + username);
   }
@@ -25,7 +21,7 @@ export class UserService   {
     return this.http.post(`${environment.serverUrl}auth/registration`, user);
   }
 
-  update(user: User) {
+  update(user: UserEditDto) {
     return this.http.post(`${environment.serverUrl}users/edit`, user);
   }
 

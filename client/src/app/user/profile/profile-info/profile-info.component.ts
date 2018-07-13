@@ -12,9 +12,12 @@ import {AlertService} from '../../../auth/service';
   styleUrls: ['profile-info.component.css']
 })
 export class ProfileInfoComponent implements OnInit {
-  //@Input() user: UserEditDto;
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  checkList: boolean[] = [false, false, false, false, false, false];
   user: UserEditDto;
   username: string;
+  role: string;
+  addNewInformation = false;
 
   constructor(private router: Router,
               private newsService: NewsService,
@@ -41,6 +44,55 @@ export class ProfileInfoComponent implements OnInit {
             });
       }
     });
+    this.role = this.user.role;
+  }
+
+  editSection(idCheck: number) {
+    if (this.canEdit()) {
+      this.checkList[idCheck] = true;
+    }
+  }
+
+  saveChanges(idCheck: number) {
+    this.setToBack(this.user);
+    this.checkList[idCheck] = false;
+  }
+
+
+  setToBack(user: UserEditDto) {
+    user.role = this.userService.transformRoleToBackEnd(this.user.role);
+    user.language = this.user.language;
+    user.theme = this.user.theme;
+    this.userService.update(this.user).pipe(first()).subscribe(() => {
+      this.user.role = this.userService.transformRoleToView(this.user.role);
+      this.profileService.setUser(this.user);
+      this.router.navigate([`/profile/${this.user.username}`]);
+    });
+  }
+
+  handleFileInput(files: FileList) {
+    let formdata: FormData = new FormData();
+    formdata.append('file', files.item(0));
+    this.userService.uploadImage(formdata, this.user.id).pipe(first()).subscribe(() => {
+      this.userService.getByUsername(this.user.username).pipe(first()).subscribe((user) => {
+        this.user = user;
+        this.user.role = this.userService.transformRoleToView(this.user.role);
+        this.profileService.setUser(this.user);
+        this.router.navigate([`/profile/${this.user.username}`]);
+      });
+    });
+  }
+
+  showNewInformation() {
+    this.addNewInformation = !this.addNewInformation;
+  }
+
+  showSection(idCheck: number): boolean {
+    return this.checkList[idCheck] || this.addNewInformation;
+  }
+
+  canEdit(): boolean {
+    return this.currentUser.userRole === 'ROLE_ADMIN' || this.username === this.currentUser.username;
   }
 
 }

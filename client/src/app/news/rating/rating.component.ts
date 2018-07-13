@@ -12,10 +12,11 @@ import {RatingSetDto} from '../../dto';
 })
 export class RatingComponent implements OnInit {
   @Input() username: string;
+  @Input() read: boolean;
   currentRating: number;
   changeRatingControl = 2;
   ratingControl = new FormControl();
-  idPost: number;
+  @Input() idPost: number;
   constructor(private newsService: NewsService,
               private route: ActivatedRoute) {}
 
@@ -34,6 +35,16 @@ export class RatingComponent implements OnInit {
               });
         }
       });
+    if (this.idPost !== null) {
+      this.newsService.getPostRating(this.idPost).pipe(first())
+        .subscribe(
+          data => {
+            this.currentRating = data;
+          },
+          error => {
+            //sdfsdfefsd
+          });
+    }
   }
 
   setRating() {

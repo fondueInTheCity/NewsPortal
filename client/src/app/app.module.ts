@@ -42,20 +42,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-    // canActivate: [AuthenticationGuard],
-    // runGuardsAndResolvers: ‘always’,
-  }
-]
-
 @NgModule({
     imports: [
-      RouterModule.forRoot(routes, {
-          onSameUrlNavigation: 'reload'
-        }),
         NgbModule.forRoot(),
         BrowserModule,
         AccordionModule,

@@ -1,48 +1,83 @@
 ﻿<section class="py-4 text-center text-lg-left">
-  <h2 *ngIf="searchedNews.length !== 0" class="h1 font-weight-bold text-center mb-5 pt-4">Search results</h2>
-  <h2 *ngIf="searchedNews.length === 0" class="h1 font-weight-bold text-center mb-5 pt-4">Recent news</h2>
-  <div class="mb-5 ml-1">
-    <h3>News rating range: {{rangeValues[0] + ' - ' + rangeValues[1]}}</h3>
-    <p-slider [(ngModel)]="rangeValues" (onChange)="filterNewsRate()" [style]="{'width':'200px'}" [range]="true" [min]="0" [max]="5"></p-slider>
-  </div>
-  <div *ngIf="viewNews.length !== 0">
-    <div  *ngFor="let post of viewNews">
-      <div class="row">
-        <div class="col-lg-5 col-xl-5 pb-3">
-          <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
-            <img src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg" alt="Sample image for first version of blog listing"
-                 class="img-fluid">
-            <a>
-              <div class="mask rgba-white-slight"></div>
-            </a>
+  <h2 *ngIf="searchedNews.length !== 0" class="h1 font-weight-bold text-center mb-4 pt-4">Search results</h2>
+  <h2 *ngIf="searchedNews.length === 0" class="h1 font-weight-bold text-center mb-4 pt-4">Recent news</h2>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="col-md-8 p-0">
+        <h3 *ngIf="filterCategories.length !== 0">Filter categories</h3>
+        <ul class="d-flex flex-wrap align-content-start p-0">
+          <li class="p-1 badge badge-primary rounded d-flex m-1" *ngFor="let category of filterCategories">
+            <span class="my-auto">{{category.name}}</span>
+            <i class="close fa fa-times my-auto mx-1" (click)="removeFilterCategory(category)"></i>
+          </li>
+        </ul>
+        <h3 *ngIf="filterTags.length !== 0">Filter tags</h3>
+        <ul class="d-flex p-0 flex-wrap align-content-start">
+          <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of filterTags">
+            <span class="text-dark">{{tag.name}}</span>
+            <i class="close fa fa-times my-auto mx-1" (click)="removeFilterTag(tag)"></i>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mb-5 ml-1">
+        <h3>News rating range: {{rangeValues[0] + ' - ' + rangeValues[1]}}</h3>
+        <p-slider [(ngModel)]="rangeValues" (onChange)="filterNews()" [style]="{'width':'200px'}" [range]="true" [min]="0" [max]="5"></p-slider>
+      </div>
+      <div *ngIf="viewNews.length !== 0">
+        <div  *ngFor="let post of viewNews">
+          <div class="row">
+            <div class="col-lg-5 col-xl-5 pb-3">
+              <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
+                <img src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg" alt="Sample image for first version of blog listing"
+                     class="img-fluid">
+                <a>
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-7 col-xl-7">
+              <ul class="d-flex flex-wrap align-content-start tags-pos p-0">
+                <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let category of post.categories">
+                  <span class="badge badge-primary">{{category.name}}</span>
+                </li>
+              </ul>
+              <h3 class="mb-4 font-weight-bold dark-grey-text">
+                <strong>{{post.post.name}}</strong>
+              </h3>
+              <p><markdown>{{post.post.description}}</markdown></p>
+              <p>by
+                <a>
+                  <strong>{{post.post.authorName}}</strong>
+                </a>, {{post.post.publishDate | date}}</p>
+              <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.post.id}}" mdbWavesEffect>Read more</a>
+              <ul class="d-flex flex-wrap align-content-start tags-pos p-0">
+                <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of post.tags">
+                  <span class="text-dark">{{tag.name}}</span>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="col-lg-7 col-xl-7">
-          <ul class="d-flex flex-wrap align-content-start tags-pos p-0">
-            <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let category of post.categories">
-              <span class="badge badge-primary">{{category.name}}</span>
-            </li>
-          </ul>
-          <h3 class="mb-4 font-weight-bold dark-grey-text">
-            <strong>{{post.post.name}}</strong>
-          </h3>
-          <p><markdown>{{post.post.description}}</markdown></p>
-          <p>by
-            <a>
-              <strong>{{post.post.authorName}}</strong>
-            </a>, {{post.post.publishDate | date}}</p>
-          <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.post.id}}" mdbWavesEffect>Read more</a>
-          <ul class="d-flex flex-wrap align-content-start tags-pos p-0">
-            <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of post.tags">
-              <span class="text-dark">{{tag.name}}</span>
-            </li>
-          </ul>
+          <hr class="mb-5 mt-5 pb-3">
         </div>
       </div>
-      <hr class="mb-5 mt-5 pb-3">
+      <div *ngIf="viewNews.length === 0">
+        <h2 class="text-center">No matching news found</h2>
+      </div>
     </div>
-  </div>
-  <div *ngIf="viewNews.length === 0">
-    <h2 class="text-center">No matching news found</h2>
+    <div class="col-md-4">
+      <h3 *ngIf="categories.length !== 0">Categories</h3>
+      <ul class="d-flex flex-wrap align-content-start p-0">
+        <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let category of categories">
+          <span class="badge badge-primary" (click)="pasteFilterCategory(category)">{{category.name}}</span>
+        </li>
+      </ul>
+      <h3 *ngIf="tags.length !== 0">Tags</h3>
+      <ul class="d-flex p-0 flex-wrap align-content-start">
+        <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of tags">
+          <span class="text-dark" (click)="pasteFilterTag(tag)">{{tag.name}}</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </section>

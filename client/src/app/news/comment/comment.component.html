@@ -25,10 +25,15 @@
       <img src="{{commentShowDto.avatar}}" class="avatar z-depth-1-half">
     </div>
     <div class="col-md-6">
-      <div class="row"><a routerLink="/profile/{{commentShowDto?.author_name}}">
-        <h3 class="user-name">{{commentShowDto?.author_name}}</h3>
-        <i class="fa fa-thumbs-up" aria-hidden="true">{{commentShowDto.likes.length}}</i>
-      </a>
+      <div class="row">
+        <div>
+          <a routerLink="/profile/{{commentShowDto?.author_name}}">
+            <h3 class="user-name">{{commentShowDto?.author_name}}</h3>
+          </a>
+        </div>
+        <div class="mt-1 mx-2">
+          <i class="fa fa-thumbs-up" aria-hidden="true">{{commentShowDto.likes.length}}</i>
+        </div>
       </div>
       <div class="row comment p-0">
           <p class="comment-text">{{commentShowDto.text}}</p>
@@ -40,7 +45,7 @@
         </ul>
       </div>
       <div class="col-4 col-sm-4">
-        <a class="card-link pointer m-1" (click)="addLike(commentShowDto.id)"><i class="fa fa-thumbs-up" aria-hidden="true">{{commentShowDto.likes.length}}</i></a>
+        <a class="card-link pointer m-1" (click)="addLike(commentShowDto.id)"><i class="fa fa-heart color-red" aria-hidden="true">{{commentShowDto.likes.length}}</i></a>
       </div>
     </div>
     </div>

@@ -3,14 +3,13 @@ import {User} from "../../model/user";
 import {AuthenticationService} from "../../auth/service/authentication.service";
 import {TranslateService} from "@ngx-translate/core";
 import { Subscription } from 'rxjs';
-import * as $ from "jquery";
 import {first} from "rxjs/internal/operators";
 import {UserService} from "../../service/user.service";
 import {AlertService} from "../../auth/service/alert.service";
 import {Language} from "../../model/language";
 import {Theme} from "../../model/theme";
 import {ProfileService} from '../../service';
-import {UserEditDto} from '../../dto/userEditDto';
+import {UserEditDto} from '../../dto';
 import {Router} from "@angular/router";
 
 @Component({

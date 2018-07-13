@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsService, UserService} from '../../service';
 import {ActivatedRoute} from '@angular/router';
 import {CommentAddDto, CommentShowDto, LikeDto} from '../../dto';
+// import * as Stomp from '@stomp/stompjs';
+// import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-comment',
@@ -13,6 +15,7 @@ import {CommentAddDto, CommentShowDto, LikeDto} from '../../dto';
 export class CommentComponent implements OnInit {
   @Input() idPost: number;
   @Input() addComment: boolean;
+
   commentForm: FormGroup;
   likeDto = new LikeDto();
   commentAddDto = new CommentAddDto();
@@ -31,8 +34,30 @@ export class CommentComponent implements OnInit {
       comment: ['', Validators.required]
     });
     this.getImage(this.currentUserJson.username);
+    // this.initializeWebSocketConnection();
     this.loadAllComments();
   }
+
+  private serverUrl = 'http://localhost:8080/socket'
+  private title = 'WebSockets chat';
+  private stompClient;
+
+  // initializeWebSocketConnection(){
+  //   let ws = new SockJS(this.serverUrl);
+  //   this.stompClient = Stomp.over(ws);
+  //   let that = this;
+  //   this.stompClient.connect({}, function(frame) {
+  //     that.stompClient.subscribe("/chat", (message) => {
+  //       if(message.body) {
+  //         console.log(message.body);
+  //       }
+  //     });
+  //   });
+  // }
+  //
+  // sendMessage(){
+  //   this.stompClient.send("/app/send/message" , {}, this.commentAddDto);
+  // }
 
   addLike(idComment: number) {
     if (this.currentUserJson === null) {
@@ -59,10 +84,11 @@ export class CommentComponent implements OnInit {
     this.newsService.addComment(this.commentAddDto).pipe(first()).subscribe(
       data => {
         this.formControl.comment.reset();
+        // this.sendMessage();
         this.loadAllComments();
       },
       error => {
-        //sdfsdfefsd
+        //sdfsdfefsdew
       });
   }
 

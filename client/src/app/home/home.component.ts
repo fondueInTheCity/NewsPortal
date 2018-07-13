@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   filterNewsByTags(): NewsInfoDto[]{
     let suitableArray = [];
     for (let post of this.news){
-      let isSuitable = this.filterTags.every((filter) => post.tags.some(({id,name}) => filter.id === id && filter.name === name));
+      let isSuitable = this.filterTags.every((filter) => post.tags.some((tag) => filter.id === tag.id && filter.name === tag.name));
       if (isSuitable) {
         suitableArray.push(post);
       }

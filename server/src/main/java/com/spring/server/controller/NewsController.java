@@ -97,4 +97,5 @@ public class NewsController {
     public float getPostRating(@PathVariable long idPost) {
         return this.newsService.getPostRating(idPost);
     }
+
 }

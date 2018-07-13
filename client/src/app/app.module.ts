@@ -33,7 +33,6 @@ import { EditNewsComponent } from './news/edit-news/edit-news.component';
 import { ViewNewsComponent } from './news/view-news/view-news.component';
 import { CommentComponent } from './news/comment/comment.component';
 import { RatingComponent } from './news/rating/rating.component';
-import {SectionService} from './service/section.service';
 import {AccordionModule} from 'primeng/accordion';
 import {SliderModule} from 'primeng/slider';
 import {RouterModule, Routes} from "@angular/router";

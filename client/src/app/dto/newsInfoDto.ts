@@ -1,8 +1,8 @@
-import {News, Category} from '../model';
+import {News, Category, Tag} from '../model';
 
 export class NewsInfoDto {
   post: News;
-  tags: Object[];
+  tags: Tag[];
   categories: Category[];
 
   constructor() {

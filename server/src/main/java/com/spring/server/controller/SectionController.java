@@ -1,6 +1,7 @@
 package com.spring.server.controller;
 
 import com.spring.server.model.Category;
+import com.spring.server.model.Tag;
 import com.spring.server.service.SectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,5 +22,11 @@ public class SectionController {
     @ResponseStatus(HttpStatus.OK)
     public List<Category> getAllCategories() {
         return this.sectionService.getAllCategories();
+    }
+
+    @GetMapping("/getAllTags")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Tag> getAllTags() {
+        return this.sectionService.getAllTags();
     }
 }

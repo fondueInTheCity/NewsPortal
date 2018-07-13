@@ -22,6 +22,10 @@ public class SectionService {
         return this.categoryRepository.findAll();
     }
 
+    public List<Tag> getAllTags() {
+        return this.tagRepository.findAll();
+    }
+
     public Set<Tag> mergeTagsToDb(Set<Tag> tags) {
         Set<Tag> resultTags = new HashSet<>();
         for (Tag tag: tags) {

@@ -8,4 +8,5 @@ export class CommentShowDto {
   publish_date: string;
   avatar: string;
   likes: Like[];
+  current_likes_user: number;
 }

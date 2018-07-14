@@ -4,7 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NewsService, ProfileService, UserService} from '../../../service';
 import {first} from 'rxjs/internal/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from '../../../auth/service';
+import {AlertService, AuthenticationService} from '../../../auth/service';
 
 @Component({
   selector: 'app-profile-news',
@@ -12,6 +12,7 @@ import {AlertService} from '../../../auth/service';
   styleUrls: ['profile-news.component.css']
 })
 export class ProfileNewsComponent implements OnInit {
+  profile = this.profileService;
   user: UserEditDto;
   news: NewsInfoDto[] = [];
   searchForm: FormGroup;
@@ -22,40 +23,42 @@ export class ProfileNewsComponent implements OnInit {
   clickSortByName = false;
   clickSortByDate = false;
   username: string;
+
   constructor(private router: Router,
               private newsService: NewsService,
               private formBuilder: FormBuilder,
               private userService: UserService,
               private alertService: AlertService,
               private activatedRoute: ActivatedRoute,
-              private profileService: ProfileService) {}
+              private profileService: ProfileService,
+              private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.username = params['username'];
-      this.userService.getByUsername(this.username)
-        .pipe(first())
-        .subscribe((data: UserEditDto) => {
-            this.user = data;
-            this.loadAllNews();
-            this.user.role = this.userService.transformRoleToView(this.user.role);
-            this.profileService.setUser(this.user);
-          },
-          error => {
-            this.alertService.error(error);
-          });
+      this.newsService.getNewsByUsername(this.username).pipe(first()).subscribe((newsInfoDto: NewsInfoDto[]) => {
+        this.newsInSearch = this.news = newsInfoDto;
+      });
+      // this.userService.getByUsername(this.username)
+      //   .pipe(first())
+      //   .subscribe((data: UserEditDto) => {
+      //       this.user = data;
+      //       this.loadAllNews();
+      //       this.user.role = this.userService.transformRoleToView(this.user.role);
+      //       //this.profileService.setUser(this.user);
+      //       let isSelfAddNews: boolean = (((this.currentUser.userRole === 'ROLE_ADMIN') ||
+      //           (this.currentUser.userRole === 'ROLE_WRITER')) && (this.username === this.currentUser.username));
+      //       let isAdminPostsByOthers: boolean = ((this.currentUser.userRole === 'ROLE_ADMIN') &&
+      //           (this.user['role'] === 'Writer'));
+      //       this.isCanAddNews = isSelfAddNews || isAdminPostsByOthers;
+      //     },
+      //     error => {
+      //       this.alertService.error(error);
+      //     });
     });
     this.searchForm = this.formBuilder.group({
       search: ['', Validators.required]
     });
-  }
-
-  isCanAddNews(): boolean {
-    const isSelfAddNews: boolean = (((this.currentUser.userRole === 'ROLE_ADMIN') ||
-    (this.currentUser.userRole === 'ROLE_WRITER')) && (this.user.username === this.currentUser.username));
-    const isAdminPostsByOthers: boolean = ((this.currentUser.userRole === 'ROLE_ADMIN') &&
-    (this.user['role'] === 'Writer'));
-    return isSelfAddNews || isAdminPostsByOthers;
   }
 
   public deletePost(id: number) {
@@ -104,5 +107,9 @@ export class ProfileNewsComponent implements OnInit {
   search() {
     this.newsInSearch = this.news;
     this.newsInSearch = this.newsService.searchByFragment(this.news, this.searchForm.controls.search.value);
+  }
+
+  isCanAddNews(): boolean {
+    return this.authenticationService.isCanAddNews(this.username);
   }
 }

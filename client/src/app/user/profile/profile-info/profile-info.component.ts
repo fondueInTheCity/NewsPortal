@@ -1,10 +1,11 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {UserEditDto} from '../../../dto';
-import {NewsService, ProfileService, UserService} from '../../../service';
+import {InfoService, NewsService, ProfileService, UserService} from '../../../service';
 import {first} from 'rxjs/internal/operators';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
-import {AlertService} from '../../../auth/service';
+import {AlertService, AuthenticationService} from '../../../auth/service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile-info',
@@ -12,11 +13,9 @@ import {AlertService} from '../../../auth/service';
   styleUrls: ['profile-info.component.css']
 })
 export class ProfileInfoComponent implements OnInit {
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  profile = this.profileService;
   checkList: boolean[] = [false, false, false, false, false, false];
-  user: UserEditDto;
   username: string;
-  role: string;
   addNewInformation = false;
 
   constructor(private router: Router,
@@ -25,61 +24,62 @@ export class ProfileInfoComponent implements OnInit {
               private userService: UserService,
               private alertService: AlertService,
               private activatedRoute: ActivatedRoute,
-              private profileService: ProfileService) { }
+              private profileService: ProfileService,
+              private toastr: ToastrService,
+              private infoService: InfoService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.username = params['username'];
-      this.user = this.profileService.getUser();
-      if (this.user.username !== this.username) {
-        this.userService.getByUsername(this.username)
-          .pipe(first())
-          .subscribe((data: UserEditDto) => {
-              this.user = data;
-              this.user.role = this.userService.transformRoleToView(this.user.role);
-              this.profileService.setUser(this.user);
-            },
-            error => {
-              this.alertService.error(error);
-            });
-      }
     });
-    this.role = this.user.role;
   }
 
   editSection(idCheck: number) {
-    if (this.canEdit()) {
+    if (this.isCanEdit()) {
       this.checkList[idCheck] = true;
     }
   }
 
   saveChanges(idCheck: number) {
-    this.setToBack(this.user);
+    this.setToBack();
     this.checkList[idCheck] = false;
   }
 
-
-  setToBack(user: UserEditDto) {
-    user.role = this.userService.transformRoleToBackEnd(this.user.role);
-    user.language = this.user.language;
-    user.theme = this.user.theme;
-    this.userService.update(this.user).pipe(first()).subscribe(() => {
-      this.user.role = this.userService.transformRoleToView(this.user.role);
-      this.profileService.setUser(this.user);
-      this.router.navigate([`/profile/${this.user.username}`]);
+  setToBack() {
+    this.userService.update(this.profile.getUser()).pipe(first()).subscribe(() => {
+      this.profileService.setProfileByUsername(this.profile.getUser().username);
     });
+  }
+
+  editUsername() {
+    this.checkList[0] = false;
+    if (this.profile.getUser().username !== '') {
+      if (this.username === this.profile.getUser().username) {
+        return;
+      }
+      this.userService.uniqueUsername(this.profile.getUser().username).pipe(first()).subscribe((isUnique) => {
+        if (isUnique) {
+          this.saveChanges(0);
+          this.infoService.alertInformation('success', 'You are change username.');
+          if (this.username === this.authenticationService.getCurrentUsername()) {
+            this.authenticationService.logout();
+          }
+        } else {
+          this.infoService.alertInformation('error', 'This username isn`t unique.');
+        }
+      });
+    } else {
+      this.profile.getUser().username = this.username;
+      this.infoService.alertInformation('warning', 'You can`t remove username.');
+    }
   }
 
   handleFileInput(files: FileList) {
     let formdata: FormData = new FormData();
     formdata.append('file', files.item(0));
-    this.userService.uploadImage(formdata, this.user.id).pipe(first()).subscribe(() => {
-      this.userService.getByUsername(this.user.username).pipe(first()).subscribe((user) => {
-        this.user = user;
-        this.user.role = this.userService.transformRoleToView(this.user.role);
-        this.profileService.setUser(this.user);
-        this.router.navigate([`/profile/${this.user.username}`]);
-      });
+    this.userService.uploadImage(formdata, this.profile.getUser().id).pipe(first()).subscribe(() => {
+      this.profileService.setProfileByUsername(this.profile.getUser().username);
     });
   }
 
@@ -91,8 +91,8 @@ export class ProfileInfoComponent implements OnInit {
     return this.checkList[idCheck] || this.addNewInformation;
   }
 
-  canEdit(): boolean {
-    return this.currentUser.userRole === 'ROLE_ADMIN' || this.username === this.currentUser.username;
-  }
+  isCanEdit(): boolean {
+      return this.authenticationService.isCanEdit(this.username);
+    }
 
 }

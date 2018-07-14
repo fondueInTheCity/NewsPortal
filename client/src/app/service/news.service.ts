@@ -5,6 +5,7 @@ import {CommentAddDto, LikeDto, RatingSetDto, NewsInfoDto, CommentShowDto} from 
 import {b} from '@angular/core/src/render3';
 import {Headers} from '@angular/http';
 import {HttpHeaders} from '@angular/common/http';
+import {News} from '../model';
 
 @Injectable()
 export class NewsService {
@@ -28,6 +29,10 @@ export class NewsService {
 
   getPostById(id: number) {
     return this.http.get<NewsInfoDto>(`${environment.serverUrl}news/` + id);
+  }
+
+  getNewsByUsername(username: string) {
+    return this.http.get<NewsInfoDto[]>(`${environment.serverUrl}news/allNews/` + username);
   }
 
   addImageToPost(image: FormData) {

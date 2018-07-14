@@ -1,5 +1,5 @@
 export class LikeDto {
   id: number;
-  username: string;
+  id_user: number;
   id_comment: number;
 }

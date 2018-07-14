@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsService, UserService} from '../../service';
 import {ActivatedRoute} from '@angular/router';
 import {CommentAddDto, CommentShowDto, LikeDto} from '../../dto';
+import {Like} from '../../model';
+import {ToastrService} from 'ngx-toastr';
 // import * as Stomp from '@stomp/stompjs';
 // import * as SockJS from 'sockjs-client';
 
@@ -21,8 +23,7 @@ export class CommentComponent implements OnInit {
   commentAddDto = new CommentAddDto();
   commentsShowDto: CommentShowDto[] = [];
   currentImage: string;
-  image = 'https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg';
-  currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   constructor(private route: ActivatedRoute,
               private newsService: NewsService,
@@ -33,14 +34,12 @@ export class CommentComponent implements OnInit {
     this.commentForm = this.formBuilder.group({
       comment: ['', Validators.required]
     });
-    this.getImage(this.currentUserJson.username);
+    if (this.currentUser !== null) {
+      this.getImage(this.currentUser.username);
+    }
     // this.initializeWebSocketConnection();
     this.loadAllComments();
   }
-
-  private serverUrl = 'http://localhost:8080/socket'
-  private title = 'WebSockets chat';
-  private stompClient;
 
   // initializeWebSocketConnection(){
   //   let ws = new SockJS(this.serverUrl);
@@ -60,10 +59,10 @@ export class CommentComponent implements OnInit {
   // }
 
   addLike(idComment: number) {
-    if (this.currentUserJson === null) {
+    if (this.currentUser === null) {
       return;
     }
-    this.likeDto.username = this.currentUserJson.username;
+    this.likeDto.id_user = this.currentUser.id;
     this.likeDto.id_comment = idComment;
     this.newsService.addLike(this.likeDto).pipe(first())
       .subscribe(
@@ -79,7 +78,7 @@ export class CommentComponent implements OnInit {
 
   onSubmit() {
     this.commentAddDto.text = this.formControl.comment.value;
-    this.commentAddDto.username = this.currentUserJson.username;
+    this.commentAddDto.username = this.currentUser.username;
     this.commentAddDto.id_news = this.idPost;
     this.newsService.addComment(this.commentAddDto).pipe(first()).subscribe(
       data => {
@@ -100,8 +99,24 @@ export class CommentComponent implements OnInit {
   }
 
   getImage(username: string) {
-    this.userService.getImage(username).pipe(first()).subscribe((urlImage: string) => {
-      this.currentImage = urlImage;
-    });
+    // this.userService.getImage(username).pipe(first()).subscribe((urlImage: string) => {
+    //   this.currentImage = urlImage;
+    // });
+  }
+
+  isLiked(likes: Like[]): boolean {
+    let isLike = false;
+    if (this.currentUser !== null) {
+      likes.forEach((like) => {
+        if (like.id_user === this.currentUser.id) {
+          isLike = true;
+        }
+      });
+    }
+    return isLike;
+  }
+
+  canAddComment(): boolean {
+    return this.currentUser !== null && this.addComment;
   }
 }

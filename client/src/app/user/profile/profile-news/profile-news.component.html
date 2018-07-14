@@ -2,8 +2,8 @@
   <div class="mb-1">
     <div class="row">
       <div class="col-sm-4">
-        <h3 id="head_name" translate>{{user?.username}} news
-          <a *ngIf="isCanAddNews()" class="pull-right" [routerLink]='["/addPost/", {authorId: user?.id}]'>+</a>
+        <h3 id="head_name" translate>{{profile.getUser()?.username}} news
+          <a *ngIf="isCanAddNews()" class="pull-right" [routerLink]='["/addPost/", {authorId: profile.getUser()?.id}]'>+</a>
         </h3>
         <hr id="head_hr" />
       </div>
@@ -42,7 +42,7 @@
         <a routerLink="/news/{{post.post?.id}}">{{post.post?.name}}</a>
       </td>
       <td>{{post.post?.description}}</td>
-      <td>{{post.post?.publishDate}}</td>
+      <td>{{post.post?.publishDate | date}}</td>
       <td>
         <div class="btn-group" dropdown>
           <button type="button" dropdownToggle class="btn action-btn dropdown-toggle dropdown-toggle-split px-3 waves-light" mdbWavesEffect></button>

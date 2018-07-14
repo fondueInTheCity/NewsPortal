@@ -4,3 +4,7 @@ export * from './LikeDto';
 export * from './RatingSetDto';
 export * from './NewsInfoDto';
 export * from './UserEditDto';
+export * from './LoginResponseDto';
+export * from './LoginRequestDto';
+export * from './ErrorDto';
+export * from './UserAddDto';

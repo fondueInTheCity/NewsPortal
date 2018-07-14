@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../model/user";
-import {AuthenticationService} from "../../auth/service/authentication.service";
-import {TranslateService} from "@ngx-translate/core";
+import { Language, Theme} from '../../model';
+import {TranslateService} from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import {first} from "rxjs/internal/operators";
-import {UserService} from "../../service/user.service";
-import {AlertService} from "../../auth/service/alert.service";
-import {Language} from "../../model/language";
-import {Theme} from "../../model/theme";
-import {ProfileService} from '../../service';
+import {first} from 'rxjs/internal/operators';
+import {UserService, ProfileService} from '../../service';
+import {AlertService, AuthenticationService} from '../../auth/service';
 import {UserEditDto} from '../../dto';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -18,23 +14,12 @@ import {Router} from "@angular/router";
   styleUrls: ['header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  currentUser: User;
-  isAdmin: boolean;
+  // currentUser: User;
   themes: any;
   languages: any;
 
   private themesSubscription: Subscription;
   private languagesSubscription: Subscription;
-
-  userValidate(){
-    let currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
-    if ((currentUserJSON != undefined) && (currentUserJSON != null) && (currentUserJSON.userRole == "ROLE_ADMIN")){
-      this.isAdmin = true;
-    }
-    else
-      this.isAdmin = false;
-    this.currentUser = currentUserJSON;
-  }
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -43,9 +28,9 @@ export class HeaderComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private profileService: ProfileService) {
-    this.authenticationService.loggedIn.subscribe( value => {
-      this.userValidate();
-    });
+    // this.authenticationService.loggedIn.subscribe( value => {
+    //   // this.userValidate();
+    // });
     this.themesSubscription = this.userService.getThemes()
       .pipe(first())
       .subscribe(
@@ -65,15 +50,30 @@ export class HeaderComponent implements OnInit {
         error => {
           this.alertService.error(error);
         });
-    let currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUserJSON === null)
+    const currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUserJSON === null) {
       translate.setDefaultLang('en');
-    else
+    } else {
       translate.setDefaultLang(currentUserJSON.language);
+    }
   }
 
+  ngOnInit() {
+    // this.userValidate();
+  }
+
+  // userValidate() {
+  //   let currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
+  //   // if ((currentUserJSON != undefined) && (currentUserJSON != null) && (currentUserJSON.userRole == "ROLE_ADMIN")){
+  //   //   this.isAdmin = true;
+  //   // }
+  //   // else
+  //   //   this.isAdmin = false;
+  //   this.currentUser = currentUserJSON;
+  // }
+
   switchTheme(theme: Theme) {
-    let currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
     if ((currentUserJSON !== null) && (currentUserJSON.username !== null)) {
       this.themesSubscription = this.userService.setTheme(currentUserJSON.username, theme)
         .pipe(first())
@@ -86,21 +86,20 @@ export class HeaderComponent implements OnInit {
           (error: string) => {
             this.alertService.error(error);
           });
-    }
-    else{
+    } else {
       this.setDomTheme(theme.name);
     }
   }
 
-  setDomTheme(theme: string){
-    let themeElem = document.getElementsByName("themeElem")[0];
-    let themeClass = themeElem.classList[0];
+  setDomTheme(theme: string) {
+    const themeElem = document.getElementsByName('themeElem')[0];
+    const themeClass = themeElem.classList[0];
     themeElem.classList.remove(themeClass);
-    themeElem.classList.add("theme-" + theme.toLowerCase());
+    themeElem.classList.add('theme-' + theme.toLowerCase());
   }
 
   switchLanguage(language: Language) {
-    let currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUserJSON = JSON.parse(localStorage.getItem('currentUser'));
     if ((currentUserJSON !== null) && (currentUserJSON.username !== null)) {
       this.languagesSubscription = this.userService.setLanguage(currentUserJSON.username, language)
         .pipe(first())
@@ -116,20 +115,33 @@ export class HeaderComponent implements OnInit {
     this.translate.use(language.name);
   }
 
-  ngOnInit() {
-    this.userValidate();
-  }
-
   search($event) {
-    let searchText = $event.target.value;
+    const searchText = $event.target.value;
     this.router.navigate(['/'], { queryParams: { search: searchText } } );
   }
+
+  clearProfile() {
+    this.profileService.setUser(new UserEditDto());
+  }
+
+  isLogin(): boolean {
+    return this.authenticationService.isLogin();
+  }
+
+  isAdmin(): boolean {
+    return this.authenticationService.isAdmin();
+  }
+
+  currentUsername(): string {
+    return this.authenticationService.getCurrentUsername();
+  }
+
+  // setProfile(username: string) {
+  //   this.profileService.setProfileByUsername(username);
+  // }
 
   ngOnDestroy(): void {
     this.themesSubscription && this.themesSubscription.unsubscribe();
     this.languagesSubscription && this.languagesSubscription.unsubscribe();
-  }
-  clearProfile() {
-    this.profileService.setUser(new UserEditDto());
   }
 }

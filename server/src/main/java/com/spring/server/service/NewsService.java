@@ -109,10 +109,10 @@ public class NewsService {
         }
         if (!isExist) {
             likes.add(like);
-            like.getUser().setAmountLike(like.getUser().getAmountLike() + 1);
+            comment.getUser().setAmountLike(comment.getUser().getAmountLike() + 1);
         } else {
             likes.remove(delLike);
-            like.getUser().setAmountLike(like.getUser().getAmountLike() - 1);
+            comment.getUser().setAmountLike(comment.getUser().getAmountLike() - 1);
         }
         comment.setLikes(likes);
         user.setLikes(likes);
@@ -159,4 +159,7 @@ public class NewsService {
         }
     }
 
+    public Set<NewsInfoDto> getNewsByIdUsername(String username) {
+        return newsInfoDtoTransformer.makeSetDto(userRepository.findByUsername(username).getNews());
+    }
 }

@@ -8,7 +8,7 @@
       <li class="nav-item waves-light" mdbWavesEffect>
         <a class="nav-link" routerLink="/" translate>Home</a>
       </li>
-      <li class="nav-item waves-light" *ngIf="isAdmin" mdbWavesEffect>
+      <li class="nav-item waves-light" *ngIf="isAdmin()" mdbWavesEffect>
         <a class="nav-link" routerLink="/users" translate>Users</a>
       </li>
     </ul>
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <ul class="navbar-nav nav-flex-icons" *ngIf="currentUser == null">
+    <ul class="navbar-nav nav-flex-icons" *ngIf="!isLogin()">
       <li class="nav-item waves-light" mdbWavesEffect>
         <a class="nav-link"><i class="fa fa-facebook"></i></a>
       </li>
@@ -49,9 +49,9 @@
         <a class="nav-link" routerLink="/login" translate>Login</a>
       </li>
     </ul>
-    <ul class="navbar-nav" *ngIf="currentUser != null">
+    <ul class="navbar-nav" *ngIf="isLogin()">
       <li class="nav-item waves-light" mdbWavesEffect>
-        <a class="nav-link" routerLink="/profile/{{currentUser.username}}">{{currentUser.username}}</a>
+        <a class="nav-link" routerLink="/profile/{{currentUsername()}}">{{currentUsername()}}</a>
       </li>
       <li class="nav-item waves-light" mdbWavesEffect>
         <a class="nav-link" routerLink="/login" (click)="clearProfile()" translate>Logout</a>

@@ -92,6 +92,11 @@ public class NewsController {
         return this.newsService.setPostRating(ratingSetDto);
     }
 
+//    @GetMapping("/getNewsWithComments")
+//    public Set<NewsWithCommentsDto> getNewsWithComments() {
+//        return this.newsService.getNewsWithCommentsDto();
+//    }
+
     @GetMapping("/getPostRating/{idPost}")
     @ResponseStatus(HttpStatus.OK)
     public float getPostRating(@PathVariable long idPost) {

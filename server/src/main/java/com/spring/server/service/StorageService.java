@@ -8,6 +8,7 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
+import com.dropbox.core.v2.files.UploadErrorException;
 import com.dropbox.core.v2.sharing.SharedLinkMetadata;
 import com.spring.server.service.dto.JsonException;
 import lombok.RequiredArgsConstructor;
@@ -23,23 +24,33 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class StorageService {
 
-    private static final String ACCESS_TOKEN = "0o4Bb8d0T4AAAAAAAAAABrdwWaOUfjVOQdi9oFerVgoxmp2CWS4oer8xzZpppIPo";
+    private static final String ACCESS_TOKEN = System.getenv("ITNEWS_DROPBOX_TOKEN");
     private DbxClientV2 client;
 
-
-    public String loadFileToDropbox(MultipartFile image) throws DbxException {
+    public String loadFileToDropbox(MultipartFile image) {
         try (InputStream in = new FileInputStream(convert(image))) {
             String keyName = UUID.randomUUID().toString();
             FileMetadata metadata = client.files().uploadBuilder("/" + keyName)
                     .uploadAndFinish(in);
-            SharedLinkMetadata slm = client.sharing().createSharedLinkWithSettings("/" + keyName);
-            String url = slm.getUrl();
-            url = url.replace("?dl=0", "?raw=1");
-            return url;
+            return getPublicUrl(keyName);
         } catch (IOException e) {
             throw new JsonException("Cannot upload image file");
+        } catch (UploadErrorException e) {
+            throw new RuntimeException("Cannot upload image file");
+        } catch (DbxException e) {
+            throw new RuntimeException("Could not connect to storage!");
         }
 
+    }
+
+    public String getPublicUrl(String fileName) {
+        try {
+            SharedLinkMetadata slm = client.sharing().createSharedLinkWithSettings("/" + fileName);
+            String url = slm.getUrl();
+            return url.replace("?dl=0", "?raw=1");
+        } catch (DbxException e) {
+            throw new RuntimeException("Could not initialize storage!");
+        }
     }
 
     public File convert(MultipartFile file) throws IOException {
@@ -51,7 +62,7 @@ public class StorageService {
         return convFile;
     }
 
-    public String uploadImage(MultipartFile image) throws DbxException {
+    public String uploadImage(MultipartFile image) {
         init();
         String publicUrl = loadFileToDropbox(image);
         return publicUrl;

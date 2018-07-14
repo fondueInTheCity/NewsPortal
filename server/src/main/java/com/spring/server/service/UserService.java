@@ -1,6 +1,5 @@
 package com.spring.server.service;
 
-import com.dropbox.core.DbxException;
 import com.spring.server.model.*;
 import com.spring.server.repository.LanguageRepository;
 import com.spring.server.repository.ThemeRepository;
@@ -97,7 +96,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void setUsersImage(Long userId, MultipartFile image) throws DbxException {
+    public void setUsersImage(Long userId, MultipartFile image) {
         String publicUrl = this.storageService.uploadImage(image);
         User user = this.userRepository.findById((long)userId);
         user.setAvatar(publicUrl);
@@ -124,6 +123,7 @@ public class UserService {
         user.setIsActive(false);
         user.setBlocked(false);
         user.setDeleted(false);
+        user.setAvatar(this.storageService.getPublicUrl("Default"));
         user.setLanguage(languageRepository.findById((long)1));
         user.setTheme(themeRepository.findById((long)1));
         user.setRole(UserRole.ROLE_READER);

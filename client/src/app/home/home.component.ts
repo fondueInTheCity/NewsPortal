@@ -8,6 +8,9 @@ import {Tag} from "../model/tag";
 import {Subscription} from "rxjs";
 import {SectionService} from "../service/section.service";
 import {Category} from "../model/category";
+import {News} from "../model/news";
+import {Comment} from "../model/comment";
+import {NewsWithCommentsDto} from "../dto/newsWithCommentsDto";
 
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit, OnDestroy {
@@ -23,6 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
   tagSubscription: Subscription;
   categoriesSubscription: Subscription;
+  newsWithCommentsSubscription: Subscription;
+  newsWithComments: NewsWithCommentsDto[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private sectionService: SectionService,
@@ -67,11 +72,23 @@ export class HomeComponent implements OnInit, OnDestroy {
           return;
         }
         let re  = new RegExp(searchText, "gi");
+        // this.newsWithCommentsSubscription = this.newsService.getAllNewsWithComments().pipe(first())
+        //   .subscribe((newsWithComments: NewsWithCommentsDto[]) => {
+        //     this.newsWithComments = newsWithComments;
+        //     for(let postInfo of this.newsWithComments){
+        //       if ((postInfo.post.post.name.search(re) !== -1) || (postInfo.post.post.description.search(re) !== -1) ||
+        //         (postInfo.post.post.authorName.search(re) !== -1))
+        //         this.searchedNews.push(postInfo.post);
+        //     }
+        //     this.filterNews();
+        // });
         for(let postInfo of this.news){
-          if (postInfo.post.name.search(re) !== -1)
+          if ((postInfo.post.name.search(re) !== -1) || (postInfo.post.description.search(re) !== -1) ||
+            (postInfo.post.authorName.search(re) !== -1) || (postInfo.post.text.search(re) !== -1))
             this.searchedNews.push(postInfo);
         }
         this.filterNews();
+
       });
   }
 

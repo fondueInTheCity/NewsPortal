@@ -8,6 +8,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsInfoDto} from '../../dto';
 import {SectionService} from '../../service';
 import {Category} from '../../model/';
+import {Tag} from "../../model/tag";
 
 @Component({
   selector: 'app-edit-news',
@@ -18,7 +19,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   news = new NewsInfoDto();
   new = true;
   private postInfo = new NewsInfoDto();
-  private tags: String[] = [];
+  private tags: Tag[] = [];
   private categories: {
     id: number;
     name: string;
@@ -53,6 +54,9 @@ export class EditNewsComponent implements OnInit, OnDestroy {
         this.categories.push({id: category.id, name: category.name, isActive: false});
       }
     });
+    this.sectionService.getTags().pipe(first()).subscribe((tags: Tag[]) => {
+      this.tags = tags;
+    });
   }
 
   imageUpload(files: string) {
@@ -81,6 +85,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     if ((tagName.length !== 0) && (tagName.length < 24) && (existedTag.length === 0)) {
       this.news.tags.push({id: null, name: tagName});
     }
+    let tagInput = document.getElementById("postTags");
   }
 
   removeTag(tag: string) {
@@ -156,6 +161,10 @@ export class EditNewsComponent implements OnInit, OnDestroy {
         this.news.categories.push({id: category.id, name: category.name});
       }
     }
+  }
+
+  disableHideDropdown($event){
+    $event.stopPropagation();
   }
 
   onCancel() {

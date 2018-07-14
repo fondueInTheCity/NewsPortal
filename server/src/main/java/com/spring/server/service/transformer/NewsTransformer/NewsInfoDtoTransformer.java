@@ -25,12 +25,8 @@ public class NewsInfoDtoTransformer {
         news.setPublishDate(newsInfoDto.getPost().getPublishDate());
         news.setUser(this.userRepository.findById(newsInfoDto.getPost().getId_user()));
         news.setRatingValue(newsInfoDto.getPost().getValue_rating());
-//        news.setTags(newsInfoDto.getTags());
-//        news.setCategories(newsInfoDto.getCategories());
         return news;
     }
-
-
 
     public NewsInfoDto makeDto(News news) {
         NewsInfoDto newsInfoDto = new NewsInfoDto();

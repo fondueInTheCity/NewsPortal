@@ -19,22 +19,29 @@
         Select category
       </button>
       <div class="dropdown-menu dropdown-primary">
-        <a class="dropdown-item col-md-11 m-left" *ngFor="let category of categories" (click)="category.isActive = !category.isActive">
-            <input class="form-check-input mr-1 drop-checkbox position-static" [checked]="category.isActive" (change)="category.isActive = !category.isActive" type="checkbox">
+        <a class="dropdown-item col-md-11 m-left" *ngFor="let category of categories" (click)="disableHideDropdown($event)" (click)="category.isActive = !category.isActive">
+            <input class="form-check-input mr-1 drop-checkbox position-static" [checked]="category.isActive" (onClick)="category.isActive = !category.isActive" type="checkbox">
           {{category.name}}
         </a>
       </div>
     </div>
     <form [formGroup]="newsForm" class="col-md-6" (change)="addTag()" >
-      <!--<div class="col-md-4">-->
-      <!--<div class="row">-->
       <div class="md-form">
-        <input class="form-control" id="postTags" required formControlName="tag" type="text">
+        <input class="form-control" list="tags" id="postTags" required formControlName="tag" type="text">
         <label class="active" for="postTags" translate>Tags</label>
+        <!--<div *ngIf="showDropdownTags" class="state-container-dropdown"> (click)="toogleDropDown()"-->
+          <!--<div>-->
+            <!--<div class="tags" *ngFor="let tag of tags">-->
+              <!--{{tag.name}}-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+        <datalist class="state-container-dropdown" id="tags" *ngFor="let tag of tags">
+          <option class="tags" (click)="addTag()">{{tag.name}}</option>
+        </datalist>
       </div>
-      <!--<button class="btn submit-btn h-75 mt-3" formControlName="tag" type="submit">Add tag</button>-->
-      <!--</div>-->
-    <!--</div>-->
     </form>
   </div>
 

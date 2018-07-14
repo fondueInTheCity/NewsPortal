@@ -20,3 +20,22 @@
   width: 15px;
   height: 15px;
 }
+
+.state-container-dropdown{
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  max-height: 300px;
+  background: #F6F6F6;
+  overflow-y: auto;
+}
+
+.tags{
+  padding: 10px;
+  font-family: sans-serif;
+  color: #A550BC;
+}
+
+.tags:hover{
+  background: #C2C2C2;
+}

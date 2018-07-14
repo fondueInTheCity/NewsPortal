@@ -6,7 +6,6 @@ export class News {
   publishDate: string;
   id_user: number;
   authorName: string;
-  idUsers: number[];
   value_rating: number;
 
   constructor() {
@@ -17,7 +16,6 @@ export class News {
     this.publishDate = '';
     this.id_user = null;
     this.authorName = '';
-    this.idUsers = null;
     this.value_rating = null;
   }
 }

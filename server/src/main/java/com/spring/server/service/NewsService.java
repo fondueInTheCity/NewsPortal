@@ -13,8 +13,9 @@ import com.spring.server.service.dto.RatingDto.RatingSetDto;
 import com.spring.server.service.transformer.CommentTransformer.CommentAddDtoTransformer;
 import com.spring.server.service.transformer.CommentTransformer.CommentShowTransformer;
 import com.spring.server.service.transformer.LikeTransformer.LikeDtoTransformer;
-import com.spring.server.service.transformer.NewsTransformer.NewsInfoDtoTransformer;
 import com.spring.server.service.transformer.NewsTransformer.NewsEditDtoTransformer;
+import com.spring.server.service.transformer.NewsTransformer.NewsInfoDtoTransformer;
+import com.spring.server.service.transformer.NewsTransformer.NewsWithCommentsTransformer;
 import com.spring.server.service.transformer.RatingDtoTransformer.RatingSetDtoTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,8 @@ public class NewsService {
     private final CommentShowTransformer commentShowTransformer;
     private final LikeDtoTransformer likeDtoTransformer;
     private final RatingSetDtoTransformer ratingSetDtoTransformer;
+    private final NewsWithCommentsTransformer newsWithCommentsTransformer;
+
 
     public List<NewsInfoDto> getNews() {
         return newsInfoDtoTransformer.makeListDto(newsRepository.findAll());
@@ -72,6 +75,7 @@ public class NewsService {
 
     public void deletePost(long id) {
         News deletePost = newsRepository.findById(id);
+        Set<Tag> deletedTags = deletePost.getTags();
         deletePost.setTags(null);
         deletePost.setCategories(null);
         newsRepository.save(deletePost);
@@ -79,6 +83,7 @@ public class NewsService {
             deleteLikes(comment.getLikes());
         }
         newsRepository.delete(deletePost);
+        this.sectionService.deleteTagsWithoutLinks(deletedTags);
     }
 
     public void addComment(CommentAddDto commentAddDto) {
@@ -92,6 +97,10 @@ public class NewsService {
     public Set<CommentShowDto> showComments(long idNews) {
         return commentShowTransformer.makeSetDto(newsRepository.findById(idNews).getComments());
     }
+
+//    public Set<NewsWithCommentsDto> getNewsWithCommentsDto() {
+//        return newsWithCommentsTransformer.makeDto(newsRepository.findAll());
+//    }
 
     public void addLike(LikeDto likeDto) {
         Like like = this.likeDtoTransformer.makeModel(likeDto);

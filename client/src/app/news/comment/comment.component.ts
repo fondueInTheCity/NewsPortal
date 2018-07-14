@@ -1,18 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {first} from 'rxjs/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsService, UserService} from '../../service';
 import {ActivatedRoute} from '@angular/router';
 import {CommentAddDto, CommentShowDto, LikeDto} from '../../dto';
-// import * as Stomp from '@stomp/stompjs';
-// import * as SockJS from 'sockjs-client';
+import * as Stomp from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.css']
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent implements OnInit, OnDestroy {
   @Input() idPost: number;
   @Input() addComment: boolean;
 
@@ -34,7 +34,7 @@ export class CommentComponent implements OnInit {
       comment: ['', Validators.required]
     });
     this.getImage(this.currentUserJson.username);
-    // this.initializeWebSocketConnection();
+    this.initializeWebSocketConnection();
     this.loadAllComments();
   }
 
@@ -42,22 +42,23 @@ export class CommentComponent implements OnInit {
   private title = 'WebSockets chat';
   private stompClient;
 
-  // initializeWebSocketConnection(){
-  //   let ws = new SockJS(this.serverUrl);
-  //   this.stompClient = Stomp.over(ws);
-  //   let that = this;
-  //   this.stompClient.connect({}, function(frame) {
-  //     that.stompClient.subscribe("/chat", (message) => {
-  //       if(message.body) {
-  //         console.log(message.body);
-  //       }
-  //     });
-  //   });
-  // }
-  //
-  // sendMessage(){
-  //   this.stompClient.send("/app/send/message" , {}, this.commentAddDto);
-  // }
+  initializeWebSocketConnection(){
+    let ws = new SockJS(this.serverUrl);
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, function(frame) {
+      that.stompClient.subscribe("/comment", (message) => {
+        if(message.body) {
+          that.loadAllComments();
+          // this.commentsShowDto.push(JSON.parse(message.body));
+        }
+      });
+    });
+  }
+
+  sendMessage(){
+    this.stompClient.send("/app/send/message" , {}, JSON.stringify(this.commentAddDto));
+  }
 
   addLike(idComment: number) {
     if (this.currentUserJson === null) {
@@ -84,7 +85,7 @@ export class CommentComponent implements OnInit {
     this.newsService.addComment(this.commentAddDto).pipe(first()).subscribe(
       data => {
         this.formControl.comment.reset();
-        // this.sendMessage();
+        this.sendMessage();
         this.loadAllComments();
       },
       error => {
@@ -103,5 +104,11 @@ export class CommentComponent implements OnInit {
     this.userService.getImage(username).pipe(first()).subscribe((urlImage: string) => {
       this.currentImage = urlImage;
     });
+  }
+
+  ngOnDestroy(){
+    if (this.stompClient !== null) {
+      this.stompClient.disconnect();
+    }
   }
 }

@@ -24,6 +24,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<UserListDto> findAll(
@@ -45,12 +46,14 @@ public class UserController {
         return this.userService.getLanguages();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_WRITTER') or hasRole('ROLE_READER')")
     @PostMapping("/setUserLanguage/{username}")
     @ResponseStatus(value = HttpStatus.OK)
     public void setUserLanguage(@PathVariable String username, @RequestBody Language language) {
         this.userService.setLanguage(username, language);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_WRITTER') or hasRole('ROLE_READER')")
     @PostMapping("/setUserTheme/{username}")
     @ResponseStatus(value = HttpStatus.OK)
     public void setUserTheme(@PathVariable String username, @RequestBody Theme theme) {
@@ -59,7 +62,6 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/setUserRole/{idUser}")
-    @ResponseStatus(value = HttpStatus.OK)
     public void setUserRole(@PathVariable Long idUser, @RequestBody String role) {
         this.userService.setRole(idUser, role);
     }
@@ -69,12 +71,13 @@ public class UserController {
         return this.userService.findUserByUsername(username);
     }
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/edit")
-    @ResponseStatus(HttpStatus.OK)
     public void editUser(@RequestBody UserEditDto user) {
         this.userService.editUser(user);
     }
 
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/editImage/{idUser}")
     public void editUserImage(@PathVariable Long idUser, @RequestParam("file") MultipartFile image) throws DbxException {
         this.userService.setUsersImage(idUser, image);
@@ -92,7 +95,6 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/block/{idUser}", method = RequestMethod.POST, produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
     public void blockUser(@PathVariable Long idUser, @RequestBody Map<String, String> blockStatus
     ) {
         boolean blockedStatus = Boolean.parseBoolean(blockStatus.get("blocked"));

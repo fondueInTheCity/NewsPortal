@@ -1,4 +1,4 @@
-<div class="row my-5 d-flex justify-content-center" *ngIf="isDeleted; else viewProfile">
+<div class="row my-5 d-flex justify-content-center" *ngIf="profile.isDeleted; else viewProfile">
   <div>
   <h1 translate>Sorry, this user has been deleted =(</h1>
 </div>
@@ -9,14 +9,14 @@
     <div class="col-md-3">
       <div class="card card-cascade narrower">
         <div class="view overlay hm-white-slight waves-light waves-effect" mdbwaveseffect="">
-          <img class="img-fluid" src={{user?.avatar}}>
+          <img class="img-fluid" src={{profile.getUser()?.avatar}}>
           <a><div class="mask">
           </div>
           </a>
         </div>
         <div class="card-body text-center">
-          <h4 class="card-title mb-2 font-bold"><strong>{{user?.username}}</strong></h4>
-          <h5 class="indigo-text"><strong>{{user?.role}}</strong></h5>
+          <h4 class="card-title mb-2 font-bold"><strong>{{profile.getUser()?.username}}</strong></h4>
+          <h5 class="indigo-text"><strong>{{profile?.role}}</strong></h5>
           <!--<h6 class="text-justify"><strong>First name:</strong></h6>-->
           <!--<p class="text-justify">{{user.firstName}}</p>-->
           <!--<h6 class="text-justify"><strong>Second name:</strong></h6>-->
@@ -34,7 +34,6 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item nav-link" [class.active]="viewMode == 'newsTab'" rel="newsTab" (click)="viewMode ='newsTab'" translate>News</li>
         <li class="nav-item nav-link" [class.active]="viewMode == 'profileTab'" rel="profileTab" (click)="viewMode ='profileTab'" translate>Profile</li>
-        <li class="nav-item nav-link" *ngIf="isCanEdit" [class.active]="viewMode == 'editTab'" rel="editTab" (click)="viewMode ='editTab'" translate>Edit</li>
       </ul>
       <div class="tab-content" id="myTabContent" [ngSwitch]="viewMode">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -44,9 +43,6 @@
             </div>
             <div id="profileTab" class="tab-slider--body" *ngSwitchCase="'profileTab'">
               <app-profile-info ></app-profile-info>
-            </div>
-            <div id="editTab" class="tab-slider--body" *ngSwitchCase="'editTab'">
-              <app-profile-edit></app-profile-edit>
             </div>
           </div>
         </div>

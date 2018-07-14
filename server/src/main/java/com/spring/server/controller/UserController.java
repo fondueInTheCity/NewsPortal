@@ -106,4 +106,10 @@ public class UserController {
     public String getImage(@PathVariable String username) {
         return this.userService.getImage(username);
     }
+
+    @GetMapping("/unique/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean uniqueUsername(@PathVariable String username) {
+        return this.userService.uniqueUsername(username);
+    }
 }

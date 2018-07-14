@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -46,6 +48,14 @@ public class NewsInfoDtoTransformer {
 //        }
         newsInfoDto.setCategories(news.getCategories());
         return newsInfoDto;
+    }
+
+    public Set<NewsInfoDto> makeSetDto(Set<News> newsSet) {
+        Set<NewsInfoDto> newsInfoDtoSet = new HashSet<>();
+        for(News news : newsSet) {
+            newsInfoDtoSet.add(makeDto(news));
+        }
+        return newsInfoDtoSet;
     }
 
     public List<NewsInfoDto> makeListDto(List<News> newsList) {

@@ -31,6 +31,10 @@ export class NewsService {
     return this.http.get<NewsInfoDto>(`${environment.serverUrl}news/` + id);
   }
 
+  getNewsByUsername(username: string) {
+    return this.http.get<NewsInfoDto[]>(`${environment.serverUrl}news/allNews/` + username);
+  }
+
   addImageToPost(image: FormData) {
     // let headers = new Headers();
     // headers.set('responseType', 'text');

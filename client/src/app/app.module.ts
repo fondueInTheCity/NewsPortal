@@ -9,7 +9,7 @@ import { routing } from './app.routing';
 import {AdminGuard, AuthGuard, ReaderGuard, WriterGuard} from './auth/guards';
 import { JwtInterceptor } from './auth/helpers';
 import {AlertService, AuthenticationService} from './auth/service';
-import {NewsService, UserService, ProfileService, SectionService} from './service';
+import {NewsService, UserService, ProfileService, SectionService, InfoService} from './service';
 import { HomeComponent } from './home';
 import { LoginComponent } from './auth/login';
 import { AlertComponent } from './auth/directives';
@@ -20,7 +20,6 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { RestorePasswordComponent } from './auth/restore-password/restore-password.component';
 import { RememberComponent } from './auth/remember/remember.component';
 import { UsersListComponent } from './user/users-list/users-list.component';
-import { ProfileEditComponent } from './user/profile/profile-edit/profile-edit.component';
 import { ProfileNewsComponent } from './user/profile/profile-news/profile-news.component';
 import { Exception404Component } from './exception/exception404/exception404.component';
 import { ProfileInfoComponent } from './user/profile/profile-info/profile-info.component';
@@ -35,7 +34,8 @@ import { CommentComponent } from './news/comment/comment.component';
 import { RatingComponent } from './news/rating/rating.component';
 import {AccordionModule} from 'primeng/accordion';
 import {SliderModule} from 'primeng/slider';
-import {RouterModule, Routes} from "@angular/router";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -43,6 +43,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
     imports: [
+        BrowserAnimationsModule, // required animations module
+        ToastrModule.forRoot(), // ToastrModule added
         NgbModule.forRoot(),
         BrowserModule,
         AccordionModule,
@@ -75,7 +77,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         RestorePasswordComponent ,
         RememberComponent,
         UsersListComponent,
-        ProfileEditComponent,
         ProfileNewsComponent,
         Exception404Component,
         ProfileInfoComponent,
@@ -95,6 +96,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NewsService,
         ProfileService,
         SectionService,
+        InfoService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,

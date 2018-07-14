@@ -32,6 +32,12 @@ public class NewsController {
         return this.newsService.getNews();
     }
 
+    @GetMapping("/allNews/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<NewsInfoDto> getNewsByIdUser(@PathVariable String username) {
+        return this.newsService.getNewsByIdUsername(username);
+    }
+
     @PostMapping("/addPost")
     @ResponseStatus(HttpStatus.OK)
     public void addPost(@RequestBody NewsInfoDto post) {

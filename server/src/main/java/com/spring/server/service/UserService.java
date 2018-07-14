@@ -4,8 +4,11 @@ import com.spring.server.model.*;
 import com.spring.server.repository.LanguageRepository;
 import com.spring.server.repository.ThemeRepository;
 import com.spring.server.repository.UserRepository;
+import com.spring.server.service.dto.ErrorDto.ErrorDto;
+import com.spring.server.service.dto.UserDto.UserAddDto;
 import com.spring.server.service.dto.UserDto.UserEditDto;
 import com.spring.server.service.dto.UserDto.UserListDto;
+import com.spring.server.service.transformer.UserTransformer.UserAddTransformer;
 import com.spring.server.service.transformer.UserTransformer.UserEditTransformer;
 import com.spring.server.service.transformer.UserTransformer.UserListTransformer;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +26,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final MailService mailService;
+    private final StorageService storageService;
+    private final MessageService messageService;
     private final UserRepository userRepository;
     private final ThemeRepository themeRepository;
     private final LanguageRepository languageRepository;
-    private final MailService mailService;
-    private final StorageService storageService;
     private final UserListTransformer userListTransformer;
     private final UserEditTransformer userEditTransformer;
-    private final MessageService messageService;
+    private final UserAddTransformer userAddTransformer;
 
     @Transactional(readOnly = true)
     public List<UserListDto> findAll() {
@@ -113,26 +117,20 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void addUser(User user) {
-        if (this.isUserExsists(user) || this.isEmailExsists(user.getEmail())) {
-            return;
+    public ErrorDto addUser(UserAddDto userAddDto) {
+        User user = userAddTransformer.makeModel(userAddDto);
+        if (!this.uniqueUsername(user.getUsername())) {
+            return new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_ISNT_UNIQUE_USERNAME);
         }
-        encoder(user);
-        newActivationCode(user);
-        user.setAmountLike(0);
-        user.setIsActive(false);
-        user.setBlocked(false);
-        user.setDeleted(false);
-        user.setAvatar(this.storageService.getPublicUrl("Default"));
-        user.setLanguage(languageRepository.findById((long)1));
-        user.setTheme(themeRepository.findById((long)1));
-        user.setRole(UserRole.ROLE_READER);
-
+        if (this.isEmailExsists(user.getEmail())) {
+            return new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_ISNT_UNIQUE_EMAIL);
+        }
+        setDefaultSettings(user);
         userRepository.save(user);
-        if(!mailService.isNull(user)) {
-            mailService.send(user.getEmail(), Abbreviation.SUBJECT_ACTIVATION_CODE,
-                    messageService.activationCode(user.getUsername(), user.getActivationCode()));
-        }
+        mailService.send(user.getEmail(), Abbreviation.SUBJECT_ACTIVATION_CODE,
+                messageService.activationCode(user.getUsername(), user.getActivationCode()));
+
+        return new ErrorDto(Abbreviation.SUCCESS, Abbreviation.SUCCESS_REGISTRATION);
     }
 
     public boolean isCodeActivated(String username) {
@@ -199,5 +197,22 @@ public class UserService {
 
     public String getImage(String username) {
         return this.userRepository.findByUsername(username).getAvatar();
+    }
+
+    public Boolean uniqueUsername(String username) {
+        return userRepository.findByUsername(username) == null;
+    }
+
+    private void setDefaultSettings(User user) {
+        encoder(user);
+        newActivationCode(user);
+        user.setAmountLike(0);
+        user.setIsActive(false);
+        user.setBlocked(false);
+        user.setDeleted(false);
+        user.setLanguage(languageRepository.findById((long)1));
+        user.setTheme(themeRepository.findById((long)1));
+        user.setRole(UserRole.ROLE_READER);
+        user.setAvatar(this.storageService.getPublicUrl("Default"));
     }
 }

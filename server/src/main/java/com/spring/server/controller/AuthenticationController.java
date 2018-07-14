@@ -1,10 +1,11 @@
 package com.spring.server.controller;
 
-import com.spring.server.model.User;
 import com.spring.server.service.AuthenticationService;
 import com.spring.server.service.UserService;
+import com.spring.server.service.dto.ErrorDto.ErrorDto;
 import com.spring.server.service.dto.LoginDto.LoginRequestDto;
 import com.spring.server.service.dto.LoginDto.LoginResponseDto;
+import com.spring.server.service.dto.UserDto.UserAddDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,8 +28,8 @@ public class AuthenticationController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
-    public void addUser(@RequestBody User user) {
-         userService.addUser(user);
+    public ErrorDto addUser(@RequestBody UserAddDto userAddDto) {
+         return userService.addUser(userAddDto);
     }
 
     @GetMapping("/activate/{code}")

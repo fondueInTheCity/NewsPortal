@@ -1,5 +1,31 @@
+.image-preview-input {
+  position: relative;
+  overflow: hidden;
+  margin: 0px;
+  border-color: #ccc;
+}
+.image-preview-input input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+  margin-left:2px;
+}
+.load{
+  width: 600px;
+  height: 600px;
+  padding-right: 25px;
+  padding-bottom: 25px;
+}
 img{
-  width: 225px;
+  width: 300px;
   padding-right: 25px;
   padding-bottom: 25px;
 }

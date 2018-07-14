@@ -25,6 +25,10 @@
   width: 129px;
 }
 
-.fa-heart{
+.fa-heart-red{
   color: crimson;
+}
+
+.fa-heart-black{
+  color: black;
 }

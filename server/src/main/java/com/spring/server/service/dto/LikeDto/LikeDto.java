@@ -13,6 +13,6 @@ import lombok.Setter;
 public class LikeDto implements Dto {
 
     private long id;
-    private String username;
+    private long id_user;
     private long id_comment;
 }

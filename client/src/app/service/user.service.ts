@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User, Language, Theme } from '../model';
 import {ActivatedRouteSnapshot, CanActivate} from '@angular/router';
-import {UserEditDto} from '../dto';
+import {ErrorDto, UserEditDto, UserAddDto} from '../dto';
 
 @Injectable()
 export class UserService   {
@@ -13,19 +13,15 @@ export class UserService   {
     return this.http.get<User[]>(`${environment.serverUrl}users`);
   }
 
-  // getById(id: number) {
-  //   return this.http.get(`${environment.serverUrl}users/` + id);
-  // }
-
   getByUsername(username: string) {
     return this.http.get<UserEditDto>(`${environment.serverUrl}users/` + username);
   }
 
-  addUser(user: User) {
-    return this.http.post(`${environment.serverUrl}auth/registration`, user);
+  addUser(userAddDto: UserAddDto) {
+    return this.http.post<ErrorDto>(`${environment.serverUrl}auth/registration`, userAddDto);
   }
 
-  update(user: User) {
+  update(user: UserEditDto) {
     return this.http.post(`${environment.serverUrl}users/edit`, user);
   }
 
@@ -74,5 +70,9 @@ export class UserService   {
 
   getImage(username: string) {
     return this.http.get<string>(`${environment.serverUrl}users/getImage/` + username);//, {responseType: 'text'});
+  }
+
+  uniqueUsername(username: string) {
+    return this.http.get<boolean>(`${environment.serverUrl}users/unique/` + username);
   }
 }

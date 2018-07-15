@@ -22,7 +22,7 @@
         {{"Theme" | translate}}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" *ngFor="let theme of themes" (click)="switchTheme(theme)">{{theme.name}}</a>
+        <a class="dropdown-item" *ngFor="let theme of themes" (click)="switchTheme(theme)">{{theme.name | translate}}</a>
       </div>
     </div>
 

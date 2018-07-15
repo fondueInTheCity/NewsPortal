@@ -9,7 +9,16 @@ import { routing } from './app.routing';
 import {AdminGuard, ReaderGuard, WriterGuard} from './auth/guards';
 import { JwtInterceptor } from './auth/helpers';
 import {AlertService} from './auth/service';
-import {NewsService, UserService, ProfileService, SectionService, InfoService, AuthenticationService, RegularService} from './service';
+import {
+  NewsService,
+  UserService,
+  ProfileService,
+  SectionService,
+  InfoService,
+  AuthenticationService,
+  RegularService,
+  ErrorService
+} from './service';
 import { HomeComponent } from './home';
 import { AlertComponent } from './auth/directives';
 import { RegisterComponent } from './auth/register';
@@ -97,6 +106,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         SectionService,
         InfoService,
         RegularService,
+        ErrorService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,

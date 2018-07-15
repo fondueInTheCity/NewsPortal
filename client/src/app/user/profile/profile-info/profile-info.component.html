@@ -10,7 +10,7 @@
             <dt class="profile-section__title" translate>Username</dt>
             <h2 *ngIf="!showSection(0)" (click)="editSection(0)">{{profile.getUser()?.username}}</h2>
             <input *ngIf="showSection(0)" [formControl]="Username" (mouseleave)="saveInputStats(0)" class="form-control" [attr.placeholder]="'Username' | translate" id="Username" type="text">
-            <h4 class="indigo-text">{{profile?.role}}</h4>
+            <h4 class="indigo-text">{{profile?.role | translate}}</h4>
           </div>
 
           <div *ngIf="profile.getUser()?.firstName || addNewInformation">

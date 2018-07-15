@@ -2,13 +2,13 @@
 
   <div class="col-md-8">
     <div class="md-form">
-      <input value="{{news.post.name}}" [(ngModel)]="news.post.name" class="form-control" required id="postName" [attr.placeholder]="'Title' | translate" type="text">
+      <input [formControl]="Title" [(ngModel)]="news.post.name" class="form-control" id="postName" [attr.placeholder]="'Title' | translate" type="text">
       <label class="active" for="postName" translate>Title</label>
     </div>
   </div>
   <div class="col-md-8">
     <div class="md-form">
-      <input value="{{news.post.description}}" [(ngModel)]="news.post.description" class="form-control" required id="postDescription" [attr.placeholder]="'Description' | translate" type="text">
+      <input [formControl]="Description" [(ngModel)]="news.post.description" class="form-control" id="postDescription" [attr.placeholder]="'Description' | translate" type="text">
       <label class="active" for="postDescription" translate>Description</label>
     </div>
   </div>

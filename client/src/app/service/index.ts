@@ -5,3 +5,4 @@ export * from './section.service';
 export * from './info.service';
 export * from './regular.service';
 export * from './authentication.service';
+export * from './error.service';

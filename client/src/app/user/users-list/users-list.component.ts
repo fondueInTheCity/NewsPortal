@@ -17,8 +17,8 @@ export class UsersListComponent implements OnInit {
     this.loadAllUsers();
   }
 
-  deleteUser(idUser: number) {
-    this.userService.delete(idUser).pipe(first()).subscribe(() => {
+  deleteUser(userId: number) {
+    this.userService.delete(userId).pipe(first()).subscribe(() => {
       this.loadAllUsers();
     });
   }
@@ -37,7 +37,7 @@ export class UsersListComponent implements OnInit {
   }
 
   private loadAllUsers() {
-    this.userService.getAll().pipe(first()).subscribe(users => {
+    this.userService.getAll().pipe(first()).subscribe((users) => {
       this.users = users;
       for (const user of users) {
         user.role = this.userService.transformRoleToView(user.role);

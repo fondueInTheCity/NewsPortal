@@ -1,9 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload/ng2-file-upload';
-import {NewsService} from '../../service';
+import {InfoService, NewsService} from '../../service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import {of, Subscription} from 'rxjs';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NewsInfoDto} from '../../dto';
 import {SectionService} from '../../service';
@@ -17,9 +17,11 @@ import {Category, Tag} from '../../model/';
 export class EditNewsComponent implements OnInit, OnDestroy {
   news = new NewsInfoDto();
   new = true;
+  Title: FormControl;
+  Description: FormControl;
   //private postInfo = new NewsInfoDto();
   private tags: Tag[] = [];
-  private categories: {
+  categories: {
     id: number;
     name: string;
     isActive: boolean;
@@ -44,7 +46,8 @@ export class EditNewsComponent implements OnInit, OnDestroy {
               private formBuilder: FormBuilder,
               private newsService: NewsService,
               private sectionService: SectionService,
-              private router: Router) {
+              private router: Router,
+              private infoService: InfoService) {
     this.newsForm = this.formBuilder.group({
       tag: ['']
     });
@@ -84,7 +87,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     if ((tagName.length !== 0) && (tagName.length < 24) && (existedTag.length === 0)) {
       this.news.tags.push({id: null, name: tagName});
     }
-    let tagInput = document.getElementById("postTags");
+    let tagInput = document.getElementById('postTags');
   }
 
   removeTag(tag: string) {
@@ -103,7 +106,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
         const activeCategory = this.news.categories.filter(obj => {
           return obj['name'] === category.name;
         });
-        if (activeCategory.length != 0 ) {
+        if (activeCategory.length !== 0 ) {
           this.categories[category.id - 1].isActive = true;
         }
       }
@@ -126,42 +129,36 @@ export class EditNewsComponent implements OnInit, OnDestroy {
             });
         }
       });
-    // this.registerForm = this.formBuilder.group({
-    //   firstName: ['', Validators.required],
-    //   lastName: ['', Validators.required],
-    //   username: ['', Validators.required],
-    //   password: ['', Validators.required],
-    //   email: ['', Validators.required]
-    // });
-    // this.Title = new FormControl();
-    // this.Description = new FormControl();
-    // this.Tags = new FormControl();
-    // this.Categories = new FormControl();
-    // this.Content = new FormControl();
+    this.Title = new FormControl(this.news.post.name, [Validators.required,
+      Validators.minLength(4), Validators.maxLength(30)]);
+    this.Description = new FormControl(this.news.post.description, [Validators.required,
+      Validators.minLength(4), Validators.maxLength(30)]);
   }
 
   onSubmit() {
+    if (this.isInvalidForm()) {
+      this.showError();
+      return;
+    }
     this.news.post.value_rating = 0;
     this.setNewsCategories();
     this.newsService.addPost(this.news).pipe(first())
       .subscribe(
-        data => {
+        () => {
           this.router.navigate([`/`]);
-        },
-        error => {
-          //sdfsdfefsd
         });
   }
 
   onSave() {
+    if (this.isInvalidForm()) {
+      this.showError();
+      return;
+    }
     this.setNewsCategories();
     this.newsService.editPost(this.news).pipe(first())
       .subscribe(
-        data => {
+        () => {
           this.router.navigate([`/news/${this.news.post.id}`]);
-        },
-        error => {
-          //sdfsdfefsd
         });
   }
 
@@ -174,12 +171,43 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     }
   }
 
-  disableHideDropdown($event){
+  disableHideDropdown($event) {
     $event.stopPropagation();
   }
 
   onCancel() {
     this.router.navigate(['/']);
+  }
+
+  private isNullCategories(): boolean {
+    let answer = false;
+    for (const category of this.categories) {
+      answer = answer || category.isActive;
+    }
+    return !answer;
+  }
+
+  private isInvalidForm(): boolean {
+    return this.isNullCategories() || this.isNullContent() || this.Title.invalid || this.Description.invalid;
+  }
+
+  private isNullContent(): boolean {
+    return this.news.post.text === '' || this.news.post.text === null || this.news.post.text === undefined;
+  }
+
+  private showError() {
+    if (this.Title.invalid) {
+      this.infoService.alertInformation('error', 'Title is Invalid.');
+    }
+    if (this.Description.invalid) {
+      this.infoService.alertInformation('error', 'Description is Invalid.');
+    }
+    if (this.isNullCategories()) {
+      this.infoService.alertInformation('error', 'News has not category.');
+    }
+    if (this.isNullContent()) {
+      this.infoService.alertInformation('error', 'Content is empty.');
+    }
   }
 
   ngOnDestroy(): void {

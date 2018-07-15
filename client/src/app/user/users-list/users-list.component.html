@@ -15,7 +15,7 @@
     <tr *ngFor="let user of users">
       <td>{{user.username}}</td>
       <td>{{user.email}}</td>
-      <td>{{user.role}}</td>
+      <td>{{user.role | translate}}</td>
       <td>
         <input type="checkbox" [checked]="user.blocked" (change)="changeBlockUserStatus(user.id, user.blocked)" class="big-checkbox">
       </td>
@@ -28,9 +28,9 @@
             <li class="dropdown-submenu">
               <a class="dropdown-item" tabindex="-1" translate>Set role</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" (click)="setUserRole('Reader', user.id)">Reader</a></li>
-                <li><a class="dropdown-item" (click)="setUserRole('Writer', user.id)">Writer</a></li>
-                <li><a class="dropdown-item" (click)="setUserRole('Admin', user.id)">Admin</a></li>
+                <li><a class="dropdown-item" (click)="setUserRole('Reader', user.id)" translate>Reader</a></li>
+                <li><a class="dropdown-item" (click)="setUserRole('Writer', user.id)" translate>Writer</a></li>
+                <li><a class="dropdown-item" (click)="setUserRole('Admin', user.id)" translate>Admin</a></li>
               </ul>
             </li>
             <div class="dropdown-divider"></div>

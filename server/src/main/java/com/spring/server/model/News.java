@@ -26,6 +26,9 @@ public class News {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "image")
+    private String userImage;
+
     @Column(name = "ratingValue")
     private Float ratingValue;
 

@@ -1,17 +1,6 @@
 @import '../node_modules/bootstrap/scss/functions';
 @import 'app/scss/themes/themes';
 @import "~ngx-toastr/toastr.css";
-//
-//// bootstrap style toast
-//// or import a bootstrap 4 alert styled design (SASS ONLY)
-//// should be after your bootstrap imports, it uses bs4 variables, mixins, functions
-//@import "~ngx-toastr/toastr-bs4-alert";
-//
-//// if you'd like to use it without importing all of bootstrap it requires
-//@import "~bootstrap/scss/functions";
-//@import "~bootstrap/scss/variables";
-//@import "~bootstrap/scss/mixins";
-//@import "~bootstrap/scss/bootstrap";
 
 .themed{
   @include themify($themes) {
@@ -23,6 +12,30 @@ img{
   @include themify($themes) {
     -webkit-filter: themed('imgWebkitFilter');
     filter: themed('imgFilter');
+  }
+}
+
+.btn-dropdown{
+  @include themify($themes) {
+    background-color: themed('buttonDropdownCategories');
+  }
+}
+
+.tabActive{
+  @include themify($themes) {
+    background-color: themed('buttonTabActive');
+  }
+}
+
+.btn-save{
+  @include themify($themes) {
+    background-color: themed('buttonNewsSave');
+  }
+}
+
+.btn-cancel{
+  @include themify($themes) {
+    background-color: themed('buttonNewsCancel');
   }
 }
 
@@ -72,7 +85,6 @@ section {
   h2 {
     @include themify($themes) {
       font-family: themed('h2font');
-      //font-family: themed('h2font'), themed('textGeorgia'), themed('textCheltenham'), themed('textSerif'), themed('textTimes') ;
     }
   }
   h3 {

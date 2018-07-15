@@ -29,3 +29,8 @@ img{
   padding-right: 25px;
   padding-bottom: 25px;
 }
+
+.img-size{
+  max-height: 250px;
+  max-width: 250px;
+}

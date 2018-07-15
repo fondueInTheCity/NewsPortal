@@ -12,7 +12,9 @@ import {News} from "../model/news";
 import {Comment} from "../model/comment";
 import {NewsWithCommentsDto} from "../dto/newsWithCommentsDto";
 
-@Component({templateUrl: 'home.component.html'})
+@Component({
+  templateUrl: 'home.component.html',
+  styleUrls: ['./home.component.css']})
 export class HomeComponent implements OnInit, OnDestroy {
   news: NewsInfoDto[] = [];
   viewNews: NewsInfoDto[] = [];
@@ -72,16 +74,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           return;
         }
         let re  = new RegExp(searchText, "gi");
-        // this.newsWithCommentsSubscription = this.newsService.getAllNewsWithComments().pipe(first())
-        //   .subscribe((newsWithComments: NewsWithCommentsDto[]) => {
-        //     this.newsWithComments = newsWithComments;
-        //     for(let postInfo of this.newsWithComments){
-        //       if ((postInfo.post.post.name.search(re) !== -1) || (postInfo.post.post.description.search(re) !== -1) ||
-        //         (postInfo.post.post.authorName.search(re) !== -1))
-        //         this.searchedNews.push(postInfo.post);
-        //     }
-        //     this.filterNews();
-        // });
         for(let postInfo of this.news){
           if ((postInfo.post.name.search(re) !== -1) || (postInfo.post.description.search(re) !== -1) ||
             (postInfo.post.authorName.search(re) !== -1) || (postInfo.post.text.search(re) !== -1))

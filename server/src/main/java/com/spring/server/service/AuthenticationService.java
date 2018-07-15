@@ -24,47 +24,36 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
     public LoginResponseDto login(final LoginRequestDto loginRequestDto) {
-
         try {
             String username = Optional.ofNullable(loginRequestDto.getUsername())
                     .orElseThrow(() -> new BadCredentialsException("Username should be passed."));
-
             String password = Optional.ofNullable(loginRequestDto.getPassword())
                     .orElseThrow(() -> new BadCredentialsException("Password should be passed."));
-
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username,
                     password);
-
             if(userService.uniqueUsername(username)) {
                 return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_UNIQUE_USERNAME),
                         null);
             }
-
-            final Authentication authResult = this.authenticationManager.authenticate(authRequest);
-
             if (this.userService.userIsDeleted(loginRequestDto.getUsername())) {
-                //throw new JsonException("User is deleted");
                 return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_DELETED),
                         null);
             }
-
             if (!this.userService.userIsActive(loginRequestDto.getUsername())) {
-                //throw new JsonException("User is not active.");
                 return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_ISNT_ACTIVE),
                         null);
             }
-
             if (this.userService.userIsBlocked(loginRequestDto.getUsername())) {
-                //throw new JsonException("User is blocked");
                 return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_BLOCKED),
                         null);
             }
+            final Authentication authResult = this.authenticationManager.authenticate(authRequest);
             if (authResult.isAuthenticated()) {
                 JwtUserDetails userDetails = (JwtUserDetails) authResult.getPrincipal();
                 User user = userRepository.findById((long)userDetails.getId());

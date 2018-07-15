@@ -52,7 +52,7 @@ public class SectionService {
 
     public void deleteTagsWithoutLinks(Set<Tag> tags) {
         for (Tag tag: tags) {
-            if (tag.getNews().size() == 0)
+            if (tag.getNews().size() == 1)
                 this.tagRepository.delete(tag);
         }
     }

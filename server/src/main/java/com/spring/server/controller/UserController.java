@@ -8,7 +8,6 @@ import com.spring.server.service.dto.UserDto.UserEditDto;
 import com.spring.server.service.dto.UserDto.UserListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +18,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
-@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/users")
 public class UserController {
 
     private final UserService userService;
@@ -46,18 +45,11 @@ public class UserController {
         return this.userService.getLanguages();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_WRITTER') or hasRole('ROLE_READER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_WRITER') or hasRole('ROLE_READER')")
     @PostMapping("/setUserLanguage/{username}")
     @ResponseStatus(value = HttpStatus.OK)
     public void setUserLanguage(@PathVariable String username, @RequestBody Language language) {
         this.userService.setLanguage(username, language);
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_WRITTER') or hasRole('ROLE_READER')")
-    @PostMapping("/setUserTheme/{username}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public void setUserTheme(@PathVariable String username, @RequestBody Theme theme) {
-        this.userService.setTheme(username, theme);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -71,19 +63,23 @@ public class UserController {
         return this.userService.findUserByUsername(username);
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_WRITER') or hasRole('ROLE_READER')")
+    @PostMapping("/setUserTheme/{username}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void setUserTheme(@PathVariable String username, @RequestBody Theme theme) {
+        this.userService.setTheme(username, theme);
+    }
+
     @PostMapping("/edit")
+    @ResponseStatus(value = HttpStatus.OK)
     public void editUser(@RequestBody UserEditDto user) {
         this.userService.editUser(user);
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/editImage/{idUser}")
+    @ResponseStatus(value = HttpStatus.OK)
     public void editUserImage(@PathVariable Long idUser, @RequestParam("file") MultipartFile image) throws DbxException {
         this.userService.setUsersImage(idUser, image);
-        //    @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = "multipart/form-data")
-        //    public void editUser(@RequestBody MultipartFile image){
-        //    this.userService.editUser(user);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

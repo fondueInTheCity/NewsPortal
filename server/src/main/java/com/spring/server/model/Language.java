@@ -3,6 +3,7 @@ package com.spring.server.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -15,9 +16,8 @@ public class Language {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", unique = true)
     private String name;
-    public Language(String name){
-        this.name = name;
-    }
+
 }

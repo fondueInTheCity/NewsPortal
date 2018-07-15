@@ -11,6 +11,7 @@ import com.spring.server.service.dto.RatingDto.RatingSetDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,6 +69,7 @@ public class NewsController {
         this.newsService.editPost(newsInfoDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_WRITTER')")
     @DeleteMapping("/deletePost/{idPost}")
     @ResponseStatus(HttpStatus.OK)
     public void deletePost(@PathVariable Long idPost) {
@@ -97,11 +99,6 @@ public class NewsController {
     public float getPostRating(@RequestBody RatingSetDto ratingSetDto) {
         return this.newsService.setPostRating(ratingSetDto);
     }
-
-//    @GetMapping("/getNewsWithComments")
-//    public Set<NewsWithCommentsDto> getNewsWithComments() {
-//        return this.newsService.getNewsWithCommentsDto();
-//    }
 
     @GetMapping("/getPostRating/{idPost}")
     @ResponseStatus(HttpStatus.OK)

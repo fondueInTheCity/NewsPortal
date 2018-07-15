@@ -75,15 +75,14 @@ public class NewsService {
 
     public void deletePost(long id) {
         News deletePost = newsRepository.findById(id);
-        Set<Tag> deletedTags = deletePost.getTags();
         deletePost.setTags(null);
         deletePost.setCategories(null);
         newsRepository.save(deletePost);
-//        this.sectionService.deleteTagsWithoutLinks(deletedTags);
         for(Comment comment : deletePost.getComments()) {
             deleteLikes(comment.getLikes());
         }
         newsRepository.delete(deletePost);
+        this.sectionService.deleteTagsWithoutLinks();
     }
 
     public void addComment(CommentAddDto commentAddDto) {
@@ -97,10 +96,6 @@ public class NewsService {
     public Set<CommentShowDto> showComments(long idNews) {
         return commentShowTransformer.makeSetDto(newsRepository.findById(idNews).getComments());
     }
-
-//    public Set<NewsWithCommentsDto> getNewsWithCommentsDto() {
-//        return newsWithCommentsTransformer.makeDto(newsRepository.findAll());
-//    }
 
     public void addLike(LikeDto likeDto) {
         Like like = this.likeDtoTransformer.makeModel(likeDto);

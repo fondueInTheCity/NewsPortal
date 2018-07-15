@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -17,21 +19,27 @@ public class News {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @Size(min=4, max=50)
     @Column(name = "name")
     private String name;
 
+    @Size(min=4, max=100)
     @Column(name = "description")
     private String description;
 
+    @NotNull
     @Column(name = "text")
     private String text;
 
     @Column(name = "image")
     private String userImage;
 
+    @NotNull
     @Column(name = "ratingValue")
     private Float ratingValue;
 
+    @NotNull
     @Column(name = "publishDate")
     private String publishDate;
 

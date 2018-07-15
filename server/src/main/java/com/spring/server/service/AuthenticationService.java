@@ -1,6 +1,6 @@
 package com.spring.server.service;
 
-import com.spring.server.model.Abbreviation;
+import com.spring.server.constants.Abbreviation;
 import com.spring.server.model.User;
 import com.spring.server.repository.UserRepository;
 import com.spring.server.security.model.JwtUserDetails;

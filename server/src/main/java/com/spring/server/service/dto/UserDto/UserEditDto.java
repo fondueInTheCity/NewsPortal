@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserEditDto implements Dto {
-
     private Long id;
     private String username;
     private UserRole role;
@@ -22,7 +21,6 @@ public class UserEditDto implements Dto {
     private String avatar;
     private boolean isDeleted;
     private boolean isBlocked;
-
     private Theme theme;
     private Language language;
 }

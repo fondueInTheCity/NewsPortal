@@ -4,9 +4,11 @@ import com.spring.server.model.Category;
 import com.spring.server.model.Tag;
 import com.spring.server.service.SectionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,13 +21,11 @@ public class SectionController {
     private final SectionService sectionService;
 
     @GetMapping("/getAllCategories")
-    @ResponseStatus(HttpStatus.OK)
     public List<Category> getAllCategories() {
         return this.sectionService.getAllCategories();
     }
 
     @GetMapping("/getAllTags")
-    @ResponseStatus(HttpStatus.OK)
     public List<Tag> getAllTags() {
         return this.sectionService.getAllTags();
     }

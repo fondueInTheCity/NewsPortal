@@ -17,7 +17,6 @@ public class NewsEditDtoTransformer {
         post.setName(newsInfoDto.getPost().getName());
         post.setDescription(newsInfoDto.getPost().getDescription());
         post.setText(newsInfoDto.getPost().getText());
-//        post.setTags(newsInfoDto.getTags());
         post.setCategories(newsInfoDto.getCategories());
         return post;
     }

@@ -1,9 +1,9 @@
 package com.spring.server.service.transformer.NewsTransformer;
 
 import com.spring.server.model.News;
+import com.spring.server.model.User;
 import com.spring.server.repository.UserRepository;
 import com.spring.server.service.dto.NewsDto.NewsInfoDto;
-import com.spring.server.service.dto.NewsDto.PostInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +17,7 @@ import java.util.Set;
 public class NewsInfoDtoTransformer {
 
     private final UserRepository userRepository;
+    private final PostInfoDtoTransformer postInfoDtoTransformer;
 
     public News makeModel(NewsInfoDto newsInfoDto) {
         News news = new News();
@@ -25,29 +26,17 @@ public class NewsInfoDtoTransformer {
         news.setDescription(newsInfoDto.getPost().getDescription());
         news.setText(newsInfoDto.getPost().getText());
         news.setPublishDate(newsInfoDto.getPost().getPublishDate());
-        news.setUserImage(this.userRepository.findById(newsInfoDto.getPost().getId_user()).getAvatar());
-        news.setUser(this.userRepository.findById(newsInfoDto.getPost().getId_user()));
+        User user = this.userRepository.findById(newsInfoDto.getPost().getId_user());
+        news.setUserImage(user.getAvatar());
+        news.setUser(user);
         news.setRatingValue(newsInfoDto.getPost().getValue_rating());
         return news;
     }
 
     public NewsInfoDto makeDto(News news) {
         NewsInfoDto newsInfoDto = new NewsInfoDto();
-        PostInfoDto postInfo = new PostInfoDto();
-        postInfo.setId(news.getId());
-        postInfo.setName(news.getName());
-        postInfo.setDescription(news.getDescription());
-        postInfo.setText(news.getText());
-        postInfo.setPublishDate(news.getPublishDate());
-        postInfo.setId_user(news.getUser().getId());
-        postInfo.setAuthorName(news.getUser().getUsername());
-        postInfo.setUserImage(news.getUser().getAvatar());
-        postInfo.setValue_rating(news.getRatingValue());
-        newsInfoDto.setPost(postInfo);
+        newsInfoDto.setPost(postInfoDtoTransformer.makeDto(news));
         newsInfoDto.setTags(news.getTags());
-//        for(Rating rating : news.getRating()) {
-//            newsInfoDto.getPost().getIdUsers().add(rating.getUser().getId());
-//        }
         newsInfoDto.setCategories(news.getCategories());
         return newsInfoDto;
     }
@@ -66,13 +55,5 @@ public class NewsInfoDtoTransformer {
             newsInfoDtoList.add(makeDto(news));
         }
         return newsInfoDtoList;
-    }
-
-    public List<News> makeListModel(List<NewsInfoDto> newsInfoDtoList) {
-        List<News> newsList = new ArrayList<>();
-        for(NewsInfoDto newsInfoDto : newsInfoDtoList) {
-            newsList.add(makeModel(newsInfoDto));
-        }
-        return newsList;
     }
 }

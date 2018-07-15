@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LikeShowDto implements Dto {
-
     private long amountOfLikes;
     private Boolean state;
 }

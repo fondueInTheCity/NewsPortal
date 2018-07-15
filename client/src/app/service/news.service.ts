@@ -47,7 +47,7 @@ export class NewsService {
   }
 
   addComment(commentAddDto: CommentAddDto) {
-    return this.http.post(`${environment.serverUrl}news/comment`, commentAddDto);
+    return this.http.post(`${environment.serverUrl}news/addComment`, commentAddDto);
   }
 
   showComments(idPost: number) {

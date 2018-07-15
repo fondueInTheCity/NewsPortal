@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LikeDto implements Dto {
-
     private long id;
     private long id_user;
     private long id_comment;

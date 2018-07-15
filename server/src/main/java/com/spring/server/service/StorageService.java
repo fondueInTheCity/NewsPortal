@@ -30,8 +30,7 @@ public class StorageService {
     public String loadFileToDropbox(MultipartFile image) {
         try (InputStream in = new FileInputStream(convert(image))) {
             String keyName = UUID.randomUUID().toString();
-            FileMetadata metadata = client.files().uploadBuilder("/" + keyName)
-                    .uploadAndFinish(in);
+            FileMetadata metadata = client.files().uploadBuilder("/" + keyName).uploadAndFinish(in);
             return getPublicUrl(keyName);
         } catch (IOException e) {
             throw new JsonException("Cannot upload image file");

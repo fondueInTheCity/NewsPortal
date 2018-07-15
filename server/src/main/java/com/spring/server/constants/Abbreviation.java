@@ -1,4 +1,4 @@
-package com.spring.server.model;
+package com.spring.server.constants;
 
 public class Abbreviation {
 

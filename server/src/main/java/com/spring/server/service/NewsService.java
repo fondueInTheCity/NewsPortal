@@ -15,7 +15,6 @@ import com.spring.server.service.transformer.CommentTransformer.CommentShowTrans
 import com.spring.server.service.transformer.LikeTransformer.LikeDtoTransformer;
 import com.spring.server.service.transformer.NewsTransformer.NewsEditDtoTransformer;
 import com.spring.server.service.transformer.NewsTransformer.NewsInfoDtoTransformer;
-import com.spring.server.service.transformer.NewsTransformer.NewsWithCommentsTransformer;
 import com.spring.server.service.transformer.RatingDtoTransformer.RatingSetDtoTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,6 @@ public class NewsService {
     private final CommentShowTransformer commentShowTransformer;
     private final LikeDtoTransformer likeDtoTransformer;
     private final RatingSetDtoTransformer ratingSetDtoTransformer;
-    private final NewsWithCommentsTransformer newsWithCommentsTransformer;
 
 
     public List<NewsInfoDto> getNews() {
@@ -50,15 +48,13 @@ public class NewsService {
     public void addPost( NewsInfoDto newsInfoDto) {
         News post = newsInfoDtoTransformer.makeModel(newsInfoDto);
         post.setPublishDate(LocalDateTime.now().toString());
-        Set<Tag> tags = this.sectionService.mergeTagsToDb(newsInfoDto.getTags());
-        Set<Category> categories = this.sectionService.getMergedCategories(newsInfoDto.getCategories());
-        post.setTags(tags);
-        post.setCategories(categories);
+        post.setTags(this.sectionService.mergeTagsToDb(newsInfoDto.getTags()));
+        post.setCategories(this.sectionService.getMergedCategories(newsInfoDto.getCategories()));
         this.newsRepository.save(post);
     }
 
     public List<NewsInfoDto> getNewsByIdUser(long id) {
-        return  newsInfoDtoTransformer.makeListDto(newsRepository.findAllByUser(userRepository.findById(id)));
+        return newsInfoDtoTransformer.makeListDto(newsRepository.findAllByUser(userRepository.findById(id)));
     }
 
     public NewsInfoDto getPostById(long idPost) {
@@ -68,8 +64,7 @@ public class NewsService {
     public void editPost(NewsInfoDto newsInfoDto) {
         News news = newsEditDtoTransformer.makeEditModel(newsInfoDto);
         news.setPublishDate(LocalDateTime.now().toString());
-        Set<Tag> tags = this.sectionService.mergeTagsToDb(newsInfoDto.getTags());
-        news.setTags(tags);
+        news.setTags(this.sectionService.mergeTagsToDb(newsInfoDto.getTags()));
         newsRepository.save(news);
     }
 
@@ -93,7 +88,7 @@ public class NewsService {
         this.newsRepository.save(post);
     }
 
-    public Set<CommentShowDto> showComments(long idNews) {
+    public Set<CommentShowDto> getPostComments(long idNews) {
         return commentShowTransformer.makeSetDto(newsRepository.findById(idNews).getComments());
     }
 
@@ -103,11 +98,11 @@ public class NewsService {
         User user = like.getUser();
         Set<Like> likes = new HashSet<>(user.getLikes());
         boolean isExist = false;
-        Like delLike = new Like();
+        Like deleteLike = new Like();
         for(Like sLike : likes) {
             if(sLike.getUser().getId().equals(user.getId())
                     && sLike.getComment().getId().equals(comment.getId())) {
-                delLike = sLike;
+                deleteLike = sLike;
                 isExist = true;
             }
         }
@@ -115,13 +110,13 @@ public class NewsService {
             likes.add(like);
             comment.getUser().setAmountLike(comment.getUser().getAmountLike() + 1);
         } else {
-            likes.remove(delLike);
+            likes.remove(deleteLike);
             comment.getUser().setAmountLike(comment.getUser().getAmountLike() - 1);
         }
         comment.setLikes(likes);
         user.setLikes(likes);
-        if (delLike.getId() != null) {
-            likeRepository.delete(delLike);
+        if (deleteLike.getId() != null) {
+            likeRepository.delete(deleteLike);
         }
         commentRepository.save(comment);
         userRepository.save(user);

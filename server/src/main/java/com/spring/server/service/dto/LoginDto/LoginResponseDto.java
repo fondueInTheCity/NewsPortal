@@ -19,9 +19,7 @@ public class LoginResponseDto implements Dto {
     private String themeName;
     private String languageName;
 
-    public LoginResponseDto(String token,
-                            ErrorDto errorDto,
-                            User user) {
+    public LoginResponseDto(String token, ErrorDto errorDto, User user) {
         this.token = token;
         this.errorDto = errorDto;
         if (user != null) {

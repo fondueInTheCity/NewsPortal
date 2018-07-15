@@ -9,8 +9,7 @@ public class MessageService {
         return String.format(
                 "Hallo, %s \n" +
                         "Welcome to ItNews! Please, visit next link: http://localhost:4200/auth/activate/%s",
-                username,
-                code);
+                username, code);
     }
 
     public String rememberPassword(String username, String password) {
@@ -18,7 +17,7 @@ public class MessageService {
     }
 
     public String activationCodeChangePassword(String username, String code) {
-        return String.format("Hallo, %s \n" + "It is confirm on change password http://localhost:4200/restore/%s"
-                , username, code);
+        return String.format("Hallo, %s \n" + "It is confirm on change password http://localhost:4200/restore/%s",
+                username, code);
     }
 }

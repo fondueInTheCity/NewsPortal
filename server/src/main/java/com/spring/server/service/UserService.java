@@ -1,5 +1,6 @@
 package com.spring.server.service;
 
+import com.spring.server.constants.Abbreviation;
 import com.spring.server.model.*;
 import com.spring.server.repository.LanguageRepository;
 import com.spring.server.repository.ThemeRepository;
@@ -38,7 +39,6 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserListDto> findAll() {
-//        List<User> users = userRepository.getNews();
         List<User> users = userRepository.findAllExisted();
         List<UserListDto> userDtoList = new ArrayList<>();
         for (User user : users) {
@@ -128,7 +128,6 @@ public class UserService {
         userRepository.save(user);
         mailService.send(user.getEmail(), Abbreviation.SUBJECT_ACTIVATION_CODE,
                 messageService.activationCode(user.getUsername(), user.getActivationCode()));
-
         return new ErrorDto(Abbreviation.SUCCESS, Abbreviation.SUCCESS_REGISTRATION);
     }
 

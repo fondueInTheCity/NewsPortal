@@ -18,6 +18,7 @@ public class PostInfoDtoTransformer {
         postInfo.setPublishDate(news.getPublishDate());
         postInfo.setId_user(news.getUser().getId());
         postInfo.setAuthorName(news.getUser().getUsername());
+        postInfo.setUserImage(news.getUser().getAvatar());
         postInfo.setValue_rating(news.getRatingValue());
         return postInfo;
     }

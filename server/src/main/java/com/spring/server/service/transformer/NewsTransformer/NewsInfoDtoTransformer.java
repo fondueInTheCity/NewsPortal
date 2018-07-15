@@ -25,6 +25,7 @@ public class NewsInfoDtoTransformer {
         news.setDescription(newsInfoDto.getPost().getDescription());
         news.setText(newsInfoDto.getPost().getText());
         news.setPublishDate(newsInfoDto.getPost().getPublishDate());
+        news.setUserImage(this.userRepository.findById(newsInfoDto.getPost().getId_user()).getAvatar());
         news.setUser(this.userRepository.findById(newsInfoDto.getPost().getId_user()));
         news.setRatingValue(newsInfoDto.getPost().getValue_rating());
         return news;
@@ -40,6 +41,7 @@ public class NewsInfoDtoTransformer {
         postInfo.setPublishDate(news.getPublishDate());
         postInfo.setId_user(news.getUser().getId());
         postInfo.setAuthorName(news.getUser().getUsername());
+        postInfo.setUserImage(news.getUser().getAvatar());
         postInfo.setValue_rating(news.getRatingValue());
         newsInfoDto.setPost(postInfo);
         newsInfoDto.setTags(news.getTags());

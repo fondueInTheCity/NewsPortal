@@ -15,8 +15,8 @@
 
   <div class="row padd">
     <div class="btn-group h-50" dropdown>
-      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light h-50 mt-4" (click)="pasteChecked()" mdbWavesEffect>
-        Select category
+      <button dropdownToggle type="button" class="btn btn-dropdown dropdown-toggle waves-light h-50 mt-4" (click)="pasteChecked()" mdbWavesEffect translate>
+        {{"Select category" | translate}}
       </button>
       <div class="dropdown-menu dropdown-primary">
         <a class="dropdown-item col-md-11 m-left" *ngFor="let category of categories" (click)="disableHideDropdown($event)" (click)="category.isActive = !category.isActive">
@@ -29,15 +29,6 @@
       <div class="md-form">
         <input class="form-control" list="tags" id="postTags" required formControlName="tag" type="text">
         <label class="active" for="postTags" translate>Tags</label>
-        <!--<div *ngIf="showDropdownTags" class="state-container-dropdown"> (click)="toogleDropDown()"-->
-          <!--<div>-->
-            <!--<div class="tags" *ngFor="let tag of tags">-->
-              <!--{{tag.name}}-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-
-
         <datalist class="state-container-dropdown" id="tags" *ngFor="let tag of tags">
           <option class="tags" (click)="addTag()">{{tag.name}}</option>
         </datalist>
@@ -55,24 +46,24 @@
   <div class="card mt-5">
     <div class="card-header">
       <div class="btn-group float-right" >
-        <button *ngIf="new" type="button" class="btn btn-success pointer" (click)="onSubmit()" dgTooltip="Publish">
+        <button *ngIf="new" type="button" class="btn btn-save pointer" (click)="onSubmit()" dgTooltip="Publish">
           <i class="material-icons">&#xE163;</i></button>
-        <button *ngIf="!new" type="button" class="btn btn-success pointer"(click)="onSave()" dgTooltip="Save">
+        <button *ngIf="!new" type="button" class="btn btn-save pointer"(click)="onSave()" dgTooltip="Save">
           <i class="material-icons">&#xE161;</i></button>
-        <button type="button" class="btn btn-default pointer" (click)="onCancel()" dgTooltip="Cancel">
+        <button type="button" class="btn btn-cancel pointer" (click)="onCancel()" dgTooltip="Cancel">
           <i class="material-icons">&#xE5C9;</i></button>
       </div>
 
       <ul class="nav nav-pills" id="editPill">
-        <li class="nav-item"><a class="nav-link" [class.active]="viewMode == 'editTab'" (click)="viewMode ='editTab'" rel="editTab">Edit</a></li>
-        <li class="nav-item"><a class="nav-link" [class.active]="viewMode == 'previewTab'" rel="previewTab" (click)="viewMode ='previewTab'">Preview</a></li>
+        <li class="nav-item"><a class="nav-link" [class.tabActive]="viewMode == 'editTab'" (click)="viewMode ='editTab'" rel="editTab" translate>Edit</a></li>
+        <li class="nav-item"><a class="nav-link" [class.tabActive]="viewMode == 'previewTab'" rel="previewTab" (click)="viewMode ='previewTab'" translate>Preview</a></li>
       </ul>
     </div>
     <div class="tab-content" [ngSwitch]="viewMode">
       <div class="tab-pane fade show active" id="edit-markdown-edit" *ngSwitchCase="'editTab'">
         <div class="card">
           <div class="card-header bg-dark text-white">
-            <h5 class="card-title float-sm-left">Content</h5>
+            <h5 class="card-title float-sm-left" translate>Content</h5>
           </div>
           <div class="card-body">
             <div ace-editor ng2FileDrop (onFileDrop)="imageUpload($event)"

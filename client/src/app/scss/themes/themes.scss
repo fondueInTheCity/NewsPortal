@@ -17,6 +17,11 @@ $themes: (
     imgFilter: none,
     actionBtnColor: red,
     browseBtnColor: #2bbbad,
+    buttonNewsSave: #00c851,
+    buttonNewsCancel: #2bbbad,
+    buttonDropdownCategories: #408bbd,
+    buttonChangeState: #007bff,
+    buttonTabActive: #007bff,
     submitBtnColor: #408bbd
   ),
   newspaper: (
@@ -31,13 +36,18 @@ $themes: (
     buttonColor: #333,
     buttonBorder: 1px solid #333,
     //hfont: "cheltenham-normal-500" georgia "times new roman" times serif,
-    imgWebkitFilter: grayscale(100%), /* Safari 6.0 - 9.0 */
+    imgWebkitFilter: grayscale(100%),
     imgFilter: grayscale(100%),
     h2font: "times new roman",
     h3font: "times new roman",
     pfont: "times new roman",
     actionBtnColor: #7B7E77,
     browseBtnColor: #7B7E77,
+    buttonNewsSave: #7B7E77,
+    buttonNewsCancel: #333,
+    buttonDropdownCategories: #333,
+    buttonChangeState: #7B7E77,
+    buttonTabActive: #7B7E77,
     submitBtnColor: #333
   ),
 );

@@ -24,19 +24,19 @@
   <div class="modal-dialog modal-notify modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <p class="heading lead">Modal Danger</p>
+        <p class="heading lead" translate>Delete confirm</p>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="confirmDeletePost.hide()">
           <span aria-hidden="true" class="white-text">×</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="text-center">
-          <p>You are sure want to delete this Post?</p>
+          <p translate>You are sure want to delete this Post?</p>
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <a type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="deletePost(post.id); confirmDeletePost.hide()">Yes</a>
-        <a type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="confirmDeletePost.hide()" mdbWavesEffect>No</a>
+        <a type="button" class="btn btn-primary waves-light" mdbWavesEffect (click)="deletePost(post.id); confirmDeletePost.hide()" translate>Yes</a>
+        <a type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="confirmDeletePost.hide()" mdbWavesEffect translate>No</a>
       </div>
     </div>
   </div>

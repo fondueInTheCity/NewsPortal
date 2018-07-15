@@ -19,7 +19,7 @@
 
     <div class="btn-group" dropdown>
       <button type="button" dropdownToggle class="btn dropdown-toggle" mdbWavesEffect translate>
-        Theme
+        {{"Theme" | translate}}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" *ngFor="let theme of themes" (click)="switchTheme(theme)">{{theme.name}}</a>
@@ -28,7 +28,7 @@
 
     <div class="btn-group" dropdown>
       <button type="button" dropdownToggle class="btn dropdown-toggle" mdbWavesEffect translate>
-        Language
+        {{"Language" | translate}}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" *ngFor="let language of languages" (click)="switchLanguage(language)">{{language.name.toUpperCase()}}</a>

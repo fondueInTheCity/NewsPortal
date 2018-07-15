@@ -75,15 +75,15 @@ public class NewsService {
 
     public void deletePost(long id) {
         News deletePost = newsRepository.findById(id);
-//        Set<Tag> deletedTags = deletePost.getTags();
+        Set<Tag> deletedTags = deletePost.getTags();
         deletePost.setTags(null);
         deletePost.setCategories(null);
         newsRepository.save(deletePost);
+//        this.sectionService.deleteTagsWithoutLinks(deletedTags);
         for(Comment comment : deletePost.getComments()) {
             deleteLikes(comment.getLikes());
         }
         newsRepository.delete(deletePost);
-//        this.sectionService.deleteTagsWithoutLinks(deletedTags);
     }
 
     public void addComment(CommentAddDto commentAddDto) {

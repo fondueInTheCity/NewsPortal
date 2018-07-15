@@ -14,6 +14,7 @@ public class PostInfoDto {
     private String description;
     private String text;
     private String publishDate;
+    private String userImage;
     private long id_user;
     private float value_rating;
     private String authorName;

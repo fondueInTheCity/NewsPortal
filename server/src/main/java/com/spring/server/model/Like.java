@@ -1,6 +1,7 @@
 package com.spring.server.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name="lois")
+@NoArgsConstructor
 public class Like {
 
     @Id
@@ -22,14 +24,6 @@ public class Like {
     @ManyToOne
     @JoinColumn(name = "id_comment")
     private Comment comment;
-
-    public Like(User user, Comment comment){
-        this.user = user;
-        this.comment = comment;
-    }
-
-    public Like(){
-    }
 
     @Override
     public String toString() {

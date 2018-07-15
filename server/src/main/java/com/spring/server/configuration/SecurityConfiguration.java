@@ -27,7 +27,13 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private static final String[] ingoringUrls = new String[]{ "/auth/**", "/news/**", "/section/**", "/socket/**",
+    private static final String[] ingoringUrls = new String[]{ "/auth/**", "/section/**", "/socket/**",
+            "/news",
+            "/news/allNews/{username}",
+            "/news/author/{idUser}",
+            "/news/{idPost}",
+            "/news/comments/{idPost}",
+            "/news/getPostRating/{idPost}",
             "/users/getThemes",
             "/users/getLanguages",
             "/users/{username}",

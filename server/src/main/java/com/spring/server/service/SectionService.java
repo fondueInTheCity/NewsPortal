@@ -50,9 +50,10 @@ public class SectionService {
         return resultCategories;
     }
 
-    public void deleteTagsWithoutLinks(Set<Tag> tags) {
+    public void deleteTagsWithoutLinks() {
+        List<Tag> tags = this.tagRepository.findAll();
         for (Tag tag: tags) {
-            if (tag.getNews().size() == 1)
+            if (tag.getNews().size() == 0)
                 this.tagRepository.delete(tag);
         }
     }

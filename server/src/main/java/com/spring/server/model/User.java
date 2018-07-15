@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -16,9 +18,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "username")
+    @NotNull
+    @Size(min=3, max=18)
+    @Column(name = "username", unique = true)
     private String username;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 
@@ -28,7 +33,8 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "email")
+    @NotNull
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "amount_like")

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {UserEditDto, NewsInfoDto} from '../../../dto';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {NewsService, ProfileService, UserService} from '../../../service';
+import {NewsService, ProfileService, UserService, AuthenticationService} from '../../../service';
 import {first} from 'rxjs/internal/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService, AuthenticationService} from '../../../auth/service';
+import {AlertService} from '../../../auth/service';
 
 @Component({
   selector: 'app-profile-news',

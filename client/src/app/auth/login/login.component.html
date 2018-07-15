@@ -5,14 +5,14 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="username" translate>Username</label>
-        <input type="text" id="username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.username.errors }" />
+        <input type="text" id="username" pattern="{{usernamePattern()}}" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.username.errors }" />
         <div *ngIf="submitted && formControl.username.errors" class="invalid-feedback">
           <div *ngIf="formControl.username.errors.required" translate>Username is required</div>
         </div>
       </div>
       <div class="form-group">
         <label for="password" translate>Password</label>
-        <input type="password" id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.password.errors }" />
+        <input type="password" id="password" pattern="{{passwordPattern()}}" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.password.errors }" />
         <div *ngIf="submitted && formControl.password.errors" class="invalid-feedback">
           <div *ngIf="formControl.password.errors.required" translate>Password is required</div>
         </div>

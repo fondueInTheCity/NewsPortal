@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 
 import {InfoService, UserService} from '../../service';
 import { AlertService } from '../service';
+import {RegularService} from '../../service/regular.service';
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
@@ -17,29 +18,26 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private alertService: AlertService,
-    private infoService: InfoService) { }
+    private infoService: InfoService,
+    private regularService: RegularService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', Validators.required],
       email: ['', Validators.required]
     });
   }
 
-  // convenience getter for easy access to form fields
   get formControl() { return this.registerForm.controls; }
 
   onSubmit() {
     this.submitted = true;
-
-    // stop here if form is invalid
     if (this.registerForm.invalid) {
       return;
     }
-
     this.loading = true;
     this.userService.addUser(this.registerForm.value)
       .pipe(first())
@@ -55,5 +53,25 @@ export class RegisterComponent implements OnInit {
           this.alertService.error(error);
           this.loading = false;
         });
+  }
+
+  firstNamePattern(): string {
+    return this.regularService.firstNamePattern;
+  }
+
+  lastNamePattern(): string {
+    return this.regularService.lastNamePattern;
+  }
+
+  usernamePattern(): string {
+    return this.regularService.usernamePattern;
+  }
+
+  passwordPattern(): string {
+    return this.regularService.passwordPattern;
+  }
+
+  emailPattern(): string {
+    return this.regularService.emailPattern;
   }
 }

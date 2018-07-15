@@ -1,14 +1,13 @@
-import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload/ng2-file-upload';
 import {NewsService} from '../../service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NewsInfoDto} from '../../dto';
 import {SectionService} from '../../service';
-import {Category} from '../../model/';
-import {Tag} from "../../model/tag";
+import {Category, Tag} from '../../model/';
 
 @Component({
   selector: 'app-edit-news',
@@ -18,7 +17,7 @@ import {Tag} from "../../model/tag";
 export class EditNewsComponent implements OnInit, OnDestroy {
   news = new NewsInfoDto();
   new = true;
-  private postInfo = new NewsInfoDto();
+  //private postInfo = new NewsInfoDto();
   private tags: Tag[] = [];
   private categories: {
     id: number;
@@ -33,9 +32,9 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   public hasAnotherDropZoneOver = false;
   private uploadSubscription: Subscription;
 
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
+  // public fileOverBase(e: any): void {
+  //   this.hasBaseDropZoneOver = e;
+  // }
 
   public fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
@@ -47,7 +46,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
               private sectionService: SectionService,
               private router: Router) {
     this.newsForm = this.formBuilder.group({
-      tag: ['', Validators.required]
+      tag: ['']
     });
     this.sectionService.getCategories().pipe(first()).subscribe((categories: Category[]) => {
       for (const category of categories) {
@@ -127,6 +126,18 @@ export class EditNewsComponent implements OnInit, OnDestroy {
             });
         }
       });
+    // this.registerForm = this.formBuilder.group({
+    //   firstName: ['', Validators.required],
+    //   lastName: ['', Validators.required],
+    //   username: ['', Validators.required],
+    //   password: ['', Validators.required],
+    //   email: ['', Validators.required]
+    // });
+    // this.Title = new FormControl();
+    // this.Description = new FormControl();
+    // this.Tags = new FormControl();
+    // this.Categories = new FormControl();
+    // this.Content = new FormControl();
   }
 
   onSubmit() {

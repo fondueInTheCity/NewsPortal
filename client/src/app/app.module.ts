@@ -8,10 +8,9 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import {AdminGuard, ReaderGuard, WriterGuard} from './auth/guards';
 import { JwtInterceptor } from './auth/helpers';
-import {AlertService, AuthenticationService} from './auth/service';
-import {NewsService, UserService, ProfileService, SectionService, InfoService} from './service';
+import {AlertService} from './auth/service';
+import {NewsService, UserService, ProfileService, SectionService, InfoService, AuthenticationService, RegularService} from './service';
 import { HomeComponent } from './home';
-import { LoginComponent } from './auth/login';
 import { AlertComponent } from './auth/directives';
 import { RegisterComponent } from './auth/register';
 import { HeaderComponent } from './shared/header/header.component';
@@ -36,6 +35,7 @@ import {AccordionModule} from 'primeng/accordion';
 import {SliderModule} from 'primeng/slider';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import {LoginComponent} from './auth/login/login.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -96,6 +96,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProfileService,
         SectionService,
         InfoService,
+        RegularService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {AlertService, AuthenticationService} from '../service';
+import {AlertService} from '../service';
+import {AuthenticationService, RegularService} from '../../service';
 
 @Component({
   selector: 'app-restore-password',
@@ -21,11 +22,12 @@ export class RestorePasswordComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService) {}
+    private alertService: AlertService,
+    private regularService: RegularService) {}
 
   ngOnInit() {
     this.passwordForm = this.formBuilder.group({
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.pattern(this.regularService.passwordPattern)]]
       //passwordConfirm: ['', Validators.required]
     });
 

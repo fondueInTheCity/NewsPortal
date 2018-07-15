@@ -212,6 +212,6 @@ public class UserService {
         user.setLanguage(languageRepository.findById((long)1));
         user.setTheme(themeRepository.findById((long)1));
         user.setRole(UserRole.ROLE_READER);
-        user.setAvatar(this.storageService.getPublicUrl("Default"));
+        user.setAvatar(this.storageService.getPublicUrl("Default.png"));
     }
 }

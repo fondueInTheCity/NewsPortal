@@ -8,7 +8,7 @@ import {first} from 'rxjs/internal/operators';
 import {Theme, User} from '../model';
 import {TranslateService} from '@ngx-translate/core';
 import {LoginResponseDto, LoginRequestDto} from '../dto';
-import {InfoService} from './index';
+import {InfoService} from './info.service';
 
 @Injectable()
 export class AuthenticationService {

@@ -1,10 +1,11 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿///<reference path="../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { AlertService, AuthenticationService } from '../service';
-import {TranslateService} from "@ngx-translate/core";
+import { AlertService } from '../service';
 import {LoginRequestDto} from '../../dto';
+import {AuthenticationService, RegularService} from '../../service';
 
 @Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService) {}
+    private alertService: AlertService,
+    private regularService: RegularService) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -27,9 +29,8 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    this.authenticationService.logout(); //?
+    this.authenticationService.logout();
 
-    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.code = this.route.snapshot.paramMap.get('code');
     if (this.code != null) {
       this.authenticationService.activate(this.code).pipe(first())
@@ -58,12 +59,13 @@ export class LoginComponent implements OnInit {
       .subscribe(() => {
         this.loading = false;
       });
-      //   () => {
-      //     this.router.navigate([this.returnUrl]);
-      //   },
-      //   error => {
-      //     this.alertService.error(error);
-      //     this.loading = false;
-      //   });
+  }
+
+  usernamePattern(): string {
+    return this.regularService.usernamePattern;
+  }
+
+  passwordPattern(): string {
+    return this.regularService.passwordPattern;
   }
 }

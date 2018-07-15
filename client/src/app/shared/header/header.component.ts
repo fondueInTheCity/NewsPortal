@@ -3,8 +3,8 @@ import { Language, Theme} from '../../model';
 import {TranslateService} from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import {first} from 'rxjs/internal/operators';
-import {UserService, ProfileService} from '../../service';
-import {AlertService, AuthenticationService} from '../../auth/service';
+import {UserService, ProfileService, AuthenticationService} from '../../service';
+import {AlertService} from '../../auth/service';
 import {UserEditDto} from '../../dto';
 import {Router} from '@angular/router';
 

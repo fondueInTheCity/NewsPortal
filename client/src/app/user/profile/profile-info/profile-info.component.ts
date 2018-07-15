@@ -41,8 +41,10 @@ export class ProfileInfoComponent implements OnInit {
     }
   }
 
-  saveChanges(idCheck: number) {
-    this.setToBack();
+  saveChange(idCheck: number) {
+    if (!this.addNewInformation) {
+      this.setToBack();
+    }
     this.checkList[idCheck] = false;
   }
 
@@ -60,10 +62,11 @@ export class ProfileInfoComponent implements OnInit {
       }
       this.userService.uniqueUsername(this.profile.getUser().username).pipe(first()).subscribe((isUnique) => {
         if (isUnique) {
-          this.saveChanges(0);
+          this.saveChange(0);
           this.infoService.alertInformation('success', 'You are change username.');
           if (this.username === this.authenticationService.getCurrentUsername()) {
-            this.authenticationService.logout();
+            this.authenticationService.setCurrentUsername(this.profile.getUser().username);
+            this.router.navigate([`/profile/${this.profile.getUser().username}`]);
           }
         } else {
           this.infoService.alertInformation('error', 'This username isn`t unique.');
@@ -84,7 +87,12 @@ export class ProfileInfoComponent implements OnInit {
   }
 
   showNewInformation() {
-    this.addNewInformation = !this.addNewInformation;
+    this.addNewInformation = true;
+  }
+
+  saveChanges() {
+    this.setToBack();
+    this.addNewInformation = false;
   }
 
   showSection(idCheck: number): boolean {

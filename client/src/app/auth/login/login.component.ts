@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService, AuthenticationService } from '../service';
 import {TranslateService} from "@ngx-translate/core";
+import {LoginRequestDto} from '../../dto';
 
 @Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
@@ -26,9 +27,9 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    this.authenticationService.logout();
+    this.authenticationService.logout(); //?
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.code = this.route.snapshot.paramMap.get('code');
     if (this.code != null) {
       this.authenticationService.activate(this.code).pipe(first())
@@ -48,13 +49,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     if (this.loginForm.invalid) {
       return;
     }
-
     this.loading = true;
-    this.authenticationService.login(this.formControl.username.value, this.formControl.password.value)
+    this.authenticationService.login(new LoginRequestDto(this.formControl.username.value, this.formControl.password.value))
       .pipe(first())
       .subscribe(() => {
         this.loading = false;

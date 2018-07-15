@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {AuthenticationService} from '../../service/authentication.service';
 
 @Injectable()
 export class WriterGuard implements CanActivate {
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.currentUser !== null) {
-      if (this.currentUser.userRole === 'ROLE_WRITER' || this.currentUser.userRole === 'ROLE_ADMIN') {
+    if (this.authenticationService.isLogin()) {
+      if (this.authenticationService.isWriter() || this.authenticationService.isAdmin()) {
         return true;
       }
       this.router.navigate(['/']);

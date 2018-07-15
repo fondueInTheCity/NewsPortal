@@ -1,6 +1,7 @@
 package com.spring.server.service;
 
 import com.spring.server.model.Abbreviation;
+import com.spring.server.model.User;
 import com.spring.server.repository.UserRepository;
 import com.spring.server.security.model.JwtUserDetails;
 import com.spring.server.security.service.AuthenticationHelper;
@@ -31,12 +32,9 @@ public class AuthenticationService {
     public LoginResponseDto login(final LoginRequestDto loginRequestDto) {
 
         try {
-
-            //?
             String username = Optional.ofNullable(loginRequestDto.getUsername())
                     .orElseThrow(() -> new BadCredentialsException("Username should be passed."));
 
-            //?
             String password = Optional.ofNullable(loginRequestDto.getPassword())
                     .orElseThrow(() -> new BadCredentialsException("Password should be passed."));
 
@@ -44,46 +42,42 @@ public class AuthenticationService {
                     password);
 
             if(userService.uniqueUsername(username)) {
-                return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_UNIQUE_USERNAME));
+                return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_UNIQUE_USERNAME),
+                        null);
             }
 
             final Authentication authResult = this.authenticationManager.authenticate(authRequest);
 
             if (this.userService.userIsDeleted(loginRequestDto.getUsername())) {
                 //throw new JsonException("User is deleted");
-                return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_DELETED));
+                return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_DELETED),
+                        null);
             }
 
             if (!this.userService.userIsActive(loginRequestDto.getUsername())) {
                 //throw new JsonException("User is not active.");
-                return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_ISNT_ACTIVE));
+                return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_ISNT_ACTIVE),
+                        null);
             }
 
             if (this.userService.userIsBlocked(loginRequestDto.getUsername())) {
                 //throw new JsonException("User is blocked");
-                return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_BLOCKED));
+                return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_USER_BLOCKED),
+                        null);
             }
-
             if (authResult.isAuthenticated()) {
                 JwtUserDetails userDetails = (JwtUserDetails) authResult.getPrincipal();
-
-//                Optional<User> user = userRepository.findById(userDetails.getId());
-//                if (Objects.isNull(user)) {
-//                    //throw new JsonException("User not exist in system.");
-//                    return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_INVALID_PARAMETRS));
-//                }
-
+                User user = userRepository.findById((long)userDetails.getId());
                 String token = this.authenticationHelper.generateToken(userDetails.getId());
-
-
-                return new LoginResponseDto(token, new ErrorDto(Abbreviation.SUCCESS, Abbreviation.SUCCESS_AUTHENTICATION));
+                return new LoginResponseDto(token,
+                                            new ErrorDto(Abbreviation.SUCCESS, Abbreviation.SUCCESS_AUTHENTICATION),
+                                            user);
             } else {
                 throw new JsonException("Authentication failed.");
             }
-
         } catch (BadCredentialsException exception) {
-            //throw new JsonException("Username or password was incorrect. Please try again.", exception);
-            return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_INVALID_PARAMETRS));
+            return new LoginResponseDto(null, new ErrorDto(Abbreviation.ERROR, Abbreviation.ERROR_INVALID_PARAMETRS),
+                    null);
         }
     }
 }

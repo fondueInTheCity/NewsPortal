@@ -6,7 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import {AdminGuard, AuthGuard, ReaderGuard, WriterGuard} from './auth/guards';
+import {AdminGuard, ReaderGuard, WriterGuard} from './auth/guards';
 import { JwtInterceptor } from './auth/helpers';
 import {AlertService, AuthenticationService} from './auth/service';
 import {NewsService, UserService, ProfileService, SectionService, InfoService} from './service';
@@ -87,7 +87,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
   schemas: [],
     providers: [
-        AuthGuard,
         AdminGuard,
         WriterGuard,
         ReaderGuard,

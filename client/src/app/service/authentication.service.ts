@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Router} from '@angular/router';
 import {first} from 'rxjs/internal/operators';
-import {User} from '../model';
+import {Theme, User} from '../model';
 import {TranslateService} from '@ngx-translate/core';
 import {LoginResponseDto, LoginRequestDto} from '../dto';
 import {InfoService} from './index';
@@ -17,28 +17,18 @@ export class AuthenticationService {
                 private translate: TranslateService,
                 private infoService: InfoService) { }
 
-    public loggedIn = new BehaviorSubject<boolean>(false);
+  //public loggedIn = new BehaviorSubject<boolean>(false);
 
-    login(username: string, password: string) {
-        let user, userRole;
-        this.http.get(`${environment.serverUrl}users` + '/' + username)
-        .pipe(first())
-            .subscribe((data: User) => {
-                    user = data;
-                    userRole = data.role;
-                },
-                error => {
-                    console.log('error');
-                });
-        return this.http.post<LoginResponseDto>(`${environment.serverUrl}auth/login`, new LoginRequestDto(username, password))
+    login(loginRequestDto: LoginRequestDto) {
+        return this.http.post<LoginResponseDto>(`${environment.serverUrl}auth/login`, loginRequestDto)
             .pipe(map((res: LoginResponseDto) => {
                 this.infoService.alertInformation(res.errorDto.error, res.errorDto.message);
                 if (res && res.token) {
-                    this.translate.use(user.language.name);
-                  this.setDomTheme(user.theme.name);
-                    localStorage.setItem('currentUser', JSON.stringify({ id: user.id, username, token: res.token, userRole,
-                      language: user.language.name, theme: user.theme.name }));
-                    this.loggedIn.next(true);
+                    this.translate.use(res.languageName);
+                  this.setDomTheme(res.themeName);
+                    localStorage.setItem('currentUser', JSON.stringify({ id: res.userId, username: loginRequestDto.username,
+                      token: res.token, userRole: res.userRole, language: res.languageName, theme: res.themeName }));
+                  //this.loggedIn.next(true);
                   this.router.navigate(['/']);
                 }
             }));
@@ -52,9 +42,8 @@ export class AuthenticationService {
     }
 
     logout() {
-        // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
-        this.loggedIn.next(false);
+        //this.loggedIn.next(false);
         this.router.navigate(['/login']);
     }
 
@@ -88,6 +77,37 @@ export class AuthenticationService {
       }
     }
 
+    getCurrentLanguage(): string {
+      if (this.isLogin()) {
+        return JSON.parse(localStorage.getItem('currentUser')).language;
+      }
+      return 'en';
+    }
+
+    setCurrentTheme(themeName: String) {
+      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      currentUser.theme = themeName;
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+
+  setCurrentLanguage(languageName: String) {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    currentUser.language = languageName;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
+  setCurrentUsername(username: string) {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    currentUser.username = username;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
+    getCurrentTheme(): string {
+      if (this.isLogin()) {
+        return JSON.parse(localStorage.getItem('currentUser')).theme;
+      }
+    }
+
     isCurrentUser(username: string): boolean {
       return this.getCurrentUsername() === username;
     }
@@ -97,7 +117,7 @@ export class AuthenticationService {
     }
 
     isCanAddNews(username: string): boolean {
-      return this.isAdmin() || (this.isCurrentUser(username) && this.isWriter())
+      return this.isAdmin() || (this.isCurrentUser(username) && this.isWriter());
     }
 
 }

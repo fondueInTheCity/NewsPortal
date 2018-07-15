@@ -50,8 +50,7 @@ public class UserService {
 
     public UserEditDto findUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
-        UserEditDto dto = userEditTransformer.makeDto(user);
-        return dto;
+        return userEditTransformer.makeDto(user);
     }
 
     public List<Theme> getThemes() {

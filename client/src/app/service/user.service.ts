@@ -38,11 +38,11 @@ export class UserService   {
   }
 
   getThemes() {
-    return this.http.get(`${environment.serverUrl}users/getThemes`);
+    return this.http.get<Theme[]>(`${environment.serverUrl}users/getThemes`);
   }
 
   getLanguages() {
-    return this.http.get(`${environment.serverUrl}users/getLanguages`);
+    return this.http.get<Language[]>(`${environment.serverUrl}users/getLanguages`);
   }
 
   setLanguage(username: string, language: Language) {

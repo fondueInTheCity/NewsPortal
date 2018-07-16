@@ -2,6 +2,7 @@
   <div class="card-header bg-dark text-white">
     <div *ngIf="showEdit()"
          class="tool-box float-sm-right main-bg-bgcolor p-2 rounded">
+      <a class="card-link pointer m-1" (click)="downloadPdf()">Download pdf</a>
       <a class="card-link pointer m-1" routerLink="/editPost/{{post.id}}"><i class="material-icons md-light">&#xE254;</i></a>
       <a class="card-link pointer m-1" (click)="confirmDeletePost.show()"><i class="material-icons md-light">&#xE872;</i></a>
     </div>
@@ -14,7 +15,7 @@
         </div>
     </div>
   </div>
-  <div class="card-body">
+  <div class="card-body" id="contentToConvert">
     <markdown [data]="post.text"></markdown>
   </div>
 </div>

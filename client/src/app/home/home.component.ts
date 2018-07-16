@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.searchedNews = [];
         const searchText = params['search'];
         if ((searchText === undefined) || (searchText === '')) {
+          this.searchedNews = null;
           this.filterNews();
           return;
         }
@@ -82,12 +83,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     const tagSuitable = this.filterNewsByTags();
     const rateSuitable = this.filterNewsRate();
     const categoriesSuitable = this.filterNewsByCategories();
-
-    const sectionSuitable = tagSuitable.filter((o) => rateSuitable.some((item) => o === item));
-    this.viewNews = sectionSuitable.filter((o) => categoriesSuitable.some((item) => o === item));
-    if (this.searchedNews.length !== 0) {
-      this.viewNews = this.viewNews.filter((o) => this.searchedNews.some((item) => o === item));
-    }
+    let sectionSuitable = tagSuitable.filter(o => rateSuitable.some((item) => o === item));
+    this.viewNews = sectionSuitable.filter(o => categoriesSuitable.some((item) => o === item));
+    if (this.searchedNews !== null)
+      this.viewNews = this.viewNews.filter(o => this.searchedNews.some((item) => o === item));
   }
 
   filterNewsByTags(): NewsInfoDto[] {

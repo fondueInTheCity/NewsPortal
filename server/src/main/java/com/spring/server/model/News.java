@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Entity
@@ -36,11 +37,11 @@ public class News {
     private String userImage;
 
     @NotNull
-    @Column(name = "ratingValue")
+    @Column(name = "rating_value")
     private Float ratingValue;
 
     @NotNull
-    @Column(name = "publishDate")
+    @Column(name = "publish_date")
     private String publishDate;
 
     @JsonBackReference(value="news-tag")
@@ -71,7 +72,7 @@ public class News {
         this.description = description;
         this.text = text;
         this.ratingValue = ratingValue;
-        this.publishDate = LocalDateTime.now().toString();
+        this.publishDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
     }
 
     public News() {

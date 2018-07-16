@@ -1,11 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable, BehaviorSubject} from 'rxjs';
+import { HttpClient} from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Router} from '@angular/router';
-import {first} from 'rxjs/internal/operators';
-import {Theme, User} from '../model';
 import {TranslateService} from '@ngx-translate/core';
 import {LoginResponseDto, LoginRequestDto} from '../dto';
 import {InfoService} from './info.service';
@@ -17,8 +14,6 @@ export class AuthenticationService {
                 private translate: TranslateService,
                 private infoService: InfoService) { }
 
-  //public loggedIn = new BehaviorSubject<boolean>(false);
-
     login(loginRequestDto: LoginRequestDto) {
         return this.http.post<LoginResponseDto>(`${environment.serverUrl}auth/login`, loginRequestDto)
             .pipe(map((res: LoginResponseDto) => {
@@ -28,7 +23,6 @@ export class AuthenticationService {
                   this.setDomTheme(res.themeName);
                     localStorage.setItem('currentUser', JSON.stringify({ id: res.userId, username: loginRequestDto.username,
                       token: res.token, userRole: res.userRole, language: res.languageName, theme: res.themeName }));
-                  //this.loggedIn.next(true);
                   this.router.navigate(['/']);
                 }
             }));
@@ -43,7 +37,6 @@ export class AuthenticationService {
 
     logout() {
         localStorage.removeItem('currentUser');
-        //this.loggedIn.next(false);
         this.router.navigate(['/login']);
     }
 
@@ -94,6 +87,10 @@ export class AuthenticationService {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     currentUser.language = languageName;
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
+  getCurrentUserId(): number {
+      return JSON.parse(localStorage.getItem('currentUser')).id;
   }
 
   setCurrentUsername(username: string) {

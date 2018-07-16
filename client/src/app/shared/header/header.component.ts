@@ -4,8 +4,6 @@ import {TranslateService} from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import {first} from 'rxjs/internal/operators';
 import {UserService, ProfileService, AuthenticationService} from '../../service';
-import {AlertService} from '../../auth/service';
-import {UserEditDto} from '../../dto';
 import {Router} from '@angular/router';
 
 @Component({
@@ -24,9 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private translate: TranslateService,
     private userService: UserService,
-    private alertService: AlertService,
-    private router: Router,
-    private profileService: ProfileService) {}
+    private router: Router) {}
 
   ngOnInit() {
     this.themesSubscription = this.userService.getThemes()
@@ -79,10 +75,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   search($event) {
     const searchText = $event.target.value;
     this.router.navigate(['/'], { queryParams: { search: searchText } } );
-  }
-
-  clearProfile() {
-    this.profileService.setUser(new UserEditDto());
   }
 
   isLogin(): boolean {

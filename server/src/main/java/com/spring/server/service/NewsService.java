@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class NewsService {
 
     public void addPost( NewsInfoDto newsInfoDto) {
         News post = newsInfoDtoTransformer.makeModel(newsInfoDto);
-        post.setPublishDate(LocalDateTime.now().toString());
+        post.setPublishDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         post.setTags(this.sectionService.mergeTagsToDb(newsInfoDto.getTags()));
         post.setCategories(this.sectionService.getMergedCategories(newsInfoDto.getCategories()));
         this.newsRepository.save(post);
@@ -63,7 +64,7 @@ public class NewsService {
 
     public void editPost(NewsInfoDto newsInfoDto) {
         News news = newsEditDtoTransformer.makeEditModel(newsInfoDto);
-        news.setPublishDate(LocalDateTime.now().toString());
+        news.setPublishDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         news.setTags(this.sectionService.mergeTagsToDb(newsInfoDto.getTags()));
         newsRepository.save(news);
     }

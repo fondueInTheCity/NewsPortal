@@ -13,10 +13,10 @@ import {RatingSetDto} from '../../dto';
 export class RatingComponent implements OnInit {
   @Input() username: string;
   @Input() read: boolean;
+  @Input() idPost: number;
   currentRating: number;
   changeRatingControl = 2;
   ratingControl = new FormControl();
-  @Input() idPost: number;
   constructor(private newsService: NewsService,
               private route: ActivatedRoute) {}
 
@@ -27,11 +27,8 @@ export class RatingComponent implements OnInit {
           this.idPost = params['id'];
           this.newsService.getPostRating(this.idPost).pipe(first())
             .subscribe(
-              data => {
+              (data) => {
                 this.currentRating = data;
-              },
-              error => {
-                //sdfsdfefsd
               });
         }
       });
@@ -40,9 +37,6 @@ export class RatingComponent implements OnInit {
         .subscribe(
           data => {
             this.currentRating = data;
-          },
-          error => {
-            //sdfsdfefsd
           });
     }
   }
@@ -53,9 +47,6 @@ export class RatingComponent implements OnInit {
         .subscribe(
           (currentRating) => {
             this.currentRating = currentRating;
-          },
-          error => {
-            //sdfsdfefsd
           });
     } else {
       --this.changeRatingControl;

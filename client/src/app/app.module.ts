@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import {AdminGuard, ReaderGuard, WriterGuard} from './auth/guards';
 import { JwtInterceptor } from './auth/helpers';
-import {AlertService} from './auth/service';
 import {
   NewsService,
   UserService,
@@ -19,9 +18,6 @@ import {
   RegularService,
   ErrorService
 } from './service';
-import { HomeComponent } from './home';
-import { AlertComponent } from './auth/directives';
-import { RegisterComponent } from './auth/register';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ProfileComponent } from './user/profile/profile.component';
@@ -45,6 +41,8 @@ import {SliderModule} from 'primeng/slider';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {LoginComponent} from './auth/login/login.component';
+import {RegisterComponent} from './auth/register/register.component';
+import {HomeComponent} from './home/home.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -78,7 +76,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppComponent,
         HomeComponent,
         LoginComponent,
-        AlertComponent ,
         RegisterComponent,
         HeaderComponent,
         FooterComponent,
@@ -99,7 +96,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         AdminGuard,
         WriterGuard,
         ReaderGuard,
-        AlertService,
         AuthenticationService,
         NewsService,
         ProfileService,

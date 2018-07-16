@@ -1,7 +1,5 @@
 ﻿import {RouterModule, Routes} from '@angular/router';
 
-import {HomeComponent} from './home';
-import {RegisterComponent} from './auth/register';
 import {ProfileComponent} from './user/profile/profile.component';
 import {RestorePasswordComponent} from './auth/restore-password/restore-password.component';
 import {RememberComponent} from './auth/remember/remember.component';
@@ -11,6 +9,8 @@ import {ViewNewsComponent} from './news/view-news/view-news.component';
 import {EditNewsComponent} from './news/edit-news/edit-news.component';
 import {AdminGuard, WriterGuard} from './auth/guards';
 import {LoginComponent} from './auth/login/login.component';
+import {RegisterComponent} from './auth/register/register.component';
+import {HomeComponent} from './home/home.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },

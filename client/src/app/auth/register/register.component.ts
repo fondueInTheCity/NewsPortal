@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
-import {InfoService, UserService} from '../../service';
-import { AlertService } from '../service';
-import {RegularService} from '../../service/regular.service';
+import {ErrorService, InfoService, UserService, RegularService} from '../../service';
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
@@ -17,17 +14,17 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private alertService: AlertService,
     private infoService: InfoService,
-    private regularService: RegularService) { }
+    private regularService: RegularService,
+    private errorService: ErrorService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', Validators.required]
+      firstName: ['', [Validators.required, Validators.pattern(this.regularService.firstNamePattern)]],
+      lastName: ['', [Validators.required, Validators.pattern(this.regularService.lastNamePattern)]],
+      username: ['', [Validators.required, Validators.pattern(this.regularService.usernamePattern)]],
+      password: ['', [Validators.required, Validators.pattern(this.regularService.passwordPattern)]],
+      email: ['', [Validators.required, Validators.pattern(this.regularService.emailPattern)]]
     });
   }
 
@@ -44,34 +41,10 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         (errorDto) => {
           this.infoService.alertInformation(errorDto.error, errorDto.message);
-          if (errorDto.error === 'success') {
+          if (errorDto.error === this.errorService.SUCCESS) {
             this.router.navigate(['/login']);
           }
           this.loading = false;
-        },
-        error => {
-          this.alertService.error(error);
-          this.loading = false;
         });
-  }
-
-  firstNamePattern(): string {
-    return this.regularService.firstNamePattern;
-  }
-
-  lastNamePattern(): string {
-    return this.regularService.lastNamePattern;
-  }
-
-  usernamePattern(): string {
-    return this.regularService.usernamePattern;
-  }
-
-  passwordPattern(): string {
-    return this.regularService.passwordPattern;
-  }
-
-  emailPattern(): string {
-    return this.regularService.emailPattern;
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from '../service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {AuthenticationService, RegularService} from '../../service';
@@ -29,7 +28,6 @@ export class RememberComponent implements OnInit {
     });
   }
 
-  // convenience getter for easy access to form fields
   get formControl() { return this.emailForm.controls; }
 
   onSubmit() {
@@ -43,7 +41,7 @@ export class RememberComponent implements OnInit {
       .pipe(first())
       .subscribe(
         () => {
-          this.router.navigate(['login']);
+          this.router.navigate(['/login']);
         });
   }
 }

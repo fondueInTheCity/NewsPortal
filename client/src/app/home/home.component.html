@@ -48,7 +48,7 @@
               <p translate>by
                 <a>
                   <strong>{{post.post.authorName}}</strong>
-                </a>, {{post.post.publishDate | date}}</p>
+                </a>, {{post.post.publishDate}}</p>
               <app-rating [username]="post.post.authorName" [read]="true" [idPost]="post.post.id"></app-rating>
               <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.post.id}}" mdbWavesEffect translate>Read more</a>
               <ul class="d-flex flex-wrap align-content-start tags-pos p-0">

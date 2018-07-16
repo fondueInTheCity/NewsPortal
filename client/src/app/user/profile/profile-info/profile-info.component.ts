@@ -1,10 +1,8 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {UserEditDto} from '../../../dto';
-import {InfoService, NewsService, ProfileService, UserService, AuthenticationService, RegularService} from '../../../service';
+import {Component, OnInit} from '@angular/core';
+import {InfoService, NewsService, ProfileService, UserService, AuthenticationService, RegularService, ErrorService} from '../../../service';
 import {first} from 'rxjs/internal/operators';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from '../../../auth/service';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -28,13 +26,13 @@ export class ProfileInfoComponent implements OnInit {
               private newsService: NewsService,
               private formBuilder: FormBuilder,
               private userService: UserService,
-              private alertService: AlertService,
               private activatedRoute: ActivatedRoute,
               private profileService: ProfileService,
               private toastr: ToastrService,
               private infoService: InfoService,
               private authenticationService: AuthenticationService,
-              private regularService: RegularService) { }
+              private regularService: RegularService,
+              private errorService: ErrorService) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -55,102 +53,109 @@ export class ProfileInfoComponent implements OnInit {
     }
   }
 
+  editUsername() {
+    if (this.Username.invalid) {
+      this.Username.reset(this.profile.getUser().username);
+      this.infoService.alertInformation(this.errorService.ERROR, this.errorService.INVALID_USERNAME);
+    } else {
+      this.userService.uniqueUsername(this.Username.value).pipe(first()).subscribe((isUnique) => {
+        if (isUnique || this.Username.value === this.profile.getUser().username) {
+          this.profile.getUser().username = this.Username.value;
+          this.authenticationService.setCurrentUsername(this.profile.getUser().username);
+          this.setToBack();
+          this.infoService.alertInformation(this.errorService.SUCCESS, this.errorService.SUCCESS_CHANGE_USERNAME);
+        } else {
+          this.Username.reset(this.profile.getUser().username);
+          this.infoService.alertInformation(this.errorService.ERROR, this.errorService.USERNAME_IS_NOT_UNIQUE);
+        }
+      });
+    }
+    this.checkList[0] = false;
+  }
+
   saveChange() {
-    for (let index in this.checkList) {
+    for (const index in this.checkList) {
       if (this.checkList[index]) {
         switch (index) {
-          case '0': {
-            if (this.Username.invalid) {
-              this.Username.reset(this.profile.getUser().username);
-              this.infoService.alertInformation('error', 'Invalid Username');
-            } else {
-              this.profile.getUser().username = this.Username.value;
-              this.infoService.alertInformation('success', 'You are change username.');
-            }
-            this.checkList[index] = false;
-            break;
-          }
           case '1': {
             if (this.FirstName.invalid) {
               this.FirstName.reset(this.profile.getUser().firstName);
-              this.infoService.alertInformation('error', 'Invalid First Name');
+              this.infoService.alertInformation(this.errorService.ERROR, this.errorService.INVALID_FIRST_NAME);
             } else {
               this.profile.getUser().firstName = this.FirstName.value;
-              this.infoService.alertInformation('success', 'You are change first name.');
+              this.infoService.alertInformation(this.errorService.SUCCESS, this.errorService.SUCCESS_CHANGE_FIRST_NAME);
             }
-            this.checkList[index] = false;
             break;
           }
           case '2': {
             if (this.LastName.invalid) {
               this.LastName.reset(this.profile.getUser().lastName);
-              this.infoService.alertInformation('error', 'Invalid Last Name');
+              this.infoService.alertInformation(this.errorService.ERROR, this.errorService.INVALID_LAST_NAME);
             } else {
               this.profile.getUser().lastName = this.LastName.value;
-              this.infoService.alertInformation('success', 'You are change last name.');
+              this.infoService.alertInformation(this.errorService.SUCCESS, this.errorService.SUCCESS_CHANGE_LAST_NAME);
             }
-            this.checkList[index] = false;
             break;
           }
           case '3': {
             if (this.Country.invalid) {
               this.Country.reset(this.profile.getUser().country);
-              this.infoService.alertInformation('error', 'Invalid Country');
+              this.infoService.alertInformation(this.errorService.ERROR, this.errorService.INVALID_COUNTRY);
             } else {
               this.profile.getUser().country = this.Country.value;
-              this.infoService.alertInformation('success', 'You are change country.');
+              this.infoService.alertInformation(this.errorService.SUCCESS, this.errorService.SUCCESS_CHANGE_COUNTRY);
             }
-            this.checkList[index] = false;
             break;
           }
           case '4': {
             if (this.City.invalid) {
               this.City.reset(this.profile.getUser().city);
-              this.infoService.alertInformation('error', 'Invalid City');
+              this.infoService.alertInformation(this.errorService.ERROR, this.errorService.INVALID_CITY);
             } else {
               this.profile.getUser().city = this.City.value;
-              this.infoService.alertInformation('success', 'You are change city.');
+              this.infoService.alertInformation(this.errorService.SUCCESS, this.errorService.SUCCESS_CHANGE_CITY);
             }
-            this.checkList[index] = false;
             break;
           }
           case '5': {
             if (this.Bio.invalid) {
               this.Bio.reset(this.profile.getUser().bio);
-              this.infoService.alertInformation('error', 'Invalid Bio');
+              this.infoService.alertInformation(this.errorService.ERROR, this.errorService.INVALID_BIO);
             } else {
               this.profile.getUser().bio = this.Bio.value;
-              this.infoService.alertInformation('success', 'You are change bio.');
+              this.infoService.alertInformation(this.errorService.SUCCESS, this.errorService.SUCCESS_CHANGE_BIO);
             }
-            this.checkList[index] = false;
             break;
           }
         }
       }
+      if (!this.addNewInformation) {
+        this.setToBack();
+      }
+      this.checkList[index] = false;
     }
   }
 
   saveInputStats(idCheck: number) {
     this.checkList[idCheck] = true;
     this.saveChange();
-    if (!this.addNewInformation) {
-      this.setToBack();
-    }
   }
 
   setToBack() {
     this.userService.update(this.profile.getUser()).pipe(first()).subscribe(() => {
       this.profileService.setProfileByUsername(this.profile.getUser().username);
+      this.router.navigate([`/profile/${this.profile.getUser().username}`]);
     });
   }
 
   handleFileInput(files: FileList) {
-    let formdata: FormData = new FormData();
+    const formdata: FormData = new FormData();
     formdata.append('file', files.item(0));
     this.userService.uploadImage(formdata, this.profile.getUser().id).pipe(first()).subscribe(() => {
       this.profileService.setProfileByUsername(this.profile.getUser().username);
     });
   }
+
 
   showNewInformation() {
     this.addNewInformation = true;

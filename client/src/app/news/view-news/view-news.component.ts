@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {News} from '../../model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {NewsService} from '../../service';
+import {AuthenticationService, NewsService} from '../../service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {NewsInfoDto} from '../../dto';
@@ -18,12 +18,11 @@ export class ViewNewsComponent implements OnInit {
   commentForm: FormGroup;
   new = true;
   id: number;
-  currentUserJson = JSON.parse(localStorage.getItem('currentUser'));
-  // @ViewChild('content') content: ElementRef;
   constructor(private route: ActivatedRoute,
               private newsService: NewsService,
               private formBuilder: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              public authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     if (this.post === undefined) {
@@ -44,6 +43,7 @@ export class ViewNewsComponent implements OnInit {
     this.commentForm = this.formBuilder.group({
       comment: ['', Validators.required]
     });
+
   }
 
   deletePost(id: number) {
@@ -51,16 +51,16 @@ export class ViewNewsComponent implements OnInit {
       .subscribe(
         () => {
           this.router.navigate([`/`]);
-        },
-        error => {
-          //sdfsdfefsd
         });
   }
 
-  downloadPdf(){
+  getCurrentUsername(): string {
+    return this.authenticationService.getCurrentUsername();
+  }
+
+  downloadPdf() {
     var data = document.getElementById('contentToConvert');
     html2canvas(data).then(canvas => {
-      // Few necessary setting options
       var imgWidth = 208;
       var pageHeight = 295;
       var imgHeight = canvas.height * imgWidth / canvas.width;
@@ -79,16 +79,15 @@ export class ViewNewsComponent implements OnInit {
       }
       pdf.save(this.post.name.concat(".pdf")); // Generated PDF
     });
-
   }
 
   showEdit(): boolean {
-    return (!this.new && this.currentUserJson !== null ?
-      ((this.currentUserJson.username === this.post.authorName || this.currentUserJson.userRole === 'ROLE_ADMIN')) : false);
+    return (!this.new && this.authenticationService.isLogin() ?
+      ((this.authenticationService.getCurrentUsername() === this.post.authorName || this.authenticationService.isAdmin())) : false);
   }
 
   showAddComment(): boolean {
-    return this.currentUserJson !== null && !this.new;
+    return this.authenticationService.isLogin() && !this.new;
   }
 
   showComments(): boolean {
@@ -96,6 +95,10 @@ export class ViewNewsComponent implements OnInit {
   }
 
   showRating(): boolean {
-    return this.currentUserJson !== null && !this.new;
+    return !this.new;
+  }
+
+  canSetRating(): boolean {
+    return !this.authenticationService.isLogin();
   }
 }

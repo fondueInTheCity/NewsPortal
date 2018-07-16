@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {AlertService} from '../service';
 import {AuthenticationService, RegularService} from '../../service';
 
 @Component({
@@ -15,31 +14,26 @@ export class RestorePasswordComponent implements OnInit {
   submitted = false;
   code: string;
   loading = false;
-  passwordConfirmError = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService,
     private regularService: RegularService) {}
 
   ngOnInit() {
     this.passwordForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.pattern(this.regularService.passwordPattern)]]
-      //passwordConfirm: ['', Validators.required]
     });
 
     this.code = this.route.snapshot.paramMap.get('code');
   }
 
-  // convenience getter for easy access to form fields
   get formControl() { return this.passwordForm.controls; }
 
   onSubmit() {
     this.submitted = true;
-    //this.passwordConfirmError = this.formControl.password.value !== this.formControl.passwordConfirm.value;
     if (this.passwordForm.invalid)  {
       return;
     }
@@ -47,12 +41,8 @@ export class RestorePasswordComponent implements OnInit {
     this.authenticationService.sendNewPassword(this.code, this.formControl.password.value)
       .pipe(first())
       .subscribe(
-        data => {
-          this.router.navigate(['login']);
-        },
-        error => {
-          this.alertService.error(error);
-          this.loading = false;
+        () => {
+          this.router.navigate(['/login']);
         });
   }
 }

@@ -2,9 +2,8 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { AlertService } from '../service';
 import {LoginRequestDto} from '../../dto';
-import {AuthenticationService, RegularService} from '../../service';
+import {AuthenticationService, ErrorService, InfoService, RegularService} from '../../service';
 
 @Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
@@ -18,13 +17,14 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService,
-    private regularService: RegularService) {}
+    private regularService: RegularService,
+    private infoService: InfoService,
+    private errorService: ErrorService) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['', [Validators.required, Validators.pattern(this.usernamePattern())]],
+      password: ['', [Validators.required, Validators.pattern(this.passwordPattern())]]
     });
 
     this.authenticationService.logout();
@@ -34,12 +34,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.activate(this.code).pipe(first())
         .subscribe(
           () => {
-            this.alertService.success('Registration successful', true);
-            this.router.navigate(['/login']);
-          },
-          error => {
-            this.alertService.error(error);
-            this.loading = false;
+            this.infoService.alertInformation(this.errorService.SUCCESS, this.errorService.SUCCESS_REGISTRATION);
           });
     }
   }
@@ -48,15 +43,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.loginForm.invalid) {
-      return;
+    if (!this.loginForm.invalid) {
+      this.loading = true;
+      this.authenticationService.login(new LoginRequestDto(this.formControl.username.value, this.formControl.password.value))
+        .pipe(first())
+        .subscribe(() => {
+          this.loading = false;
+        });
     }
-    this.loading = true;
-    this.authenticationService.login(new LoginRequestDto(this.formControl.username.value, this.formControl.password.value))
-      .pipe(first())
-      .subscribe(() => {
-        this.loading = false;
-      });
   }
 
   usernamePattern(): string {

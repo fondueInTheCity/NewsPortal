@@ -5,7 +5,7 @@ import {CommentAddDto, LikeDto, RatingSetDto, NewsInfoDto, CommentShowDto} from 
 import {b} from '@angular/core/src/render3';
 import {Headers} from '@angular/http';
 import {HttpHeaders} from '@angular/common/http';
-import {NewsWithCommentsDto} from "../dto/newsWithCommentsDto";
+import {NewsWithCommentsDto} from '../dto/newsWithCommentsDto';
 
 @Injectable()
 export class NewsService {
@@ -70,7 +70,7 @@ export class NewsService {
     const ans: NewsInfoDto[] = [];
     news.forEach(function (post: NewsInfoDto) {
       if (post.post.name.toLowerCase().includes(fragment.toLowerCase())
-        || post.post.text.toLowerCase().includes(fragment.toLowerCase())) {
+        || post.post.description.toLowerCase().includes(fragment.toLowerCase())) {
         ans.push(post);
       }
     });

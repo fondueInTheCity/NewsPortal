@@ -1,11 +1,10 @@
 <div class="mt-5">
   <div class="col-md-6 m-auto">
-    <alert></alert>
     <h2 translate>Big register</h2>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="firstName" translate>First Name</label>
-        <input type="text" id="firstName" pattern="{{firstNamePattern()}}" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.firstName.errors }" />
+        <input type="text" id="firstName" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.firstName.errors }" />
         <div *ngIf="submitted && formControl.firstName.errors" class="invalid-feedback">
           <div *ngIf="formControl.firstName.errors.required" translate>First Name is required</div>
           <div *ngIf="formControl.firstName.errors.pattern" translate>First Name is invalid</div>
@@ -13,7 +12,7 @@
       </div>
       <div class="form-group">
         <label for="lastName" translate>Last Name</label>
-        <input type="text" id="lastName" pattern="{{lastNamePattern()}}" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.lastName.errors }" />
+        <input type="text" id="lastName" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.lastName.errors }" />
         <div *ngIf="submitted && formControl.lastName.errors" class="invalid-feedback">
           <div *ngIf="formControl.lastName.errors.required" translate>Last Name is required</div>
           <div *ngIf="formControl.lastName.errors.pattern" translate>Last Name is invalid</div>
@@ -21,7 +20,7 @@
       </div>
       <div class="form-group">
         <label for="username" translate>Username</label>
-        <input type="text" id="username" pattern="{{usernamePattern()}}" formControlName="username"  class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.username.errors }" />
+        <input type="text" id="username" formControlName="username"  class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.username.errors }" />
         <div *ngIf="submitted && formControl.username.errors" class="invalid-feedback">
           <div *ngIf="formControl.username.errors.required" translate>Username is required</div>
           <div *ngIf="formControl.username.errors.pattern" translate>Username is invalid</div>
@@ -29,7 +28,7 @@
       </div>
       <div class="form-group">
         <label for="password" translate>Password</label>
-        <input type="password" id="password" pattern="{{passwordPattern()}}" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.password.errors }" />
+        <input type="password" id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControl.password.errors }" />
         <div *ngIf="submitted && formControl.password.errors" class="invalid-feedback">
           <div *ngIf="formControl.password.errors.required" translate>Password is required</div>
           <div *ngIf="formControl.password.errors.pattern" translate>Password is invalid</div>
@@ -37,7 +36,7 @@
       </div>
       <div class="form-group">
         <label for="email" translate>Email</label>
-        <input type="email" id="email" pattern="{{emailPattern()}}" formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && formControl.email.errors }"/>
+        <input type="email" id="email" formControlName="email" class="form-control"  [ngClass]="{ 'is-invalid': submitted && formControl.email.errors }"/>
         <div *ngIf="submitted && formControl.email.errors" class="invalid-feedback">
           <div *ngIf="formControl.email.errors.required" translate>Email is required</div>
           <div *ngIf="formControl.email.errors.pattern"> Email is invalid</div>

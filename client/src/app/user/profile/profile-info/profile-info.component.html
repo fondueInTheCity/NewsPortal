@@ -9,7 +9,7 @@
           <div>
             <dt class="profile-section__title" translate>Username</dt>
             <h2 *ngIf="!showSection(0)" (click)="editSection(0)">{{profile.getUser()?.username}}</h2>
-            <input *ngIf="showSection(0)" [formControl]="Username" (mouseleave)="saveInputStats(0)" class="form-control" [attr.placeholder]="'Username' | translate" id="Username" type="text">
+            <input *ngIf="showSection(0)" [formControl]="Username" (mouseleave)="editUsername()" class="form-control" [attr.placeholder]="'Username' | translate" id="Username" type="text">
             <h4 class="indigo-text">{{profile?.role | translate}}</h4>
           </div>
 
@@ -36,7 +36,6 @@
         <dt class="profile-section__title" translate>City</dt>
         <dd *ngIf="!showSection(4)" class="profile-section__about-text" (click)="editSection(4)">{{profile.getUser()?.city}}</dd>
         <input *ngIf="showSection(4)" [formControl]="City" (mouseleave)="saveInputStats(4)" class="form-control" id="City" [attr.placeholder]="'City' | translate" type="text">
-        <!--<input *ngIf="showSection(4)" pattern="{{cityPattern()}}" value="{{profile.getUser()?.city}}" [(ngModel)]="profile.getUser().city" (mouseleave)="saveInputStats(4)" class="form-control" id="City" [attr.placeholder]="'City' | translate" type="text">-->
       </div>
 
 
@@ -44,7 +43,6 @@
         <dt class="profile-section__title" translate>Bio</dt>
         <dd *ngIf="!showSection(5)" class="profile-section__about-text" (click)="editSection(5)">{{profile.getUser()?.bio}}</dd>
         <input *ngIf="showSection(5)" [formControl]="Bio" (mouseleave)="saveInputStats(5)" class="form-control" id="Bio" [attr.placeholder]="'Bio' | translate" type="text">
-        <!--<input *ngIf="showSection(5)" pattern="{{bioPattern()}}" value="{{profile.getUser()?.bio}}" [(ngModel)]="profile.getUser().bio" (mouseleave)="saveInputStats(5)" #bio="ngModel" class="form-control" id="Bio" [attr.placeholder]="'Bio' | translate" type="text">-->
       </div>
 
       <div *ngIf="addNewInformation" class="input-group image-preview my-3">

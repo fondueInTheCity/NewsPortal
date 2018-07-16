@@ -4,7 +4,6 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NewsService, ProfileService, UserService, AuthenticationService} from '../../../service';
 import {first} from 'rxjs/internal/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from '../../../auth/service';
 
 @Component({
   selector: 'app-profile-news',
@@ -28,7 +27,6 @@ export class ProfileNewsComponent implements OnInit {
               private newsService: NewsService,
               private formBuilder: FormBuilder,
               private userService: UserService,
-              private alertService: AlertService,
               private activatedRoute: ActivatedRoute,
               private profileService: ProfileService,
               private authenticationService: AuthenticationService) {}
@@ -37,24 +35,8 @@ export class ProfileNewsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.username = params['username'];
       this.newsService.getNewsByUsername(this.username).pipe(first()).subscribe((newsInfoDto: NewsInfoDto[]) => {
-        this.newsInSearch = this.news = newsInfoDto;
+        this.newsInSearch = this.news = this.newsService.sortByDate(newsInfoDto, -1);
       });
-      // this.userService.getByUsername(this.username)
-      //   .pipe(first())
-      //   .subscribe((data: UserEditDto) => {
-      //       this.user = data;
-      //       this.loadAllNews();
-      //       this.user.role = this.userService.transformRoleToView(this.user.role);
-      //       //this.profileService.setUser(this.user);
-      //       let isSelfAddNews: boolean = (((this.currentUser.userRole === 'ROLE_ADMIN') ||
-      //           (this.currentUser.userRole === 'ROLE_WRITER')) && (this.username === this.currentUser.username));
-      //       let isAdminPostsByOthers: boolean = ((this.currentUser.userRole === 'ROLE_ADMIN') &&
-      //           (this.user['role'] === 'Writer'));
-      //       this.isCanAddNews = isSelfAddNews || isAdminPostsByOthers;
-      //     },
-      //     error => {
-      //       this.alertService.error(error);
-      //     });
     });
     this.searchForm = this.formBuilder.group({
       search: ['', Validators.required]
@@ -63,28 +45,28 @@ export class ProfileNewsComponent implements OnInit {
 
   public deletePost(id: number) {
     this.newsService.deletePost(id).pipe(first()).subscribe(
-      data => {
+      () => {
         this.loadAllNews();
       });
   }
 
   private loadAllNews() {
     this.newsService.getNewsByIdUser(this.user.id).pipe(first()).subscribe(news => {
-      this.news = this.newsInSearch = news;
+      this.news = this.newsInSearch = this.newsService.sortByDate(news, -1);
     });
   }
 
   sortByTitle() {
     this.clickSortByName = true;
     this.clickSortByDate = false;
-    this.news = this.newsService.sortByName(this.news, this.sortByNameType);
+    this.newsInSearch = this.newsService.sortByName(this.newsInSearch, this.sortByNameType);
     this.sortByNameType *= -1;
   }
 
   sortByDate() {
     this.clickSortByName = false;
     this.clickSortByDate = true;
-    this.news = this.newsService.sortByDate(this.news, this.sortByDateType);
+    this.newsInSearch = this.newsService.sortByDate(this.newsInSearch, this.sortByDateType);
     this.sortByDateType *= -1;
   }
 
@@ -105,7 +87,6 @@ export class ProfileNewsComponent implements OnInit {
   }
 
   search() {
-    this.newsInSearch = this.news;
     this.newsInSearch = this.newsService.searchByFragment(this.news, this.searchForm.controls.search.value);
   }
 

@@ -1,6 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ProfileService, UserService} from '../../service';
-import {AlertService} from '../../auth/service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
 import {UserEditDto, NewsInfoDto} from '../../dto';
@@ -20,7 +19,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private routeSubscription: Subscription;
 
   constructor(private userService: UserService,
-              private alertService: AlertService,
               private activatedRoute: ActivatedRoute,
               private profileService: ProfileService) {}
 

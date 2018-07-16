@@ -111,5 +111,9 @@
   "You ara register in system": "Вы зарегистрировались в системе",
   "Magazine": "Журнал",
   "Newspaper": "Газета",
+  "Invalid Title": "Недопустимое название",
+  "Invalid Description": "Недопустимое описание",
+  "News has not category": "У новости нет категории",
+  "Content is empty": "Содержимое пусто",
   "": ""
 }

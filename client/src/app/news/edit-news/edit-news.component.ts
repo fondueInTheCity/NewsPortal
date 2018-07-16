@@ -191,16 +191,16 @@ export class EditNewsComponent implements OnInit, OnDestroy {
 
   private showError() {
     if (this.Title.invalid) {
-      this.infoService.alertInformation(this.errorService.ERROR, 'Title is Invalid.');
+      this.infoService.alertInformation(this.errorService.ERROR, this.errorService.INVALID_TITLE);
     }
     if (this.Description.invalid) {
-      this.infoService.alertInformation(this.errorService.ERROR, 'Description is Invalid.');
+      this.infoService.alertInformation(this.errorService.ERROR, this.errorService.INVALID_DESCRIPTION);
     }
     if (this.isNullCategories()) {
-      this.infoService.alertInformation(this.errorService.ERROR, 'News has not category.');
+      this.infoService.alertInformation(this.errorService.ERROR, this.errorService.IS_NULL_CATEGORIES);
     }
     if (this.isNullContent()) {
-      this.infoService.alertInformation(this.errorService.ERROR, 'Content is empty.');
+      this.infoService.alertInformation(this.errorService.ERROR, this.errorService.IS_NULL_CONTENT);
     }
   }
 

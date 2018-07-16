@@ -13,6 +13,9 @@ export class ErrorService {
   public CITY = 'City';
   public BIO = 'Bio';
   public REGISTRATION = 'REGISTRATION';
+  public TITLE = 'Title';
+  public DESCRIPTION = 'Description';
+  public
 
   public ERROR = 'error';
   public INVALID = 'Invalid';
@@ -24,7 +27,11 @@ export class ErrorService {
   public INVALID_COUNTRY = this.INVALID + ' '  + this.COUNTRY;
   public INVALID_CITY = this.INVALID + ' '  + this.CITY;
   public INVALID_BIO = this.INVALID + ' '  + this.BIO;
+  public INVALID_TITLE = this.INVALID + ' ' + this.TITLE;
+  public INVALID_DESCRIPTION = this.INVALID + ' ' + this.DESCRIPTION;
   public USERNAME_IS_NOT_UNIQUE = this.USERNAME + ' ' + this.IS_NOT_UNIQUE;
+  public IS_NULL_CATEGORIES = 'News has not category';
+  public IS_NULL_CONTENT = 'Content is empty';
 
   public SUCCESS = 'success';
   public SUCCESS_CHANGE_USERNAME = this.YOU_ARE_CHANGE + ' '  + this.USERNAME;

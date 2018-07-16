@@ -111,6 +111,10 @@
   "You ara register in system": "Вы зарэгістраваныя ў сістэме",
   "Magazine": "Часопіс",
   "Newspaper": "Газета",
+  "Invalid Title": "Няправільная назва",
+  "Invalid Description": "Няправільнае апісанне",
+  "News has not category": "Навіны не мае катэгорыі",
+  "Content is empty": "Змест пуст",
   "": ""
 
 }

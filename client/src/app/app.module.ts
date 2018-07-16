@@ -50,8 +50,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
     imports: [
-        BrowserAnimationsModule, // required animations module
-        ToastrModule.forRoot(), // ToastrModule added
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
         NgbModule.forRoot(),
         BrowserModule,
         AccordionModule,

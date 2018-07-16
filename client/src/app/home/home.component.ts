@@ -70,6 +70,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.searchedNews = [];
         let searchText = params['search'];
         if ((searchText === undefined) || (searchText === "")){
+          this.searchedNews = null;
           this.filterNews();
           return;
         }
@@ -91,7 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     let sectionSuitable = tagSuitable.filter(o => rateSuitable.some((item) => o === item));
     this.viewNews = sectionSuitable.filter(o => categoriesSuitable.some((item) => o === item));
-    if (this.searchedNews.length !== 0)
+    if (this.searchedNews !== null)
       this.viewNews = this.viewNews.filter(o => this.searchedNews.some((item) => o === item));
   }
 

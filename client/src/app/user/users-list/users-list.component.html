@@ -17,7 +17,7 @@
       <td>{{user.email}}</td>
       <td>{{user.role | translate}}</td>
       <td>
-        <input type="checkbox" [checked]="user.blocked" (change)="changeBlockUserStatus(user.id, user.blocked)" class="big-checkbox">
+        <input type="checkbox" [checked]="user.blocked" (change)="changeBlockUserStatus(user.id, user.blocked)" class="big-checkbox pointer">
       </td>
       <td>
         <div class="btn-group" dropdown>

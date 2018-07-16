@@ -1,20 +1,20 @@
 ﻿<section class="py-4 text-center text-lg-left">
-  <h2 *ngIf="searchedNews.length !== 0" class="h1 font-weight-bold text-center mb-4 pt-4" translate>Search results</h2>
-  <h2 *ngIf="searchedNews.length === 0" class="h1 font-weight-bold text-center mb-4 pt-4" translate>Recent news</h2>
+  <h2 *ngIf="searchedNews !== null" class="h1 font-weight-bold text-center mb-4 pt-4" translate>Search results</h2>
+  <h2 *ngIf="searchedNews === null" class="h1 font-weight-bold text-center mb-4 pt-4" translate>Recent news</h2>
   <div class="row">
     <div class="col-md-8">
       <div class="col-md-8 p-0">
         <h3 *ngIf="filterCategories.length !== 0" translate>Filter categories</h3>
         <ul class="d-flex flex-wrap align-content-start p-0">
           <li class="p-1 badge badge-primary rounded d-flex m-1" *ngFor="let category of filterCategories">
-            <span class="my-auto">{{category.name}}</span>
+            <span class="my-auto pointer">{{category.name}}</span>
             <i class="close fa fa-times my-auto mx-1" (click)="removeFilterCategory(category)"></i>
           </li>
         </ul>
         <h3 *ngIf="filterTags.length !== 0" translate>Filter tags</h3>
         <ul class="d-flex p-0 flex-wrap align-content-start">
           <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of filterTags">
-            <span class="text-dark">{{tag.name}}</span>
+            <span class="text-dark pointer">{{tag.name}}</span>
             <i class="close fa fa-times my-auto mx-1" (click)="removeFilterTag(tag)"></i>
           </li>
         </ul>
@@ -38,7 +38,7 @@
             <div class="col-lg-7 col-xl-7">
               <ul class="d-flex flex-wrap align-content-start tags-pos p-0">
                 <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let category of post.categories">
-                  <span class="badge badge-primary">{{category.name}}</span>
+                  <span class="badge badge-primary pointer">{{category.name}}</span>
                 </li>
               </ul>
               <h3 class="mb-4 font-weight-bold dark-grey-text">
@@ -53,7 +53,7 @@
               <a class="btn btn-md mb-3 waves-light" routerLink="/news/{{post.post.id}}" mdbWavesEffect translate>Read more</a>
               <ul class="d-flex flex-wrap align-content-start tags-pos p-0">
                 <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of post.tags">
-                  <span class="text-dark">{{tag.name}}</span>
+                  <span class="text-dark pointer">{{tag.name}}</span>
                 </li>
               </ul>
             </div>
@@ -69,13 +69,13 @@
       <h3 *ngIf="categories.length !== 0" translate>Categories</h3>
       <ul class="d-flex flex-wrap align-content-start p-0">
         <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let category of categories">
-          <span class="badge badge-primary" (click)="pasteFilterCategory(category)">{{category.name}}</span>
+          <span class="badge badge-primary pointer" (click)="pasteFilterCategory(category)">{{category.name}}</span>
         </li>
       </ul>
       <h3 *ngIf="tags.length !== 0" translate>Tags</h3>
       <ul class="d-flex p-0 flex-wrap align-content-start">
         <li class="p-1 bg-light rounded d-flex m-1" *ngFor="let tag of tags">
-          <span class="text-dark" (click)="pasteFilterTag(tag)">{{tag.name}}</span>
+          <span class="text-dark pointer" (click)="pasteFilterTag(tag)">{{tag.name}}</span>
         </li>
       </ul>
     </div>

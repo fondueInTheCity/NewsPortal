@@ -1,3 +1,6 @@
 .center-me {
   margin: 0 auto;
 }
+.pointer{
+  cursor: pointer;
+}

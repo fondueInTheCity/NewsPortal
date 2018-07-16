@@ -7,7 +7,7 @@
     </div>
       <div class="float-sm-left">
       <h2>{{post.name}}</h2>
-      <h5>{{post.publishDate}}</h5>
+      <h5>{{post.publishDate | date}}</h5>
         <app-rating *ngIf="showRating()"  [username]="getCurrentUsername()" [read]="canSetRating()" ></app-rating>
         <div *ngIf="!new">
           <a routerLink="/profile/{{post?.authorName}}"><h1>{{post?.authorName}}</h1></a>

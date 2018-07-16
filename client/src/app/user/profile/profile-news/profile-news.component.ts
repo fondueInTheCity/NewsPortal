@@ -51,7 +51,7 @@ export class ProfileNewsComponent implements OnInit {
   }
 
   private loadAllNews() {
-    this.newsService.getNewsByIdUser(this.user.id).pipe(first()).subscribe(news => {
+    this.newsService.getNewsByIdUser(this.profile.getUser().id).pipe(first()).subscribe(news => {
       this.news = this.newsInSearch = this.newsService.sortByDate(news, -1);
     });
   }

@@ -2,7 +2,7 @@
   <h2 class="h1 section-heading" translate>Leave a reply</h2>
   <div class="row">
     <div class="col-sm-2 col-12 mt-5 p-0">
-      <img src="{{currentImage}}" class="avatar z-depth-1-half img-size">
+      <img src="{{currentImage}}" class="avatar z-depth-1-half rounded-circle img-size">
     </div>
     <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="col-sm-10 col-12">
       <div class="md-form">
@@ -41,7 +41,7 @@
       <div class="row">
       <div class="card-data">
         <ul class="pl-0 list-unstyled">
-          <li class="comment-date"><i class="fa fa-clock-o"></i> {{commentShowDto.publish_date}}</li>
+          <li class="comment-date"><i class="fa fa-clock-o"></i> {{commentShowDto.publish_date | date}}</li>
         </ul>
       </div>
       <div class="col-4 col-sm-4">

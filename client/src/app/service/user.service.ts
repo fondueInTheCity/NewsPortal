@@ -68,7 +68,7 @@ export class UserService   {
   }
 
   getImage(username: string) {
-    return this.http.get<string>(`${environment.serverUrl}users/getImage/` + username);//, {responseType: 'text'});
+    return this.http.get<string>(`${environment.serverUrl}users/getImage/` + username, {responseType: 'text'});
   }
 
   uniqueUsername(username: string) {

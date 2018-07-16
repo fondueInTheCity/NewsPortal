@@ -36,10 +36,7 @@ export class NewsService {
   }
 
   addImageToPost(image: FormData) {
-    // let headers = new Headers();
-    // headers.set('responseType', 'text');
-    // let headers = new HttpHeaders({'Content-Type': 'application/json'})
-    return this.http.post<string>(`${environment.serverUrl}news/addImageToPost`, image);
+    return this.http.post<string>(`${environment.serverUrl}news/addImageToPost`, image, {responseType: 'text'});
   }
 
   deletePost(id: number) {

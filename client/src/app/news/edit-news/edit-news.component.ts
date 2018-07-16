@@ -70,7 +70,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     this.Title = new FormControl(this.news.post.name, [Validators.required,
       Validators.minLength(4), Validators.maxLength(30)]);
     this.Description = new FormControl(this.news.post.description, [Validators.required,
-      Validators.minLength(4), Validators.maxLength(30)]);
+      Validators.minLength(4), Validators.maxLength(100)]);
   }
 
   public fileOverAnother(e: any): void {
@@ -91,7 +91,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
     if (this.news.post.text === undefined) {
       this.news.post.text = '';
     }
-    this.news.post.text += ' <img class="img-fluid" src="' + url + '">';
+    this.news.post.text += ' <img class="img-fluid" src="' + url + '" style="max-width: 500px; max-heigth: 900px;">';
   }
 
   addTag() {

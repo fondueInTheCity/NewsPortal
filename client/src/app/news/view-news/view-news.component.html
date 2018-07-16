@@ -1,10 +1,9 @@
 <div *ngIf="post" class="card mb-5 mt-5">
   <div class="card-header bg-dark text-white">
-    <div *ngIf="showEdit()"
-         class="tool-box float-sm-right main-bg-bgcolor p-2 rounded">
-      <a class="card-link pointer m-1" (click)="downloadPdf()">Download pdf</a>
-      <a class="card-link pointer m-1" routerLink="/editPost/{{post.id}}"><i class="material-icons md-light">&#xE254;</i></a>
-      <a class="card-link pointer m-1" (click)="confirmDeletePost.show()"><i class="material-icons md-light">&#xE872;</i></a>
+    <div class="tool-box float-sm-right main-bg-bgcolor p-2 rounded">
+      <a class="card-link pointer m-1 mr-2" (click)="downloadPdf()" translate>Download pdf</a>
+      <a *ngIf="showEdit()" class="card-link pointer m-1" routerLink="/editPost/{{post.id}}"><i class="material-icons md-light">&#xE254;</i></a>
+      <a *ngIf="showEdit()" class="card-link pointer m-1" (click)="confirmDeletePost.show()"><i class="material-icons md-light">&#xE872;</i></a>
     </div>
       <div class="float-sm-left">
       <h2>{{post.name}}</h2>

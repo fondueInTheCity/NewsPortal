@@ -44,7 +44,6 @@ public class StorageService {
 
     public String getPublicUrl(String fileName) {
         try {
-            init();
             SharedLinkMetadata slm = client.sharing().createSharedLinkWithSettings("/" + fileName);
             String url = slm.getUrl();
             return url.replace("?dl=0", "?raw=1");

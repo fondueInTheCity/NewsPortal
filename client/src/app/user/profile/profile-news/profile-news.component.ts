@@ -91,6 +91,6 @@ export class ProfileNewsComponent implements OnInit {
   }
 
   isCanAddNews(): boolean {
-    return this.authenticationService.isCanAddNews(this.username);
+    return this.authenticationService.isCanAddNews(this.username) && (this.profile.role !== 'Reader');
   }
 }

@@ -67,6 +67,7 @@ public class NewsService {
         news.setPublishDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         news.setTags(this.sectionService.mergeTagsToDb(newsInfoDto.getTags()));
         newsRepository.save(news);
+        this.sectionService.deleteTagsWithoutLinks();
     }
 
     public void deletePost(long id) {

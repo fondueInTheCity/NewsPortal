@@ -99,12 +99,6 @@ export class AuthenticationService {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 
-    getCurrentTheme(): string {
-      if (this.isLogin()) {
-        return JSON.parse(localStorage.getItem('currentUser')).theme;
-      }
-    }
-
     isCurrentUser(username: string): boolean {
       return this.getCurrentUsername() === username;
     }

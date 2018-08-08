@@ -2,10 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {CommentAddDto, LikeDto, RatingSetDto, NewsInfoDto, CommentShowDto} from '../dto';
-import {b} from '@angular/core/src/render3';
-import {Headers} from '@angular/http';
-import {HttpHeaders} from '@angular/common/http';
-import {NewsWithCommentsDto} from '../dto/newsWithCommentsDto';
 
 @Injectable()
 export class NewsService {
@@ -72,10 +68,6 @@ export class NewsService {
       }
     });
     return ans;
-  }
-
-  getAllNewsWithComments() {
-    return this.http.get<NewsWithCommentsDto[]>(`${environment.serverUrl}news/getNewsWithComments`);
   }
 
   addLike(likeDto: LikeDto) {

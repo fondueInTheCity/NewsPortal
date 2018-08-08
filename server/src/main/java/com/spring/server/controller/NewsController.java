@@ -9,7 +9,6 @@ import com.spring.server.service.dto.NewsDto.NewsInfoDto;
 import com.spring.server.service.dto.RatingDto.RatingSetDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,7 +59,6 @@ public class NewsController {
         this.newsService.editPost(newsInfoDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_WRITTER')")
     @DeleteMapping("/deletePost/{idPost}")
     public void deletePost(@PathVariable Long idPost) {
         this.newsService.deletePost(idPost);

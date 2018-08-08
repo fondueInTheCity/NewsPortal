@@ -44,7 +44,7 @@ export class ProfileInfoComponent implements OnInit {
     this.LastName = new FormControl(`${this.profile.getUser().lastName}`, Validators.pattern(this.lastNamePattern()));
     this.Country = new FormControl(`${this.profile.getUser().country}`, Validators.pattern(this.countryPattern()));
     this.City = new FormControl(`${this.profile.getUser().city}`, Validators.pattern(this.cityPattern()));
-    this.Bio = new FormControl(`${this.profile.getUser().bio}`, Validators.pattern(this.bioPattern()));
+    this.Bio = new FormControl(`${this.profile.getUser().bio}`, Validators.maxLength(200));
   }
 
   editSection(idCheck: number) {

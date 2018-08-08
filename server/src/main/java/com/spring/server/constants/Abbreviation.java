@@ -19,4 +19,6 @@ public class Abbreviation {
     static public final String SUCCESS = "success";
     static public final String SUCCESS_AUTHENTICATION = "You ara login in system";
     static public final String SUCCESS_REGISTRATION = "You ara register in system";
+
+    static public final String DEFAULT_IMAGE = "https://www.dropbox.com/s/oypri1triz49u2v/Default.png?raw=1";
 }

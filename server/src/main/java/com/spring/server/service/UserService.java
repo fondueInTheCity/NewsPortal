@@ -131,10 +131,6 @@ public class UserService {
         return new ErrorDto(Abbreviation.SUCCESS, Abbreviation.SUCCESS_REGISTRATION);
     }
 
-    public boolean isCodeActivated(String username) {
-        return userRepository.findByUsername(username).getActivationCode() == null;
-    }
-
     public boolean userIsActive(String username) {
         return userRepository.findByUsername(username).getIsActive();
     }
@@ -211,6 +207,6 @@ public class UserService {
         user.setLanguage(languageRepository.findById((long)1));
         user.setTheme(themeRepository.findById((long)1));
         user.setRole(UserRole.ROLE_READER);
-        user.setAvatar(this.storageService.getPublicUrl("Default.png"));
+        user.setAvatar(Abbreviation.DEFAULT_IMAGE);
     }
 }

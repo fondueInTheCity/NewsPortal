@@ -174,6 +174,7 @@ export class EditNewsComponent implements OnInit, OnDestroy {
   }
 
   private isNullCategories(): boolean {
+    this.pasteChecked();
     let answer = false;
     for (const category of this.categories) {
       answer = answer || category.isActive;
